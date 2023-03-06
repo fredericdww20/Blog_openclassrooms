@@ -23,4 +23,4 @@ Route::add('/inscription', function () {
 });
 
 // Run the router
-Route::run('/blog_openclassrooms/');
+Route::run('/OpenClassrooms/');
