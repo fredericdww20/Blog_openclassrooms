@@ -1,0 +1,12 @@
+{
+    "require": {
+        "twig/twig": "^3.5",
+        "steampixel/simple-php-router": "^0.7.1",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\" : "src/"
+        }
+    }
+}
