@@ -2,20 +2,30 @@
 
 namespace App\Controllers;
 
+use App\Models\UserManager;
 use PDO;
-class ConnectController extends PDO
+class ConnectController extends Controller
 {
-	function connect()
+	public function connect()
 	{
-		$username = 'pofr8259_blogopen';
-		$userpass = 'DelPFzMI2P1h';
-		try {
-			$bdd = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', $username, $userpass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-			return $bdd;
-		} catch (Exception $e) {
+		$username = $_POST['username'];
+		$password = $_POST['password'];
 
-			die (' Erreur de connexion en base : ' . $e->getMessage());
+		$userManager = new UserManager();
+
+		$user = $userManager->authentication($username, $password);
+
+		if ($user) {
+
+			// Je mets les données en session
+
+		} else {
+
+			// J'affiche un message d'erreur
+			// Je redirige vers la home
 		}
+
+		return $this->twig->render('login/login.html.twig');
 	}
 }
 

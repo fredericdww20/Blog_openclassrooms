@@ -5,6 +5,10 @@ class MainController extends Controller
 {
 	public function index()
 	{
-		$this->twig->display('main/index.html.twig');
+		$posts = $this->postManager->findAll();
+
+		return $this->twig->render('main/index.html.twig', [
+			'posts' => $posts
+		]);
 	}
 }

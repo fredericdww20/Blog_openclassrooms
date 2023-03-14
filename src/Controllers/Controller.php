@@ -6,13 +6,11 @@ use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
 {
-	private $loader;
-	protected $twig;
+	protected Environment $twig;
 
 	public function __construct()
 	{
-		$this->loader = new FilesystemLoader(ROOT.'/templates');
-
-		$this->twig = new Environment($this->loader);
+		$loader = new FilesystemLoader(__DIR__ . '/../../templates');
+		$this->twig = new Environment($loader);
 	}
 }
