@@ -8,7 +8,7 @@ class ConnectController extends Controller
 {
 	public function connect()
 	{
-		$username = $_POST['username'];
+		$username = $_POST['name'];
 		$password = $_POST['password'];
 
 		$userManager = new UserManager();

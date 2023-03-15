@@ -5,33 +5,22 @@ error_reporting(E_ALL);
 
 require_once 'vendor/autoload.php';
 
-use App\Controllers\PostController;
 use App\Controllers\RegisterController;
 use App\Controllers\MainController;
-use \App\Controllers\ConnectController;
 use Steampixel\Route;
 
 // Add the first route
-Route::add('/post', function () {
-	echo (new PostController())->index();
-});
-
-Route::add('/posts/([0-9]*)/edit', function (int $id) {
-	echo (new PostController())->edit($id);
+Route::add('/', function () {
+	echo (new MainController())->index();
 });
 
 Route::add('/inscription', function () {
 	echo (new RegisterController())->register();
 });
 
-Route::add('/', function () {
-	echo (new MainController())->index();
-});
-
-Route::add('/connexion', function () {
-	echo (new ConnectController())->connect();
-});
-
+Route::add('/inscription', function () {
+	echo (new RegisterController())->register();
+}, 'post');
 
 // Run the router
 Route::run('/OpenClassrooms/');
