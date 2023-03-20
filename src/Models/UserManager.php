@@ -67,10 +67,13 @@ class UserManager
 
 	public function authentication(string $email, string $password)
 	{
-		$sql = 'SELECT email, password FROM user';
+		$sql = 'SELECT * FROM user';
 
 		$statement = $this->pdo->prepare($sql);
 
-		$statement->fetch();
+		$statement->fetchAll([
+			'email' => $email,
+			'password' => $password,
+		]);
 	}
 }
