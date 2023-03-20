@@ -12,24 +12,23 @@ class RegisterController extends Controller
 			$userManager = new UserManager();
 
 			if($this->isValid($_POST)) {
-				$userManager->create($_POST['name'], $_POST['firstname'], $_POST['email'], $_POST['password']);
+				$userManager->create($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['password']);
 
-				header('Location: login/login.html.twig');
+				header('Location: /OpenClassrooms/login');
 				exit;
 
-			} else {
-
 			}
-			
 		}
-
 		return $this->twig->render('register/register.html.twig');
 	}
 
 	public function isValid(array $data): bool
 	{
-		$name = htmlentities($data['name']);
-		if(empty($name)) {
+		$firstname = htmlentities($data['firstname']);;
+		$lastname = htmlentities($data['lastname']);
+		$email = htmlentities($data['email']);
+		$password = htmlentities($data['password']);
+		if(empty($firstname) && empty($lastname) && empty($email) && empty($password)) {
 			return false;
 		}
 

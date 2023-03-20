@@ -7,6 +7,7 @@ require_once 'vendor/autoload.php';
 
 use App\Controllers\RegisterController;
 use App\Controllers\MainController;
+use App\Controllers\ConnectController;
 use Steampixel\Route;
 
 // Add the first route
@@ -20,6 +21,14 @@ Route::add('/inscription', function () {
 
 Route::add('/inscription', function () {
 	echo (new RegisterController())->register();
+}, 'post');
+
+Route::add('/login', function () {
+	echo (new ConnectController())->connect();
+});
+
+Route::add('/login', function () {
+	echo (new ConnectController())->connect();
 }, 'post');
 
 // Run the router

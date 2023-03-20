@@ -9,7 +9,7 @@ class UserManager
 	public function __construct()
 	{
 		try {
-			$this->pdo = new \PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'DelPFzMI2P1h');
+			$this->pdo = new \PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA');
 		}
 		catch (\Exception $e)
 		{
@@ -17,14 +17,14 @@ class UserManager
 		}
 	}
 
-	public function create(string $name, string $firstname, string $email, string $password)
+	public function create(string $lastname, string $firstname, string $email, string $password)
 	{
-		$sql = 'INSERT INTO user(name, firstname, email, password) VALUES (:name, :firstname, :email, :password)';
+		$sql = 'INSERT INTO user(lastname, firstname, email, password) VALUES (:lastname, :firstname, :email, :password)';
 
 		$statement = $this->pdo->prepare($sql);
 
 		$statement->execute([
-			'name' => $name,
+			'lastname' => $lastname,
 			'firstname' => $firstname,
 			'email' => $email,
 			'password' => password_hash($password, PASSWORD_BCRYPT),
@@ -65,8 +65,12 @@ class UserManager
 
 	}
 
-	public function authentication(string $name, string $password)
+	public function authentication(string $email, string $password)
 	{
+		$sql = 'SELECT email, password FROM user';
 
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->fetch();
 	}
 }
