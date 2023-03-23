@@ -8,20 +8,25 @@ class ConnectController extends Controller
 	public function connect()
 	{
 		$userManager = new UserManager();
+		$message = null;
 
 		if(isset($_POST['email']) && isset($_POST['password'])) {
 
-			foreach ( $userManager as $user) {
-				if (
-					$user['email'] === $_POST['email'] &&
-					$user['password'] === $_POST['password']
-				) {
-					$_SESSION['LOGGED_USER'] = $user['email'];
-				}
-			}
-		}
+			$user = $userManager->authentication($_POST['email'], $_POST['password']);
 
-		return $this->twig->render('login/login.html.twig');
+			if ($user) {
+				$_SESSION['LOGGED_USER'] = $user['email'];
+				header('Location: /OpenClassrooms/');
+				exit();
+
+			} else {
+				$message = 'User not found';
+			}
+
+		}
+		return $this->twig->render('login/login.html.twig', [
+			'message' => $message
+		]);
 	}
 }
 

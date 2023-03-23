@@ -19,7 +19,7 @@ class UserManager
 
 	public function create(string $lastname, string $firstname, string $email, string $password)
 	{
-		$sql = 'INSERT INTO user(lastname, firstname, email, password) VALUES (:lastname, :firstname, :email, :password)';
+		$sql = 'INSERT INTO user (lastname, firstname, email, password) VALUES (:lastname, :firstname, :email, :password)';
 
 		$statement = $this->pdo->prepare($sql);
 
@@ -27,7 +27,7 @@ class UserManager
 			'lastname' => $lastname,
 			'firstname' => $firstname,
 			'email' => $email,
-			'password' => password_hash($password, PASSWORD_BCRYPT),
+			'password' => password_hash($password, PASSWORD_DEFAULT),
 		]);
 	}
 
@@ -67,13 +67,20 @@ class UserManager
 
 	public function authentication(string $email, string $password)
 	{
-		$sql = 'SELECT * FROM user';
+		$sql = 'SELECT * FROM user WHERE email = :email';
 
 		$statement = $this->pdo->prepare($sql);
 
-		$statement->fetchAll([
+		$statement->execute([
 			'email' => $email,
-			'password' => $password,
 		]);
+
+		$user = $statement->fetch();
+
+		if (password_verify($password, $user['password'])) {
+			return $user;
+		}
+
+		return null;
 	}
 }
