@@ -8,6 +8,7 @@ require_once 'vendor/autoload.php';
 use App\Controllers\RegisterController;
 use App\Controllers\MainController;
 use App\Controllers\ConnectController;
+use App\Controllers\PostController;
 use Steampixel\Route;
 
 // Add the first route
@@ -23,6 +24,7 @@ Route::add('/inscription', function () {
 	echo (new RegisterController())->register();
 }, 'post');
 
+// Route pour la connexion utilisateur
 Route::add('/login', function () {
 	echo (new ConnectController())->connect();
 });
@@ -30,6 +32,15 @@ Route::add('/login', function () {
 Route::add('/login', function () {
 	echo (new ConnectController())->connect();
 }, 'post');
+
+// Route pour la publication d'un post
+Route::add('/add', function () {
+	echo (new PostController())->addpost();
+});
+Route::add('/add', function () {
+	echo (new PostController())->addpost();
+}, 'post');
+
 
 // Run the router
 Route::run('/OpenClassrooms/');

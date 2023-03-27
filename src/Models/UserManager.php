@@ -31,6 +31,24 @@ class UserManager
 		]);
 	}
 
+	public function authentication(string $email, string $password)
+	{
+		$sql = 'SELECT * FROM user WHERE email = :email';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute([
+			'email' => $email,
+		]);
+
+		$user = $statement->fetch();
+
+		if (password_verify($password, $user['password'])) {
+			return $user;
+		}
+
+		return null;
+	}
 	public function fetchAll()
 	{
 		$sql = 'SELECT ...';
@@ -65,22 +83,4 @@ class UserManager
 
 	}
 
-	public function authentication(string $email, string $password)
-	{
-		$sql = 'SELECT * FROM user WHERE email = :email';
-
-		$statement = $this->pdo->prepare($sql);
-
-		$statement->execute([
-			'email' => $email,
-		]);
-
-		$user = $statement->fetch();
-
-		if (password_verify($password, $user['password'])) {
-			return $user;
-		}
-
-		return null;
-	}
 }

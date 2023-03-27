@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserManager;
+
 class ConnectController extends Controller
 {
 	public function connect()
