@@ -31,15 +31,16 @@ class PostManager
 		]);
 	}
 
-	public function fetchpost(string $title, string $description, string $chapo)
+
+	public function fetch()
 	{
 		$sql = 'SELECT * FROM post';
 
 		$post = $this->pdo->prepare($sql);
 
-		$post->execute();
+		$post>execute();
 
 		return $post;
-
 	}
+
 }

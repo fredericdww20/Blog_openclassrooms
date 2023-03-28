@@ -6,7 +6,7 @@ use App\Models\PostManager;
 
 class PostController extends Controller
 {
-	public function addpost()
+	public function addpost(): string
 	{
 		if (!empty($_POST))
 		{
@@ -19,5 +19,9 @@ class PostController extends Controller
 		return $this->twig->render('addpost/post.html.twig');
 	}
 
+	public function viewpost()
+	{
 
+
+	}
 }
