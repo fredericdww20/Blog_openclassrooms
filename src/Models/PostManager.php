@@ -32,15 +32,27 @@ class PostManager
 	}
 
 
-	public function fetch()
+	public function fetchAll()
 	{
 		$sql = 'SELECT * FROM post';
 
 		$post = $this->pdo->prepare($sql);
 
-		$post>execute();
+		$post->execute();
 
-		return $post;
+		return $post->fetchAll();
+	}
+
+	public function fetch(int $id)
+	{
+		$sql = 'SELECT * FROM post WHERE id = :id';
+
+		$post = $this->pdo->prepare($sql);
+
+		$post->execute([
+			'id' => $id,]);
+
+		return $post->fetch();
 	}
 
 }

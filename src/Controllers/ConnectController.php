@@ -17,6 +17,7 @@ class ConnectController extends Controller
 
 			if ($user) {
 				$_SESSION['LOGGED_USER'] = $user['email'];
+				$_SESSION['ROLE_USER'] = $user['role'];
 				header('Location: /OpenClassrooms/');
 				exit();
 

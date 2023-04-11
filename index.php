@@ -41,9 +41,15 @@ Route::add('/add', function () {
 	echo (new PostController())->addpost();
 }, 'post');
 
-Route::add('/add', function () {
-	echo (new PostController())->viewpost();
+Route::add('/posts', function () {
+	echo (new PostController())->list();
 });
+
+Route::add('/post/{id}', function ($id) {
+	var_dump('ok'); die;
+	echo (new PostController())->show($id);
+});
+
 
 // Run the router
 Route::run('/OpenClassrooms/');

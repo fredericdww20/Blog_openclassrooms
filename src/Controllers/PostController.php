@@ -16,12 +16,28 @@ class PostController extends Controller
 
 			echo 'Article envoyer';
 		}
-		return $this->twig->render('addpost/post.html.twig');
+		return $this->twig->render('list/post.html.twig');
 	}
 
-	public function viewpost()
+	public function show($id)
 	{
+		return $this->twig->render('list/post.html.twig');
+	}
 
+	public function list()
+	{
+		$postManager = new PostManager();
 
+		//if ($_SESSION['ROLE'] !== 'admin') {
+			// redirection vers home
+		//	header(' ....');
+		//	exit();
+		//}
+
+		$posts = $postManager->fetchAll();
+
+		return $this->twig->render('list/list.html.twig', [
+			'posts' => $posts
+		]);
 	}
 }

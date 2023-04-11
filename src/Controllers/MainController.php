@@ -4,7 +4,9 @@ namespace App\Controllers;
 
 class MainController extends Controller
 {
-	public function index() {
+	// Rendu vers la page principale
+	public function index()
+	{
 		return $this->twig->render('main/index.html.twig');
 	}
 }
