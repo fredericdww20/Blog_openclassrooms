@@ -31,7 +31,6 @@ class PostManager
 		]);
 	}
 
-
 	public function fetchAll()
 	{
 		$sql = 'SELECT * FROM post';
@@ -50,7 +49,8 @@ class PostManager
 		$post = $this->pdo->prepare($sql);
 
 		$post->execute([
-			'id' => $id,]);
+			'id' => $id
+		]);
 
 		return $post->fetch();
 	}

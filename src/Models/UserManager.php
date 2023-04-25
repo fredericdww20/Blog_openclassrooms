@@ -35,7 +35,7 @@ class UserManager
 	}
 
 	// Fonction verification utilisateur en base de données
-	public function authentication(string $email, string $password)
+	function authentication(string $email, string $password)
 	{
 		$sql = 'SELECT * FROM user WHERE email = :email';
 
@@ -45,14 +45,14 @@ class UserManager
 			'email' => $email,
 		]);
 
-		$user = $statement->fetch();
+		$user = $statement->fetchObject(User::class);
 
-		if ($user && password_verify($password, $user['password'])) {
+		if ($user && password_verify($password, $user->getPassword())) {
 
-			$_SESSION['email'] = $user['email'];
-			$_SESSION['lastname'] = $user['lastname'];
-			$_SESSION['firstname'] = $user['firstname'];
-			$_SESSION['roles'] = $user['roles'];
+			$_SESSION['email'] = $user->getEmail();
+			$_SESSION['lastname'] = $user->getLastname();
+			$_SESSION['firstname'] = $user->getFirstname();
+			$_SESSION['roles'] = $user->getRoles();
 
 			return $user;
 		}
@@ -60,7 +60,7 @@ class UserManager
 		return null;
 	}
 
-	// Fonction pour récupérer les informations utilisateur.
+	// Pas utiliser
 	public function infosuser(string $email)
 	{
 		$sql = 'SELECT * FROM user WHERE email = :email';
@@ -76,17 +76,7 @@ class UserManager
 		return $users;
 	}
 
-
-
-	public function fetchAll()
-	{
-		$sql = 'SELECT ...';
-		$this->pdo->prepare($sql);
-		$posts = $this->pdo->exec();
-
-		return $posts;
-	}
-
+	// Pas utiliser
 	public function delete(int $id)
 	{
 		$sql = 'DELETE FROM user WHERE id = :id';
@@ -97,18 +87,13 @@ class UserManager
 			'id' => $id,
 		]);
 	}
-
+	// Pas utiliser
 	public function update()
 	{
 		$sql = 'UPDATE user SET name = :name, firstname = :firstname, email = :email  WHERE id = :id ';
 		
 		$this->pdo->prepare($sql);
 
-
-	}
-
-	public function fetch(int $id)
-	{
 
 	}
 

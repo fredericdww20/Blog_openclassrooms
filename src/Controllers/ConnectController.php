@@ -3,12 +3,14 @@
 namespace App\Controllers;
 
 use App\Models\UserManager;
+use App\Models\User;
 
 class ConnectController extends Controller
 {
 	public function connect()
 	{
 		$userManager = new UserManager();
+		$user = new User();
 		$message = null;
 
 		if(isset($_POST['email']) && isset($_POST['password'])) {
@@ -16,13 +18,13 @@ class ConnectController extends Controller
 			$user = $userManager->authentication($_POST['email'], $_POST['password']);
 
 			if ($user) {
-				$_SESSION['LOGGED_USER'] = $user['email'];
-				$_SESSION['ROLE_USER'] = $user['role'];
+				$_SESSION['LOGGED_USER'] = $user->getEmail();
+				$_SESSION['ROLE_USER'] = $user->getRoles();
 				header('Location: /OpenClassrooms/');
 				exit();
 
 			} else {
-				$message = 'User not found';
+				$message = 'Utilisateur non trouvé';
 			}
 
 		}

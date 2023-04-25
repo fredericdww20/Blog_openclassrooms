@@ -45,8 +45,7 @@ Route::add('/posts', function () {
 	echo (new PostController())->list();
 });
 
-Route::add('/post/{id}', function ($id) {
-	var_dump('ok'); die;
+Route::add('/post/([0-9]*)', function ($id) {
 	echo (new PostController())->show($id);
 });
 

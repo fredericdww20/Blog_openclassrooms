@@ -8,31 +8,32 @@ class PostController extends Controller
 {
 	public function addpost(): string
 	{
+		$message = null;
 		if (!empty($_POST))
 		{
 			$postManager = new PostManager();
 
 			$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo']);
 
-			echo 'Article envoyer';
+			$message = 'Article envoyer';
 		}
-		return $this->twig->render('list/post.html.twig');
+		return $this->twig->render('list/posts.html.twig', [
+			'message' => $message
+		]);
 	}
 
 	public function show($id)
 	{
+		$postManager = new PostManager();
+
+		$postManager->fetch($id);
+
 		return $this->twig->render('list/post.html.twig');
 	}
 
-	public function list()
+	public function list(): string
 	{
 		$postManager = new PostManager();
-
-		//if ($_SESSION['ROLE'] !== 'admin') {
-			// redirection vers home
-		//	header(' ....');
-		//	exit();
-		//}
 
 		$posts = $postManager->fetchAll();
 
