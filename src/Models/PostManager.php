@@ -54,7 +54,7 @@ class PostManager
 
 	public function fetch(int $id)
 	{
-		$sql = 'SELECT * FROM post WHERE :id ='. $id;
+		$sql = 'SELECT * FROM post WHERE id = :id';
 
 		$statement = $this->pdo->prepare($sql);
 
