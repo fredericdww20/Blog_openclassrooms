@@ -27,6 +27,8 @@ class PostController extends Controller
 		$postManager = new PostManager();
 
 		$post = $postManager->fetch($id);
+		var_dump($post);
+		die();
 
 		return $this->twig->render('list/post.html.twig', [
 			'post' => $post
