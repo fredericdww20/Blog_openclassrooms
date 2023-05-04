@@ -50,5 +50,6 @@ Route::add('/post/([0-9]*)', function ($id) {
 });
 
 
+
 // Run the router
 Route::run('/OpenClassrooms/');

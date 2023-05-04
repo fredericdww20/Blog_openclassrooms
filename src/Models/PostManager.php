@@ -35,24 +35,47 @@ class PostManager
 	{
 		$sql = 'SELECT * FROM post';
 
-		$post = $this->pdo->prepare($sql);
+		$statement = $this->pdo->prepare($sql);
 
-		$post->execute();
+		$statement->execute();
 
-		return $post->fetchAll();
+		$posts = [];
+		while (($row = $statement->fetch())) {
+			$post = new Post();
+			$post->setTitle($row['title']);
+			$post->setChapo($row['chapo']);
+			$post->setDescription('description');
+
+			$posts[] = $post;
+		}
+
+		return $posts;
 	}
 
 	public function fetch(int $id)
 	{
-		$sql = 'SELECT * FROM post WHERE id = :id';
+		$sql = 'SELECT * FROM post WHERE :id ='. $id;
 
-		$post = $this->pdo->prepare($sql);
+		$statement = $this->pdo->prepare($sql);
 
-		$post->execute([
+		$statement->execute([
 			'id' => $id
 		]);
 
-		return $post->fetch();
+		return $statement->fetchObject(Post::class);
+	}
+
+	public function delete(int $id)
+	{
+		$sql = 'DElETE FROM post WHERE id = :id';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute([
+			'id' => $id
+		]);
+
+		return $statement->fetchObject(Post::class);
 	}
 
 }

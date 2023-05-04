@@ -26,10 +26,24 @@ class PostController extends Controller
 	{
 		$postManager = new PostManager();
 
-		$postManager->fetch($id);
+		$post = $postManager->fetch($id);
 
-		return $this->twig->render('list/post.html.twig');
+		return $this->twig->render('list/post.html.twig', [
+			'post' => $post
+		]);
 	}
+
+	public function delete($id)
+	{
+		$postManager = new PostManager();
+
+		$post = $postManager->delete($id);
+
+		return $this->twig->render('list/posts.html.twig', [
+			'post' => $post
+		]);
+	}
+
 
 	public function list(): string
 	{
