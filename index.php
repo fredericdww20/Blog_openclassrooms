@@ -49,7 +49,9 @@ Route::add('/post/([0-9]*)', function ($id) {
 	echo (new PostController())->show($id);
 });
 
-
+Route::add('/delete/([0-9]*', function ($id) {
+	echo (new PostController())->delete($id);
+});
 
 // Run the router
 Route::run('/OpenClassrooms/');

@@ -42,6 +42,7 @@ class PostManager
 		$posts = [];
 		while (($row = $statement->fetch())) {
 			$post = new Post();
+			$post->setId($row['id']);
 			$post->setTitle($row['title']);
 			$post->setChapo($row['chapo']);
 			$post->setDescription('description');

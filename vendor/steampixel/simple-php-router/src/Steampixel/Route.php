@@ -112,6 +112,7 @@ class Route {
         }
       }
 
+
       // Break the loop if the first found route is a match
       if($route_match_found&&!$multimatch) {
         break;

@@ -27,8 +27,7 @@ class PostController extends Controller
 		$postManager = new PostManager();
 
 		$post = $postManager->fetch($id);
-		var_dump($post);
-		die();
+
 
 		return $this->twig->render('list/post.html.twig', [
 			'post' => $post
@@ -39,11 +38,10 @@ class PostController extends Controller
 	{
 		$postManager = new PostManager();
 
-		$post = $postManager->delete($id);
+		$postManager->delete($id);
 
-		return $this->twig->render('list/posts.html.twig', [
-			'post' => $post
-		]);
+		return header('Location: list/list.html.twig');
+		exit;
 	}
 
 

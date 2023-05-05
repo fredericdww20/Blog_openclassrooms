@@ -408,7 +408,7 @@ function twig_random(Environment $env, $values = null, $max = null)
 /**
  * Converts a date to the given format.
  *
- *   {{ addpost.published_at|date("m/d/Y") }}
+ *   {{ post.published_at|date("m/d/Y") }}
  *
  * @param \DateTimeInterface|\DateInterval|string $date     A date
  * @param string|null                             $format   The target format, null to use the default
@@ -433,7 +433,7 @@ function twig_date_format_filter(Environment $env, $date, $format = null, $timez
 /**
  * Returns a new date object modified.
  *
- *   {{ addpost.published_at|date_modify("-1day")|date("m/d/Y") }}
+ *   {{ post.published_at|date_modify("-1day")|date("m/d/Y") }}
  *
  * @param \DateTimeInterface|string $date     A date
  * @param string                    $modifier A modifier string
