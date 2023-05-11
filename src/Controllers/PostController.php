@@ -39,9 +39,6 @@ class PostController extends Controller
 		$postManager = new PostManager();
 
 		$postManager->delete($id);
-
-		return header('Location: list/list.html.twig');
-		exit;
 	}
 
 
