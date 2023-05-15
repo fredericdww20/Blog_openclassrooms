@@ -32,5 +32,13 @@ class ConnectController extends Controller
 			'message' => $message
 		]);
 	}
+
+	public function logoot() {
+
+		session_destroy();
+
+		header('Location: /OpenClassrooms/');
+
+	}
 }
 

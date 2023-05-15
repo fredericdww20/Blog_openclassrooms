@@ -15,6 +15,9 @@ use Steampixel\Route;
 Route::add('/', function () {
 	echo (new MainController())->index();
 });
+Route::add('/logoot', function () {
+	echo (new ConnectController())->logoot();
+});
 
 Route::add('/inscription', function () {
 	echo (new RegisterController())->register();
