@@ -3,46 +3,184 @@
 <title>Blog OpenClassrooms</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+<meta name="description" content="Blog openclassrooms"/>
+<meta name="keywords" content=""/>
+<meta name="author" content=""/>
+<link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <head>
-
     {% block head %}
-        <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
-            <div class="container flex flex-wrap items-center justify-between mx-auto">
-                <a href="/OpenClassrooms" class="flex items-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/fr/0/0d/Logo_OpenClassrooms.png?20210604083359" class="h-6 mr-3 sm:h-9" alt="Flowbite Logo" />
-                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Blog</span>
-                </a>
-                <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-                    <span class="sr-only">Open main menu</span>
-                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-                </button>
-                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <a href="/OpenClassrooms/inscription" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Inscription</a>
+
+        <nav id="header" class="fixed w-full z-30 top-0 text-white">
+            <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+                <div class="pl-4 flex items-center">
+                    <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+                       href="#">
+                        BLOG
+                    </a>
+                </div>
+                <div class="block lg:hidden pr-4">
+                    <button id="nav-toggle"
+                            class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+                        <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <title>Menu</title>
+                            <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20"
+                     id="nav-content">
+                    <ul class="list-reset lg:flex justify-end flex-1 items-center">
+                        <li class="mr-3">
+                            <a class="inline-block py-2 px-4 text-black font-bold no-underline" href="/OpenClassrooms/">Accueil</a>
                         </li>
-                        <li>
-                            <a href="/OpenClassrooms/login" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Connexion</a>
+                        {% if session ['LOGGED_USER'] == false %}
+                        <li class="mr-3">
+                            <a class="inline-block py-2 px-4 text-black font-bold no-underline"
+                               href="/OpenClassrooms/login">Connexion</a>
                         </li>
-                        <li>
-                            <a href="/OpenClassrooms/add" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ajout post</a>
+                        {% endif %}
+                        {% if session ['LOGGED_USER'] == true %}
+                            <li class="mr-3">
+                                <a class="inline-block py-2 px-4 text-black font-bold no-underline"
+                                   href="">Déconnexion</a>
+                            </li>
+                        {% endif %}
+                        {% if session ['LOGGED_USER'] == false %}
+                            <li class="mr-3">
+                                <a class="inline-block py-2 px-4 text-black font-bold no-underline"
+                                   href="/OpenClassrooms/inscription">Inscripion</a>
+                            </li>
+                        {% endif %}
+                        {% if session ['LOGGED_USER'] == true %}
+                        <li class="mr-3">
+                            <a class="inline-block py-2 px-4 text-black font-bold no-underline"
+                               href="/OpenClassrooms/add">Ajouter un post</a>
                         </li>
-                        <li>
-                            <a href="/OpenClassrooms/posts" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Voir les posts</a>
+                        {% endif %}
+                        {% if session ['LOGGED_USER'] == true %}
+                        <li class="mr-3">
+                            <a class="inline-block py-2 px-4 text-black font-bold no-underline"
+                               href="/OpenClassrooms/posts">Tout les post</a>
                         </li>
-                        <li>
-                            <a href="#" class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
-                        </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
+            <hr class="border-b border-gray-100 opacity-25 my-0 py-0"/>
         </nav>
+
 
     {% endblock %}
 
 </head>
 <body>
-{% block body %}{% endblock %}
+{% block body %}
+
+
+{% endblock %}
+
+<style>
+    .gradient {
+        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+    }
+</style>
+
+<script>
+    var scrollpos = window.scrollY;
+    var header = document.getElementById("header");
+    var navcontent = document.getElementById("nav-content");
+    var navaction = document.getElementById("navAction");
+    var brandname = document.getElementById("brandname");
+    var toToggle = document.querySelectorAll(".toggleColour");
+
+    document.addEventListener("scroll", function () {
+        /*Apply classes for slide in bar*/
+        scrollpos = window.scrollY;
+
+        if (scrollpos > 10) {
+            header.classList.add("bg-white");
+            navaction.classList.remove("bg-white");
+            navaction.classList.add("gradient");
+            navaction.classList.remove("text-gray-800");
+            navaction.classList.add("text-white");
+            //Use to switch toggleColour colours
+            for (var i = 0; i < toToggle.length; i++) {
+                toToggle[i].classList.add("text-gray-800");
+                toToggle[i].classList.remove("text-white");
+            }
+            header.classList.add("shadow");
+            navcontent.classList.remove("bg-gray-100");
+            navcontent.classList.add("bg-white");
+        } else {
+            header.classList.remove("bg-white");
+            navaction.classList.remove("gradient");
+            navaction.classList.add("bg-white");
+            navaction.classList.remove("text-white");
+            navaction.classList.add("text-gray-800");
+            //Use to switch toggleColour colours
+            for (var i = 0; i < toToggle.length; i++) {
+                toToggle[i].classList.add("text-white");
+                toToggle[i].classList.remove("text-gray-800");
+            }
+
+            header.classList.remove("shadow");
+            navcontent.classList.remove("bg-white");
+            navcontent.classList.add("bg-gray-100");
+        }
+    });
+</script>
+<script>
+    /*Toggle dropdown list*/
+    /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+
+    var navMenuDiv = document.getElementById("nav-content");
+    var navMenu = document.getElementById("nav-toggle");
+
+    document.onclick = check;
+
+    function check(e) {
+        var target = (e && e.target) || (event && event.srcElement);
+
+        //Nav Menu
+        if (!checkParent(target, navMenuDiv)) {
+            // click NOT on the menu
+            if (checkParent(target, navMenu)) {
+                // click on the link
+                if (navMenuDiv.classList.contains("hidden")) {
+                    navMenuDiv.classList.remove("hidden");
+                } else {
+                    navMenuDiv.classList.add("hidden");
+                }
+            } else {
+                // click both outside link and outside menu, hide menu
+                navMenuDiv.classList.add("hidden");
+            }
+        }
+    }
+
+    function checkParent(t, elm) {
+        while (t.parentNode) {
+            if (t == elm) {
+                return true;
+            }
+            t = t.parentNode;
+        }
+        return false;
+    }
+</script>
 </body>
+
+{% block footer %}
+
+    <footer class="bg-white h-50">
+        <section class="container mx-auto text-center py-6 mb-12">
+            <p href="" class="inline-block text-center text-gray-500">Frederic Portemer - 2023</p> <span class="text-gray-500"> - </span> <p href="" class="inline-block text-center text-gray-500">Accès à l'administration</p>
+        </section>
+    </footer>
+
+{% endblock %}
+
 </html>
