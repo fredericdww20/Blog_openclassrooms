@@ -33,7 +33,7 @@ class ConnectController extends Controller
 		]);
 	}
 
-	public function logoot() {
+	public function logout() {
 
 		session_destroy();
 

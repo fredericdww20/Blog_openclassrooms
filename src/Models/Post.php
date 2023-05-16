@@ -8,7 +8,6 @@ class Post
 	private string $title;
 	private string $description;
 	private string $chapo;
-
 	public function setId(int $id): void
 	{
 		$this->id = $id;

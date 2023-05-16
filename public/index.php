@@ -5,18 +5,24 @@ error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 
+use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
 use App\Controllers\MainController;
 use App\Controllers\ConnectController;
 use App\Controllers\PostController;
 use Steampixel\Route;
 
-// Add the first route
+// Route Home
 Route::add('/', function () {
 	echo (new MainController())->index();
 });
+// Route Admin
+Route::add('/admin', function () {
+	echo (new AdminController())->admin();
+});
+// Route Session Logoot
 Route::add('/logoot', function () {
-	echo (new ConnectController())->logoot();
+	echo (new ConnectController())->logout();
 });
 
 Route::add('/inscription', function () {
