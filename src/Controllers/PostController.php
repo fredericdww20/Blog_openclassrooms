@@ -41,6 +41,15 @@ class PostController extends Controller
 		$postManager->delete($id);
 	}
 
+	public function update($id)
+	{
+		$postManager = new PostManager();
+
+		$postManager->update($id);
+
+
+	}
+
 
 	public function list(): string
 	{

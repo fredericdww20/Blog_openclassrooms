@@ -11,9 +11,7 @@ class PostManager
 	{
 		try {
 			$this->pdo = new \PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA');
-		}
-		catch (\Exception $e)
-		{
+		} catch (\Exception $e) {
 			die('Erreur de connexion : ' . $e->getMessage());
 		}
 	}
@@ -79,4 +77,17 @@ class PostManager
 		return $statement->fetchObject(Post::class);
 	}
 
+	public function update(int $id)
+	{
+		$sql = 'UPDATE post SET title = $title  WHERE id = :id';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute([
+				'id' => $id
+			]);
+
+		return $statement->fetchObject(Post::class);
+
+	}
 }
