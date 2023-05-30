@@ -8,6 +8,8 @@ class Post
 	private string $title;
 	private string $description;
 	private string $chapo;
+	private bool $sta;
+
 	public function setId(int $id): void
 	{
 		$this->id = $id;
@@ -45,6 +47,16 @@ class Post
 	public function setChapo(string $chapo): void
 	{
 		$this->chapo = $chapo;
+	}
+
+	public function getSta(): bool
+	{
+		return $this->sta;
+	}
+
+	public function setSta(bool $sta): void
+	{
+		$this->sta = $sta;
 	}
 
 }

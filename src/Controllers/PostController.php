@@ -39,14 +39,19 @@ class PostController extends Controller
 		$postManager = new PostManager();
 
 		$postManager->delete($id);
+
 	}
 
-	public function update($id)
+	public function update($id, $title, $description, $chapo)
 	{
 		$postManager = new PostManager();
 
 		$postManager->update($id);
 
+		
+		
+
+		return $this->twig->render(':list:edit.html.twig');
 
 	}
 
