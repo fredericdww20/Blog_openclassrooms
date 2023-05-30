@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Cassandra\Time;
+
 class Post
 {
 	private ?int $id = 0;
@@ -9,6 +11,8 @@ class Post
 	private string $description;
 	private string $chapo;
 	private bool $sta;
+	private string $updated_at;
+	private string $created_at;
 
 	public function setId(int $id): void
 	{
@@ -57,6 +61,24 @@ class Post
 	public function setSta(bool $sta): void
 	{
 		$this->sta = $sta;
+	}
+
+	public function getUpdated_at(): string
+	{
+		return $this->updated_at;
+	}
+
+	public function setUpdated_at(string $updated_at): void
+	{
+		$this->updated_at = $updated_at;
+	}
+	public function getCreated_at(): string
+	{
+		return $this->created_at;
+	}
+	public function setCreated_at(string $created_at): void
+	{
+		$this->created_at = $created_at;
 	}
 
 }

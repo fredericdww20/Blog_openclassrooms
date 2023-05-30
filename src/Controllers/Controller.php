@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use Twig\Environment;
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
 abstract class Controller
@@ -14,7 +15,7 @@ abstract class Controller
 		$this->twig = new Environment($loader, [
 			'debug' => true,
 		]);
-		$this->twig->addExtension(new \Twig\Extension\DebugExtension());
+		$this->twig->addExtension(new DebugExtension());
 		$this->twig->addGlobal('session', $_SESSION);
 
 

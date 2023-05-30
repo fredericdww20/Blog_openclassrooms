@@ -25,7 +25,7 @@ class PostManager
 
 		$statement = $this->pdo->prepare($sql);
 
-		$sta = 1;
+		$sta = 0;
 
 		$statement->execute([
 			'title' => $title,
@@ -50,6 +50,7 @@ class PostManager
 			$post->setTitle($row['title']);
 			$post->setChapo($row['chapo']);
 			$post->setDescription('description');
+			$post->setCreated_at('created_at');
 
 			$posts[] = $post;
 		}

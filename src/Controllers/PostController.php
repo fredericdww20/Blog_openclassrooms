@@ -16,7 +16,7 @@ class PostController extends Controller
 			$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo']);
 
 			$message = 'Article envoyer';
-		}
+
 		return $this->twig->render('list/posts.html.twig', [
 			'message' => $message
 		]);
@@ -47,9 +47,6 @@ class PostController extends Controller
 		$postManager = new PostManager();
 
 		$postManager->update($id);
-
-		
-		
 
 		return $this->twig->render(':list:edit.html.twig');
 

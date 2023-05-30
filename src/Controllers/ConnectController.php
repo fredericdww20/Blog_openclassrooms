@@ -10,7 +10,6 @@ class ConnectController extends Controller
 	public function connect()
 	{
 		$userManager = new UserManager();
-		$user = new User();
 		$message = null;
 
 		if(isset($_POST['email']) && isset($_POST['password'])) {
