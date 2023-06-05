@@ -49,8 +49,8 @@ class PostManager
 			$post->setId($row['id']);
 			$post->setTitle($row['title']);
 			$post->setChapo($row['chapo']);
-			$post->setDescription('description');
-			$post->setCreated_at('created_at');
+			$post->setDescription($row['description']);
+			$post->setCreated_at($row['created_at']);
 
 			$posts[] = $post;
 		}
@@ -94,7 +94,6 @@ class PostManager
 			'title' => $title,
 			'description' => $description,
 			'chapo' => $chapo,
-			'id' => $id
 		]);
 
 		return $statement->fetchObject(Post::class);

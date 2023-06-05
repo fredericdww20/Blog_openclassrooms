@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Cassandra\Time;
-
 class Post
 {
 	private ?int $id = 0;

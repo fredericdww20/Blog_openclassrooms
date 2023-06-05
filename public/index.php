@@ -10,6 +10,7 @@ use App\Controllers\RegisterController;
 use App\Controllers\MainController;
 use App\Controllers\ConnectController;
 use App\Controllers\PostController;
+use App\Controllers\CommentController;
 use Steampixel\Route;
 
 // Route Home
@@ -21,7 +22,7 @@ Route::add('/admin', function () {
 	echo (new AdminController())->admin();
 });
 // Route Session Logoot
-Route::add('/logoot', function () {
+Route::add('/logout', function () {
 	echo (new ConnectController())->logout();
 });
 
@@ -48,6 +49,15 @@ Route::add('/add', function () {
 });
 Route::add('/add', function () {
 	echo (new PostController())->addpost();
+}, 'post');
+
+
+Route::add('/comment', function () {
+	echo (new CommentController())->addcommentay();
+});
+
+Route::add('/comment', function () {
+	echo (new CommentController())->addcommentay();
 }, 'post');
 
 Route::add('/posts', function () {

@@ -9,13 +9,13 @@ class PostController extends Controller
 	public function addpost(): string
 	{
 		$message = null;
-		if (!empty($_POST))
-		{
+		if (!empty($_POST)) {
 			$postManager = new PostManager();
 
 			$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo']);
 
 			$message = 'Article envoyer';
+		}
 
 		return $this->twig->render('list/posts.html.twig', [
 			'message' => $message
@@ -27,7 +27,6 @@ class PostController extends Controller
 		$postManager = new PostManager();
 
 		$post = $postManager->fetch($id);
-
 
 		return $this->twig->render('list/post.html.twig', [
 			'post' => $post
@@ -42,16 +41,17 @@ class PostController extends Controller
 
 	}
 
-	public function update($id, $title, $description, $chapo)
+	public function update($id)
 	{
 		$postManager = new PostManager();
 
-		$postManager->update($id);
+		$postManager->update([
+			'id' => $id,
+		]);
 
-		return $this->twig->render(':list:edit.html.twig');
+		return $this->twig->render('list/edit.html.twig');
 
 	}
-
 
 	public function list(): string
 	{

@@ -60,41 +60,4 @@ class UserManager
 		return null;
 	}
 
-	// Pas utiliser
-	public function infosuser(string $email)
-	{
-		$sql = 'SELECT * FROM user WHERE email = :email';
-
-		$statement = $this->pdo->prepare($sql);
-
-		$statement->execute([
-			'email' => $email
-		]);
-
-		$users = $statement->fetch();
-
-		return $users;
-	}
-
-	// Pas utiliser
-	public function delete(int $id)
-	{
-		$sql = 'DELETE FROM user WHERE id = :id';
-
-		$statement = $this->pdo->prepare($sql);
-		
-		$this->pdo->exec([
-			'id' => $id,
-		]);
-	}
-	// Pas utiliser
-	public function update()
-	{
-		$sql = 'UPDATE user SET name = :name, firstname = :firstname, email = :email  WHERE id = :id ';
-		
-		$this->pdo->prepare($sql);
-
-
-	}
-
 }
