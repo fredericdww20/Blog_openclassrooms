@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\CommentManager;
+
 class AdminController extends Controller
 {
 	// Rendu vers la page admin

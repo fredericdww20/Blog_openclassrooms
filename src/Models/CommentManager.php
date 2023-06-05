@@ -34,4 +34,5 @@ class CommentManager extends PostManager
 		]);
 	}
 
+
 }

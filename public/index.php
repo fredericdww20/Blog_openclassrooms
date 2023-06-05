@@ -21,6 +21,8 @@ Route::add('/', function () {
 Route::add('/admin', function () {
 	echo (new AdminController())->admin();
 });
+
+
 // Route Session Logoot
 Route::add('/logout', function () {
 	echo (new ConnectController())->logout();
@@ -69,7 +71,7 @@ Route::add('/post/([0-9]*)', function ($id) {
 });
 
 Route::add('/delete/([0-9]*)', function ($id) {
-	 (new PostController())->delete($id);
+	(new PostController())->delete($id);
 	header('Location: /OpenClassrooms/posts');
 	exit();
 });
