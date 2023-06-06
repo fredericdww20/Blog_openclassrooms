@@ -57,13 +57,13 @@ class PostController extends Controller
 
 	public function update($id)
 	{
+		if (!empty($_POST)) {
+
 		$postManager = new PostManager();
 
-		$title = $_POST['title'];
-		$description = $_POST['description'];
-		$chapo = $_POST['chapo'];
+		$postManager->update($_POST['title'], $_POST['description'], $_POST['chapo']);
 
-		$postManager->update($id, $title, $description, $chapo);
+		}
 
 		return $this->twig->render('list/edit.html.twig');
 	}

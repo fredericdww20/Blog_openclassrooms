@@ -22,8 +22,7 @@ Route::add('/admin', function () {
 	echo (new AdminController())->admin();
 });
 
-
-// Route Session Logoot
+// Route Session Logout
 Route::add('/logout', function () {
 	echo (new ConnectController())->logout();
 });
@@ -52,7 +51,6 @@ Route::add('/add', function () {
 Route::add('/add', function () {
 	echo (new PostController())->addpost();
 }, 'post');
-
 
 Route::add('/comment', function () {
 	echo (new CommentController())->addcommentay();
