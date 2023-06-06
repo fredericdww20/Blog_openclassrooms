@@ -14,7 +14,7 @@ class CommentController extends Controller
 		$postId = isset($_POST['post_id']) ? (int)$_POST['post_id'] : 0;
 		$userId = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
 
-		// Vérifier si l'ID du post existe
+		
 		$postManager = new PostManager();
 		$post = $postManager->fetch($postId);
 		if (!$post) {
