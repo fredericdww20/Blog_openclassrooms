@@ -44,10 +44,6 @@
     <div class="container mx-auto">
         <div class=" m-9 grid grid-cols-3 gap-3 place-content-stretch ">
 
-            {% if commenterror %}
-                <p class="mt-2 text-center text-green-600">{{ commenterror }}</p>
-            {% endif %}
-
             {% for post in posts %}
 
                 <section class="z-50 pb-5 bg-white dark:bg-gray-900">

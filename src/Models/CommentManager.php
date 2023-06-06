@@ -21,30 +21,22 @@ class CommentManager
 
 	public function commentate(string $title, string $commentary, int $postId, int $userId): void
 	{
-		$sql = 'SELECT COUNT(*) FROM post WHERE id = :id';
+		$sql = 'INSERT INTO comment (title, commentary, sta, post_id, user_id)
+            SELECT :title, :commentary, :sta, :post_id, :user_id
+            FROM post
+            WHERE id = :post_id';
+
 		$statement = $this->pdo->prepare($sql);
-		$statement->execute([':id' => $postId]);
-		$count = $statement->fetchColumn();
 
-		if ($count > 0) {
+		$sta = 0;
 
-			$sql = 'INSERT INTO comment (title, commentary, sta, post_id, user_id) VALUES (:title, :commentary, :sta, :post_id, :user_id) ';
-
-			$statement = $this->pdo->prepare($sql);
-
-			$sta = 0;
-
-			$statement->execute([
-				':title' => $title,
-				':commentary' => $commentary,
-				':sta' => $sta,
-				':post_id' => $postId,
-				':user_id' => $userId
-			]);
-		} else {
-			// Gérer le cas où l'ID du post n'existe pas
-			throw new Exception("L'ID du post n'existe pas.");
-		}
+		$statement->execute([
+			':title' => $title,
+			':commentary' => $commentary,
+			':sta' => $sta,
+			':post_id' => $postId,
+			':user_id' => $userId
+		]);
 	}
 
 	public function fetch(int $id)
