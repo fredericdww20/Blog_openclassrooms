@@ -59,9 +59,9 @@ class PostController extends Controller
 	{
 		$postManager = new PostManager();
 
-		$title = $_POST['title'] ?? '';
-		$description = $_POST['description'] ?? '';
-		$chapo = $_POST['chapo'] ?? '';
+		$title = $_POST['title'];
+		$description = $_POST['description'];
+		$chapo = $_POST['chapo'];
 
 		$postManager->update($id, $title, $description, $chapo);
 
