@@ -11,12 +11,17 @@ class PostController extends Controller
 	public function addpost(): string
 	{
 		$message = null;
-		if (!empty($_POST)) {
+		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
+
 			$postManager = new PostManager();
 
-			$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo']);
+			$title = $_POST['title'];
+			$description = $_POST['description'];
+			$chapo = $_POST['chapo'];
 
-			$message = 'Article envoyer';
+			$postManager->creatpost($title, $description, $chapo);
+
+			$message = 'Article envoyé';
 		}
 
 		return $this->twig->render('list/posts.html.twig', [
@@ -58,13 +63,12 @@ class PostController extends Controller
 	public function update($id)
 	{
 		if (!empty($_POST)) {
-
-		$postManager = new PostManager();
-
-		$postManager->update($_POST['title'], $_POST['description'], $_POST['chapo']);
-
+			$postManager = new PostManager();
+			$title = $_POST['title'] ?? '';
+			$description = $_POST['description'] ?? '';
+			$chapo = $_POST['chapo'] ?? '';
+			$postManager->update($id, $title, $description, $chapo);
 		}
-
 		return $this->twig->render('list/edit.html.twig');
 	}
 

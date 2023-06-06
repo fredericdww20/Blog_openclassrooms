@@ -79,9 +79,7 @@ Route::add('/delete/([0-9]*)', function ($id) {
 });
 
 Route::add('/update/([0-9]*)', function ($id) {
-	(new PostController())->update($id);
-	header('Location: /OpenClassrooms/posts');
-	exit();
+	echo (new PostController())->update($id);
 });
 
 // Run the router

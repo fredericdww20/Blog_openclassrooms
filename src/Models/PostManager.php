@@ -91,10 +91,10 @@ class PostManager
 		$statement = $this->pdo->prepare($sql);
 
 		$statement->execute([
-			':id' => $id,
-			':title' => $title,
-			':description' => $description,
-			':chapo' => $chapo,
+			'id' => $id,
+			'title' => $title,
+			'description' => $description,
+			'chapo' => $chapo,
 		]);
 
 		return $statement->fetchObject(Post::class);
