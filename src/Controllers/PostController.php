@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Models\PostManager;
+use App\Models\CommentManager;
+
 
 class PostController extends Controller
 {
@@ -33,6 +35,18 @@ class PostController extends Controller
 		]);
 	}
 
+	public function showcomment($id)
+	{
+		$commentManager = new CommentManager();
+
+		$comment = $commentManager->fetch($id);
+
+		return $this->twig->render('list/post.html.twig', [
+			'comment' => $comment
+		]);
+	}
+
+
 	public function delete($id)
 	{
 		$postManager = new PostManager();
@@ -45,12 +59,13 @@ class PostController extends Controller
 	{
 		$postManager = new PostManager();
 
-		$postManager->update([
-			'id' => $id,
-		]);
+		$title = $_POST['title'] ?? '';
+		$description = $_POST['description'] ?? '';
+		$chapo = $_POST['chapo'] ?? '';
+
+		$postManager->update($id, $title, $description, $chapo);
 
 		return $this->twig->render('list/edit.html.twig');
-
 	}
 
 	public function list(): string

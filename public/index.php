@@ -70,6 +70,10 @@ Route::add('/post/([0-9]*)', function ($id) {
 	echo (new PostController())->show($id);
 });
 
+Route::add('/post/([0-9]*)', function ($id) {
+	echo (new PostController())->showcomment($id);
+});
+
 Route::add('/delete/([0-9]*)', function ($id) {
 	(new PostController())->delete($id);
 	header('Location: /OpenClassrooms/posts');

@@ -63,16 +63,20 @@
                              type="button">
                             Voir le post
                         </a>
+                        {% if session ['LOGGED_USER'] == true %}
                         <a href="delete/{{ post.id }}"
                            class="m-2 text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Supprimer le post
                         </a>
+
                         <a href="update/{{ post.id }}"
                            class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Modifier le post
-                        </a></div>
+                        </a>
+                        {% endif %}
+                    </div>
                 </section>
 
             {% endfor %}

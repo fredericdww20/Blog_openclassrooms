@@ -5,7 +5,7 @@ namespace App\Models;
 use Exception;
 use PDO;
 
-class CommentManager extends PostManager
+class CommentManager
 
 {
 	private PDO $pdo;
@@ -21,7 +21,7 @@ class CommentManager extends PostManager
 
 	public function commentate(string $title, string $commentary): void
 	{
-		$sql = 'INSERT INTO comment (title, commentary, sta) VALUES (:title, :commentary, :sta)';
+		$sql = 'INSERT INTO comment (title, commentary, sta) VALUES (:title, :commentary, :sta) ';
 
 		$statement = $this->pdo->prepare($sql);
 
@@ -32,6 +32,19 @@ class CommentManager extends PostManager
 			'commentary' => $commentary,
 			'sta' => $sta,
 		]);
+	}
+
+	public function fetch(int $id)
+	{
+		$sql = 'SELECT * FROM comment WHERE id = :id';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute([
+			'id' => $id
+		]);
+
+		return $statement->fetchObject(Post::class);
 	}
 
 

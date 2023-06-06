@@ -86,17 +86,17 @@ class PostManager
 
 	public function update(int $id, string $title, string $description, string $chapo)
 	{
-		$sql = 'UPDATE post SET title = :title, description = :description, chapo = :chapo  WHERE id = :id';
+		$sql = 'UPDATE post SET title = :title, description = :description, chapo = :chapo WHERE id = :id';
 
 		$statement = $this->pdo->prepare($sql);
 
 		$statement->execute([
-			'title' => $title,
-			'description' => $description,
-			'chapo' => $chapo,
+			':id' => $id,
+			':title' => $title,
+			':description' => $description,
+			':chapo' => $chapo,
 		]);
 
 		return $statement->fetchObject(Post::class);
-
 	}
 }
