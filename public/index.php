@@ -5,6 +5,7 @@ error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 
+
 use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
 use App\Controllers\MainController;
