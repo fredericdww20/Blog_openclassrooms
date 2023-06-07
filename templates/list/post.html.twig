@@ -69,45 +69,87 @@
                     {% endif %}
                 </section>
 
-                {% if comment %}
-                    <p class="mt-2 text-center text-green-600">{{ comment }}</p>
+                {% if message %}
+                    <p class="mt-2 text-center text-green-600">{{ message }}</p>
                 {% endif %}
 
-                {% if commenterror %}
-                    <p class="mt-2 text-center text-green-600">{{ commenterror }}</p>
-                {% endif %}
-
-                {% if session ['LOGGED_USER'] == true %}
-                <form action="/OpenClassrooms/comment" method="POST" class="space-y-8">
-                    <div>
-                        <label for="title"
-                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Titre</label>
-                        <input type="text" id="title" name=
-                        "title"
-                               class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                               placeholder="Super !!!" required>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="commentary" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Votre
-                            commentaire</label>
-                        <textarea id="commentary" name="commentary" rows="6"
-                                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                  placeholder="Bonjour..."></textarea>
-                    </div>
-                    <button type="submit"
-                            class="group relative flex w-full justify-center rounded-md py-2 px-3 text-sm font-semibold text-black hover:text-grey border-solid border-2 border-black-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-50">
-                        Soumettre
-                    </button>
-                </form>
-                {% endif %}
-
-                {% for comment in comments %}
-
-                    {{comment.commentary}}
-
-                {% endfor %}
             </div>
         </div>
     </div>
+
+    <section class="bg-white dark:bg-gray-900 py-8 lg:py-16">
+        <div class="max-w-2xl mx-auto px-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Commentaire</h2>
+            </div>
+            {% if session ['LOGGED_USER'] == true %}
+            <form  action="/OpenClassrooms/comment" method="POST"  class="mb-6">
+                <input type="hidden" name="id_post" value="{{ post.id }}">
+                <div class="mb-5">
+                    <label for="title"
+                           class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800">Titre</label>
+                    <input type="text" id="title" name="title"
+                           class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
+                           placeholder="Super !!!" required>
+                </div>
+                <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                    <label for="comment" class="sr-only">Commentaire</label>
+                    <textarea id="commentary" name="commentary" rows="6"
+                              class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                              placeholder="Ecrivez votre commentaire" required></textarea>
+                </div>
+                <button type="submit"
+                        class="group relative  rounded-md py-2 px-3 text-sm font-semibold text-black hover:text-grey border-solid border-2 border-black-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-50">
+                    Soumettre
+                </button>
+            </form>
+
+            {% endif %}
+
+            {% for comment in comments %}
+            <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                <footer class="flex justify-between items-center mb-2">
+                    <div class="flex items-center">
+                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                                    class="mr-2 w-6 h-6 rounded-full"
+                                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
+                                    alt="Michael Gough">{{ session.lastname }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
+                                                                                  title="February 8th, 2022">Feb. 8, 2022</time></p>
+                    </div>
+                    <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button">
+                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
+                            </path>
+                        </svg>
+                        <span class="sr-only">Option</span>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div id="dropdownComment1"
+                         class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownMenuIconHorizontalButton">
+                            <li>
+                                <a href="#"
+                                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Modifier</a>
+                            </li>
+                            <li>
+                                <a href="#"
+                                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Supprimer</a>
+                            </li>
+                        </ul>
+                    </div>
+                </footer>
+                <p class="mb-2 mr-3 text-sm text-gray-900 dark:text-white">{{ comment.title }}</p>
+                <p class="text-gray-500 dark:text-gray-400">{{ comment.commentary }}</p>
+            </article>
+
+            {% endfor %}
+        </div>
+    </section>
 </section>
 {% endblock %}

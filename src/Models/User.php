@@ -9,7 +9,17 @@ class User
 	private string $lastname;
 	private string $firstname;
 	private string $roles;
+	private int $id;
 
+	public function getId(): int
+	{
+		return $this->id;
+	}
+
+	public function setId(int $id): void
+	{
+		$this->id = $id;
+	}
 
 	public function getEmail(): string
 	{

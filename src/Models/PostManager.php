@@ -19,9 +19,9 @@ class PostManager
 		}
 	}
 
-	public function creatpost(string $title, string $description, string $chapo)
+	public function creatpost(string $title, string $description, string $chapo, int $userId)
 	{
-		$sql = 'INSERT INTO post (title, description, chapo, sta) VALUES (:title, :description, :chapo, :sta)';
+		$sql = 'INSERT INTO post (title, description, chapo, sta, id_user) VALUES (:title, :description, :chapo, :sta, :userId)';
 
 		$statement = $this->pdo->prepare($sql);
 
@@ -32,8 +32,10 @@ class PostManager
 			'description' => $description,
 			'chapo' => $chapo,
 			'sta' => $sta,
+			'userId' => $userId,
 		]);
 	}
+
 
 	public function fetchAll()
 	{
@@ -99,4 +101,5 @@ class PostManager
 
 		return $statement->fetchObject(Post::class);
 	}
+
 }

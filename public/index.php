@@ -53,12 +53,13 @@ Route::add('/add', function () {
 }, 'post');
 
 Route::add('/comment', function () {
-	echo (new CommentController())->addcommentay();
+	echo (new CommentController())->addcomment();
 });
 
 Route::add('/comment', function () {
-	echo (new CommentController())->addcommentay();
+	echo (new CommentController())->addcomment();
 }, 'post');
+
 
 Route::add('/posts', function () {
 	echo (new PostController())->list();
@@ -66,10 +67,6 @@ Route::add('/posts', function () {
 
 Route::add('/post/([0-9]*)', function ($id) {
 	echo (new PostController())->show($id);
-});
-
-Route::add('/post/([0-9]*)', function ($id) {
-	echo (new PostController())->showcomment($id);
 });
 
 Route::add('/delete/([0-9]*)', function ($id) {
@@ -81,6 +78,10 @@ Route::add('/delete/([0-9]*)', function ($id) {
 Route::add('/update/([0-9]*)', function ($id) {
 	echo (new PostController())->update($id);
 });
+
+Route::add('/update/([0-9]*)', function ($id) {
+	echo (new PostController())->update($id);
+}, 'post');
 
 // Run the router
 Route::run('/OpenClassrooms/');

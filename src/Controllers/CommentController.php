@@ -5,35 +5,60 @@ namespace App\Controllers;
 use App\Models\CommentManager;
 use App\Models\PostManager;
 
+use PDOException;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+
 class CommentController extends Controller
 {
-	public function addcommentay()
+	/**
+	 * @throws SyntaxError
+	 * @throws RuntimeError
+	 * @throws LoaderError
+	 */
+	public function addcomment(): string
 	{
-		$title = $_POST['title'] ?? '';
-		$commentary = $_POST['commentary'] ?? '';
-		$postId = isset($_POST['post_id']) ? (int)$_POST['post_id'] : 0;
-		$userId = isset($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
+		$message = null;
+		if (!empty($_POST['title']) && !empty($_POST['commentary']) && !empty($_POST['id_post']))
+		{
+			$commentManager = new CommentManager();
 
-		
-		$postManager = new PostManager();
-		$post = $postManager->fetch($postId);
-		if (!$post) {
-			$commenterror = 'Le post n\'existe pas';
-			return $this->twig->render('list/posts.html.twig', [
-				'commenterror' => $commenterror
-			]);
+			$postId = ($_POST['id_post']);
+			$userId = ($_SESSION['USER_ID']);
+
+			try {
+				$commentManager->commentate($_POST['title'], $_POST['commentary'], intval($postId), $userId);
+				$message = 'Commentaire envoyé';
+			} catch (PDOException $e) {
+				$message = 'Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage();
+			}
+		} else {
+			$message = 'Veuillez remplir tous les champs du formulaire.';
 		}
 
-		$commentManager = new CommentManager();
+		$postManager = new PostManager();
 
-		$commentManager->commentate($title, $commentary, $postId, $userId);
-
-		$comment = 'Commentaire envoyé pour validation';
+		$post = $postManager->fetch($_POST['id_post']);
 
 		return $this->twig->render('list/post.html.twig', [
-			'comment' => $comment
+			'message' => $message,
+			'post' => $post,
 		]);
 	}
+	public function showComment($id)
+	{
+		$commentRepository = new CommentManager();
+
+		$comments = $commentRepository->fetch($id);
+
+		return $this->twig->render('list/post.html.twig', [
+			'comments' => $comments
+		]);
+	}
+
+
+
 
 
 }

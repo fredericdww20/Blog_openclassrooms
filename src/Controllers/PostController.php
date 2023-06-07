@@ -12,16 +12,19 @@ class PostController extends Controller
 	{
 		$message = null;
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-
 			$postManager = new PostManager();
 
-			$title = $_POST['title'];
-			$description = $_POST['description'];
-			$chapo = $_POST['chapo'];
+			$userId = $_SESSION['USER_ID'];
 
-			$postManager->creatpost($title, $description, $chapo);
+			try {
+				$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
+				$message = 'Article envoyé';
+			} catch (PDOException $e) {
+				$message = 'Une erreur s\'est produite lors de la création de l\'article.';
 
-			$message = 'Article envoyé';
+			}
+		} else {
+			$message = 'Veuillez remplir tous les champs du formulaire.';
 		}
 
 		return $this->twig->render('list/posts.html.twig', [
@@ -32,25 +35,17 @@ class PostController extends Controller
 	public function show($id)
 	{
 		$postManager = new PostManager();
+		$commentsManager = new CommentManager();
 
 		$post = $postManager->fetch($id);
 
-		return $this->twig->render('list/post.html.twig', [
-			'post' => $post
-		]);
-	}
-
-	public function showcomment($id)
-	{
-		$commentManager = new CommentManager();
-
-		$comment = $commentManager->fetch($id);
+		$comments = $commentsManager->fetch($id);
 
 		return $this->twig->render('list/post.html.twig', [
-			'comment' => $comment
+			'post' => $post,
+			'comments' => $comments,
 		]);
 	}
-
 
 	public function delete($id)
 	{
@@ -63,12 +58,13 @@ class PostController extends Controller
 	public function update($id)
 	{
 		if (!empty($_POST)) {
-			$postManager = new PostManager();
-			$title = $_POST['title'] ?? '';
-			$description = $_POST['description'] ?? '';
-			$chapo = $_POST['chapo'] ?? '';
-			$postManager->update($id, $title, $description, $chapo);
+
+		$postManager = new PostManager();
+
+		$postManager->update($_POST['title'], $_POST['description'], $_POST['chapo'], $_POST['id']);
+
 		}
+
 		return $this->twig->render('list/edit.html.twig');
 	}
 
