@@ -43,7 +43,11 @@ class CommentManager
 
 	public function fetch(int $id)
 	{
-		$sql = 'SELECT c.* FROM comment AS c JOIN post AS p ON c.id_post = p.id WHERE p.id = :id AND c.sta = 1';
+		$sql = 'SELECT c.*, u.lastname, u.firstname
+            FROM comment AS c 
+            JOIN post AS p ON c.id_post = p.id 
+            JOIN user AS u ON p.id_user = u.id 
+            WHERE p.id = :id AND c.sta = 1';
 
 		$statement = $this->pdo->prepare($sql);
 
