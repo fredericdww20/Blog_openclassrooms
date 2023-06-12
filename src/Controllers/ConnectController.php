@@ -33,12 +33,12 @@ class ConnectController extends Controller
 		]);
 	}
 
-	public function logout() {
-
+	public function logout()
+	{
+		session_start();
 		session_destroy();
-
 		header('Location: /OpenClassrooms/');
-
+		exit;
 	}
 }
 

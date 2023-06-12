@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Exception;
 use PDO;
 
 class PostManager
@@ -13,8 +12,14 @@ class PostManager
 	public function __construct()
 	{
 		try {
-			$this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA');
-		} catch (Exception $e) {
+			$options = [
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+				PDO::ATTR_EMULATE_PREPARES => false,
+			];
+
+			$this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
+		} catch (PDOException $e) {
 			die('Erreur de connexion : ' . $e->getMessage());
 		}
 	}
@@ -86,7 +91,7 @@ class PostManager
 		return $statement->fetchObject(Post::class);
 	}
 
-	public function update(int $id, string $title, string $description, string $chapo)
+	public function update(int $id, string $title, string $description, string $chapo): ?Post
 	{
 		$sql = 'UPDATE post SET title = :title, description = :description, chapo = :chapo WHERE id = :id';
 
@@ -99,7 +104,20 @@ class PostManager
 			'chapo' => $chapo,
 		]);
 
-		return $statement->fetchObject(Post::class);
+		return $this->fetch($id);
 	}
+
+	public function updateDateUpdated($id, $dateUpdated)
+	{
+		$sql = 'UPDATE post SET updated_at = :updated_at WHERE id = :id';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute([
+			'id' => $id,
+			'updated_at' => $dateUpdated
+		]);
+	}
+
 
 }

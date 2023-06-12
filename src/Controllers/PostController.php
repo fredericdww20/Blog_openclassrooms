@@ -6,6 +6,7 @@ use App\Models\PostManager;
 use App\Models\CommentManager;
 
 
+
 class PostController extends Controller
 {
 	public function addpost(): string
@@ -57,16 +58,57 @@ class PostController extends Controller
 
 	public function update($id)
 	{
-		if (!empty($_POST)) {
-
 		$postManager = new PostManager();
+		$post = $postManager->fetch($id);
 
-		$postManager->update($_POST['title'], $_POST['description'], $_POST['chapo'], $_POST['id']);
+		$message = null;
+		$errors = [];
 
+		if (isset($_POST['title'], $_POST['description'], $_POST['chapo'])) {
+			$title = $_POST['title'];
+			$description = $_POST['description'];
+			$chapo = $_POST['chapo'];
+
+			if (empty($title)) {
+				$errors[] = 'Le titre est requis.';
+			}
+			if (empty($description)) {
+				$errors[] = 'La description est requise.';
+			}
+			if (empty($chapo)) {
+				$errors[] = 'Le chapo est requis.';
+			}
+
+			if (empty($errors)) {
+				$postManager->update($id, $title, $description, $chapo);
+
+				$dateUpdated = date('Y-m-d H:i:s');
+				$postManager->updateDateUpdated($id, $dateUpdated);
+
+				$message = 'Article modifié';
+
+				header('Location: /OpenClassrooms/post/' . $id . '?message=Article modifié');
+				exit();
+
+			} else {
+				$errorString = urlencode(implode('<br>', $errors));
+				header('Location: /OpenClassrooms/post/' . $id . '?error=' . $errorString);
+				exit();
+			}
 		}
 
-		return $this->twig->render('list/edit.html.twig');
+
+		return $this->twig->render('list/edit.html.twig', [
+			'id' => $id,
+			'title' => $post->getTitle(),
+			'description' => $post->getDescription(),
+			'chapo' => $post->getChapo(),
+			'message' => $message,
+			'errors' => $errors
+		]);
 	}
+
+
 
 	public function list(): string
 	{

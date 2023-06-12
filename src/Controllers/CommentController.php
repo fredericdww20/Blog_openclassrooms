@@ -12,11 +12,7 @@ use Twig\Error\SyntaxError;
 
 class CommentController extends Controller
 {
-	/**
-	 * @throws SyntaxError
-	 * @throws RuntimeError
-	 * @throws LoaderError
-	 */
+
 	public function addcomment(): string
 	{
 		$message = null;

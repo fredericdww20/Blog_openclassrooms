@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
+
+use PDO;
+
 class UserManager
 {
-	private \PDO $pdo;
-	// Fonction de connexion à la base de données
+	private PDO $pdo;
+
 	public function __construct()
 	{
 		try {
-			$this->pdo = new \PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA');
-		}
-		catch (\Exception $e)
-		{
+			$options = [
+				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+				PDO::ATTR_EMULATE_PREPARES => false,
+			];
+
+			$this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
+		} catch (PDOException $e) {
 			die('Erreur de connexion : ' . $e->getMessage());
 		}
 	}

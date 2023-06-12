@@ -2,14 +2,75 @@
 
 namespace App\Controllers;
 
-use App\Models\CommentManager;
+use App\Models\AdminManager;
+
+
 
 class AdminController extends Controller
 {
-	// Rendu vers la page admin
-	public function admin()
+
+	public function listvalidate(): string
 	{
-		return $this->twig->render('admin/admin.html.twig');
+		$adminManager = new AdminManager();
+
+		$posts = $adminManager->fetchAll();
+
+		return $this->twig->render('admin/admin.html.twig', [
+			'posts' => $posts
+		]);
 	}
+
+	public function list(): string
+	{
+		$adminManager = new AdminManager();
+
+		$posts = $adminManager->fetchvalidate();
+
+		return $this->twig->render('admin/posts.html.twig', [
+			'posts' => $posts
+		]);
+	}
+
+	public function update($id)
+	{
+		$adminManager = new AdminManager();
+		$message = null;
+		$errors = [];
+		$sta = null;
+
+
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			if (isset($_POST['sta'])) {
+				$sta = $_POST['sta'];
+
+				if (empty($sta)) {
+					$errors[] = 'Le champ "sta" est requis.';
+				}
+
+				if (empty($errors)) {
+
+					$adminManager->update($id, $sta);
+					$message = 'Mise à jour réussie';
+
+					return $this->twig->render('admin/posts.html.twig', [
+						'id' => $id,
+						'sta' => $sta,
+						'message' => $message,
+						'errors' => $errors,
+					]);
+				}
+			}
+		}
+
+		return $this->twig->render('admin/edit.html.twig', [
+			'id' => $id,
+			'sta' => $sta,
+			'message' => $message,
+			'errors' => $errors,
+		]);
+	}
+
+
+
 
 }

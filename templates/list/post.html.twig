@@ -61,7 +61,7 @@
                            type="button">
                             Supprimer le post
                         </a>
-                        <a href="update/{{ post.id }}"
+                        <a href="/update/{{ post.id }}"
                            class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Modifier le post
@@ -69,8 +69,11 @@
                     {% endif %}
                 </section>
 
-                {% if message %}
-                    <p class="mt-2 text-center text-green-600">{{ message }}</p>
+                {% if message is not empty %}
+                    <div class="message">{{ message }}</div>
+                {% endif %}
+                {% if errors is not empty %}
+                    <div class="error">{{ errors|join('<br>') }}</div>
                 {% endif %}
 
             </div>
@@ -88,7 +91,7 @@
                 <div class="mb-5">
                     <label for="title"
                            class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800">Titre</label>
-                    <input type="text" id="title" name="title"
+                    <input type="text" name="title" id="title" value="{{ title|default('') }}"
                            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
                            placeholder="Super !!!" required>
                 </div>
@@ -96,7 +99,7 @@
                     <label for="comment" class="sr-only">Commentaire</label>
                     <textarea id="commentary" name="commentary" rows="6"
                               class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                              placeholder="Ecrivez votre commentaire" required></textarea>
+                              placeholder="Ecrivez votre commentaire" name="chapo" id="chapo" required>{{ chapo|default('') }}</textarea>
                 </div>
                 <button type="submit"
                         class="group relative  rounded-md py-2 px-3 text-sm font-semibold text-black hover:text-grey border-solid border-2 border-black-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-50">
@@ -114,9 +117,9 @@
                                     class="mr-2 w-6 h-6 rounded-full"
                                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
                                     alt="Michael Gough">{{ comment.lastname }} {{ comment.firstname }}</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-02-08"
-                                                                                  title="February 8th, 2022">Publier le : {{ comment.created_at|date("m/d/Y", "Europe/Paris") }}</time></p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400"><time>Publier le : {{ comment.created_at|date("d/m/Y H:i:s", "Europe/Paris") }}</time></p>
                     </div>
+                    {% if session ['LOGGED_USER'] == true %}
                     <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
                             class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                             type="button">
@@ -128,7 +131,7 @@
                         </svg>
                         <span class="sr-only">Option</span>
                     </button>
-                    <!-- Dropdown menu -->
+
                     <div id="dropdownComment1"
                          class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
@@ -143,6 +146,7 @@
                             </li>
                         </ul>
                     </div>
+                    {% endif %}
                 </footer>
                 <p class="mb-2 mr-3 text-sm text-gray-900 dark:text-white">{{ comment.title }}</p>
                 <p class="text-gray-500 dark:text-gray-400">{{ comment.commentary }}</p>

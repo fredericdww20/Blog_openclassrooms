@@ -104,7 +104,8 @@
         <aside
                 class="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
                 aria-label="Sidenav"
-                id="drawer-navigation">
+                id="drawer-navigation"
+        >
             <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
                 <ul class="space-y-2">
                     <li>
@@ -148,7 +149,8 @@
 
                             <span class="ml-3">Post à valider</span>
                         </a>
-                    </li><li>
+                    </li>
+                    <li>
                         <a href="{{ '/OpenClassrooms/admin/comment' }}"
                            class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                             <svg aria-hidden="true"
@@ -166,59 +168,10 @@
             </div>
         </aside>
 
+        </aside>
+
         <main class="p-4 md:ml-64 h-auto pt-20">
-            <h3 class="mb-3  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">Les dernier post
-                valider</h3>
-
-            <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4">
-
-
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Titre
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Chapo
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Description
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Crée le
-                            </th>
-                        </tr>
-                        </thead>
-                        {% for post in posts %}
-                            <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ post.title }}
-                                </th>
-                                <td class="px-6 py-4">
-                                    {{ post.chapo }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ post.description }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ post.created_at }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        {% endfor %}
-                    </table>
-                </div>
-
-
-            </div>
-        </main>
-
-        <main class="p-4 md:ml-64 h-auto ">
-            <h3 class="mb-3  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">Les dernier commentaire
+            <h3 class="mb-3  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">Les dernier commentaire à
                 valider</h3>
 
             <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4">
@@ -252,7 +205,12 @@
                                 <td class="px-6 py-4">
                                     {{ comment.chapo }}
                                 </td>
-
+                                <td class="px-6 py-4">
+                                    {{ comment.id.user }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ comment.created_at }}
+                                </td>
                             </tr>
                             </tbody>
                         {% endfor %}

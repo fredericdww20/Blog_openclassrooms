@@ -12,15 +12,24 @@ use App\Controllers\MainController;
 use App\Controllers\ConnectController;
 use App\Controllers\PostController;
 use App\Controllers\CommentController;
+use App\Controllers\UserController;
 use Steampixel\Route;
 
 // Route Home
 Route::add('/', function () {
 	echo (new MainController())->index();
 });
+
+Route::add('/profil', function () {
+	echo (new UserController())->profil();
+});
+
 // Route Admin
+Route::add('/admin/posts', function () {
+	echo (new AdminController())->list();
+});
 Route::add('/admin', function () {
-	echo (new AdminController())->admin();
+	echo (new AdminController())->listvalidate();
 });
 
 // Route Session Logout
@@ -75,6 +84,14 @@ Route::add('/delete/([0-9]*)', function ($id) {
 	header('Location: /OpenClassrooms/posts');
 	exit();
 });
+
+Route::add('/admin/validate/([0-9]*)', function ($id) {
+	echo (new AdminController())->update($id);
+});
+
+Route::add('/admin/validate/([0-9]*)', function ($id) {
+	echo (new AdminController())->update($id);
+}, 'post');
 
 Route::add('/update/([0-9]*)', function ($id) {
 	echo (new PostController())->update($id);
