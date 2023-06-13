@@ -50,6 +50,13 @@
                         Ou
                         <a href="{{ '/OpenClassrooms/login' }}" class="font-medium text-black-400 hover:text-grey-500">Connectez-vous à votre compte</a>
                     </p>
+
+                    {% if errorMessage is defined %}
+                        <div class="error-message">
+                            <p class="m-3 text-center font-medium text-red-400 hover:text-red-500">{{ errorMessage }}</p>
+                        </div>
+                    {% endif %}
+
                 </div>
 
                 <form class="mt-8 space-y-6 " action="/OpenClassrooms/inscription" method="POST">

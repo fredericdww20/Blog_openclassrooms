@@ -32,6 +32,7 @@ Route::add('/admin', function () {
 	echo (new AdminController())->listvalidate();
 });
 
+
 // Route Session Logout
 Route::add('/logout', function () {
 	echo (new ConnectController())->logout();
@@ -74,6 +75,11 @@ Route::add('/comment', function () {
 Route::add('/posts', function () {
 	echo (new PostController())->list();
 });
+
+Route::add('/admin/comment', function () {
+	echo (new AdminController())->listcomment();
+});
+
 
 Route::add('/post/([0-9]*)', function ($id) {
 	echo (new PostController())->show($id);

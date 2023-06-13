@@ -41,13 +41,11 @@ class UserManager
 		]);
 	}
 
-	// Fonction verification utilisateur en base de données
-	function authentication(string $email, string $password)
+	public function authentication(string $email, string $password)
 	{
-		$sql = 'SELECT * FROM user WHERE email = :email';
+		$sql = 'SELECT id, email, password, firstname, lastname, roles FROM user WHERE email = :email';
 
 		$statement = $this->pdo->prepare($sql);
-
 		$statement->execute([
 			'email' => $email,
 		]);
@@ -55,16 +53,26 @@ class UserManager
 		$user = $statement->fetchObject(User::class);
 
 		if ($user && password_verify($password, $user->getPassword())) {
-
-			$_SESSION['email'] = $user->getEmail();
-			$_SESSION['lastname'] = $user->getLastname();
-			$_SESSION['firstname'] = $user->getFirstname();
-			$_SESSION['roles'] = $user->getRoles();
-
+			$_SESSION['USER_ID'] = $user->getId();
 			return $user;
 		}
 
 		return null;
 	}
+
+	public function checkEmailExists(string $email): bool
+	{
+		$sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
+
+		$statement = $this->pdo->prepare($sql);
+		$statement->execute([
+			'email' => $email,
+		]);
+
+		$count = $statement->fetchColumn();
+
+		return ($count > 0);
+	}
+
 
 }

@@ -23,6 +23,20 @@ class AdminManager
 		}
 	}
 
+	public function updatecomment(int $id, bool $sta): ?Post
+	{
+		$sql = 'UPDATE comment SET sta = :sta WHERE id = :id';
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute([
+			'id' => $id,
+			'sta' => $sta,
+		]);
+
+		return $this->fetch($id);
+	}
+
+
 	public function update(int $id, bool $sta): ?Post
 	{
 		$sql = 'UPDATE post SET sta = :sta WHERE id = :id';
@@ -36,6 +50,26 @@ class AdminManager
 		return $this->fetch($id);
 	}
 
+	public function fetchComment()
+	{
+		$sql = 'SELECT * FROM comment WHERE sta = 0';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute();
+
+		$comments = [];
+		while ($row = $statement->fetch()) {
+			$comment = new Comment();
+			$comment->setId($row['id']);
+			$comment->setTitle($row['title']);
+			$comment->setCommentary($row['commentary']);
+			$comment->setCreatedAt($row['created_at']);
+			$comments[] = $comment;
+		}
+
+		return $comments;
+	}
 
 	public function fetchvalidate()
 	{

@@ -12,26 +12,41 @@ class ConnectController extends Controller
 		$userManager = new UserManager();
 		$message = null;
 
-		if(isset($_POST['email']) && isset($_POST['password'])) {
+		if (isset($_POST['email']) && isset($_POST['password'])) {
+			$email = $_POST['email'];
+			$password = $_POST['password'];
 
-			$user = $userManager->authentication($_POST['email'], $_POST['password']);
+			try {
 
-			if ($user) {
-				$_SESSION['LOGGED_USER'] = $user->getEmail();
-				$_SESSION['ROLE_USER'] = $user->getRoles();
-				$_SESSION['USER_ID'] = $user->getId();
-				header('Location: /OpenClassrooms/');
-				exit();
+				if ($userManager->checkEmailExists($email)) {
+					$user = $userManager->authentication($email, $password);
 
-			} else {
-				$message = 'Utilisateur non trouvé';
+					if ($user) {
+						$_SESSION['LOGGED_USER'] = $user->getEmail();
+						$_SESSION['ROLE_USER'] = $user->getRoles();
+						$_SESSION['USER_ID'] = $user->getId();
+						header('Location: /OpenClassrooms/');
+						exit;
+					} else {
+						$message = 'Identifiants de connexion incorrects';
+					}
+				} else {
+					$message = 'Utilisateur non trouvé';
+				}
+			} catch (Exception $e) {
+				$message = 'Une erreur s\'est produite lors de l\'authentification';
+
 			}
-
 		}
+
 		return $this->twig->render('login/login.html.twig', [
 			'message' => $message
 		]);
 	}
+
+
+
+
 
 	public function logout()
 	{

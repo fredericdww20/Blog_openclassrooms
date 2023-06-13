@@ -7,8 +7,27 @@ class Comment
 	private ?int $id = 0;
 	private string $title;
 	private string $commentary;
+	private string $created_at;
+	public function getCreatedAt(): string
+	{
+		return $this->created_at;
+	}
+	public function setCreatedAt(string $created_at): void
+	{
+		$this->created_at = $created_at;
+	}
 	private string $id_post;
 	private string $id_user;
+	private string $sta;
+	public function getSta(): string
+	{
+		return $this->sta;
+	}
+	public function setSta(string $sta): void
+	{
+		$this->sta = $sta;
+	}
+
 
 	public function setId(int $id): void
 	{

@@ -10,15 +10,28 @@ class RegisterController extends Controller
 		if (!empty($_POST)) {
 			$userManager = new UserManager();
 
-			if($this->isValid($_POST)) {
-				$userManager->create($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['password']);
+			$firstname = htmlentities($_POST['firstname']);
+			$lastname = htmlentities($_POST['lastname']);
+			$email = htmlentities($_POST['email']);
+			$password = htmlentities($_POST['password']);
 
-				header('Location: /OpenClassrooms/login');
-				exit;
+			if ($this->isValid($_POST)) {
+				if (!$userManager->checkEmailExists($email)) {
+					$userManager->create($firstname, $lastname, $email, $password);
 
+					header('Location: /OpenClassrooms/login');
+					exit;
+				} else {
+					$errorMessage = 'Cet email est déjà utilisé.';
+				}
+			} else {
+				$errorMessage = 'Veuillez remplir tous les champs.';
 			}
 		}
-		return $this->twig->render('register/register.html.twig');
+
+		return $this->twig->render('register/register.html.twig', [
+			'errorMessage' => $errorMessage ?? null
+		]);
 	}
 
 	public function isValid(array $data): bool

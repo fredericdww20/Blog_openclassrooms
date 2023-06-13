@@ -9,6 +9,17 @@ use App\Models\AdminManager;
 class AdminController extends Controller
 {
 
+	public function listcomment(): string
+	{
+		$adminManager = new AdminManager();
+
+		$comments = $adminManager->fetchComment();
+
+		return $this->twig->render('admin/comment.html.twig', [
+			'comments' => $comments
+		]);
+	}
+
 	public function listvalidate(): string
 	{
 		$adminManager = new AdminManager();
