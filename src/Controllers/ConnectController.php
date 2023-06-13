@@ -27,11 +27,12 @@ class ConnectController extends Controller
 					if (!empty($user->getRoles())) {
 						$_SESSION['ROLE_ADMIN'] = true;
 						header('Location: /OpenClassrooms/admin');
+						exit();
 					} else {
 						$_SESSION['ROLE_USER'] = true;
 						header('Location: /OpenClassrooms/');
+						exit();
 					}
-					exit;
 				} else {
 					$message = 'Identifiants de connexion incorrects';
 				}
