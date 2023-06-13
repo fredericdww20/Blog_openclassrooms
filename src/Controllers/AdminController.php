@@ -49,17 +49,16 @@ class AdminController extends Controller
 		$errors = [];
 		$sta = null;
 
-
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			if (isset($_POST['sta'])) {
-				$sta = $_POST['sta'];
+				$sta = htmlspecialchars($_POST['sta'], ENT_QUOTES, 'UTF-8');
 
 				if (empty($sta)) {
 					$errors[] = 'Le champ "sta" est requis.';
 				}
 
 				if (empty($errors)) {
-
+					// Utilisation de requêtes préparées pour l'update
 					$adminManager->update($id, $sta);
 					$message = 'Mise à jour réussie';
 
@@ -80,6 +79,7 @@ class AdminController extends Controller
 			'errors' => $errors,
 		]);
 	}
+
 
 
 

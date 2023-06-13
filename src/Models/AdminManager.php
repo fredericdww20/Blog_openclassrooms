@@ -23,20 +23,7 @@ class AdminManager
 		}
 	}
 
-	public function updatecomment(int $id, bool $sta): ?Post
-	{
-		$sql = 'UPDATE comment SET sta = :sta WHERE id = :id';
-		$statement = $this->pdo->prepare($sql);
-
-		$statement->execute([
-			'id' => $id,
-			'sta' => $sta,
-		]);
-
-		return $this->fetch($id);
-	}
-
-
+	// Permet la mise à jour d'un post pour le publier.
 	public function update(int $id, bool $sta): ?Post
 	{
 		$sql = 'UPDATE post SET sta = :sta WHERE id = :id';
@@ -50,6 +37,7 @@ class AdminManager
 		return $this->fetch($id);
 	}
 
+	// Récupère les commentaires à valider.
 	public function fetchComment()
 	{
 		$sql = 'SELECT * FROM comment WHERE sta = 0';
@@ -71,6 +59,7 @@ class AdminManager
 		return $comments;
 	}
 
+	// Récupère les posts à valider.
 	public function fetchvalidate()
 	{
 		$sql = 'SELECT * FROM post WHERE sta = 0';
@@ -94,6 +83,7 @@ class AdminManager
 		return $posts;
 	}
 
+	// Récupère les 4 dernier posts valider.
 	public function fetchAll()
 	{
 		$sql = 'SELECT * FROM post WHERE sta = 1 ORDER BY created_at DESC LIMIT 4';
@@ -117,7 +107,7 @@ class AdminManager
 		return $posts;
 	}
 
-	// Récuppére les posts
+	// Récupère les posts.
 	public function fetch(int $id)
 	{
 		$sql = 'SELECT * FROM post WHERE id = :id';
