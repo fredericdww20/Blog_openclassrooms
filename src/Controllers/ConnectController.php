@@ -8,47 +8,47 @@ use App\Models\User;
 class ConnectController extends Controller
 {
 	public function connect()
-	{
-		$userManager = new UserManager();
-		$message = null;
+{
+	$userManager = new UserManager();
+	$message = null;
 
-		if (isset($_POST['email']) && isset($_POST['password'])) {
-			$email = $_POST['email'];
-			$password = $_POST['password'];
+	if (isset($_POST['email']) && isset($_POST['password'])) {
+		$email = $_POST['email'];
+		$password = $_POST['password'];
 
-			try {
+		try {
+			if ($userManager->checkEmailExists($email)) {
+				$user = $userManager->authentication($email, $password);
 
-				if ($userManager->checkEmailExists($email)) {
-					$user = $userManager->authentication($email, $password);
+				if ($user) {
+					$_SESSION['LOGGED_USER'] = $user->getEmail();
+					$_SESSION['USER_ID'] = $user->getId();
 
-					if ($user) {
-						$_SESSION['LOGGED_USER'] = $user->getEmail();
-						$_SESSION['USER_ID'] = $user->getId();
-						if ($user->getRoles()) {
-							$_SESSION['ROLE_ADMIN'] = true;
-							header('Location: /OpenClassrooms/admin');
-							exit;
-						} else {
-							$_SESSION['ROLE_USER'] = true;
-							header('Location: /OpenClassrooms/');
-							exit;
-						}
+					if (!empty($user->getRoles())) {
+						$_SESSION['ROLE_ADMIN'] = true;
+						header('Location: /OpenClassrooms/admin');
 					} else {
-						$message = 'Identifiants de connexion incorrects';
+						$_SESSION['ROLE_USER'] = true;
+						header('Location: /OpenClassrooms/');
 					}
+					exit;
 				} else {
-					$message = 'Utilisateur non trouvé';
+					$message = 'Identifiants de connexion incorrects';
 				}
-			} catch (Exception $e) {
-				$message = 'Une erreur s\'est produite lors de l\'authentification';
-
+			} else {
+				$message = 'Utilisateur non trouvé';
 			}
+		} catch (Exception $e) {
+			$message = 'Une erreur s\'est produite lors de l\'authentification';
 		}
-
-		return $this->twig->render('login/login.html.twig', [
-			'message' => $message
-		]);
 	}
+
+	return $this->twig->render('login/login.html.twig', [
+		'message' => $message
+	]);
+}
+
+
 	public function logout()
 	{
 		session_start();
