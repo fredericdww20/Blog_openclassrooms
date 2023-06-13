@@ -27,7 +27,7 @@ Route::add('/profil', function () {
 
 /// ADMINCONTROLLER //
 Route::add('/admin', function () {
-	echo (new AdminController())->index();
+	echo (new AdminController())->listvalidate();
 });
 Route::add('/admin/posts', function () {
 	echo (new AdminController())->list();
