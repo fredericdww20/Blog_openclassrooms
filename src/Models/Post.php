@@ -70,7 +70,7 @@ class Post
 	{
 		$this->updated_at = $updated_at;
 	}
-	public function getCreatedAt(): string
+	public function getCreated_at(): string
 	{
 		return $this->created_at;
 	}

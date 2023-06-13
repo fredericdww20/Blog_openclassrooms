@@ -23,10 +23,16 @@ class ConnectController extends Controller
 
 					if ($user) {
 						$_SESSION['LOGGED_USER'] = $user->getEmail();
-						$_SESSION['ROLE_USER'] = $user->getRoles();
 						$_SESSION['USER_ID'] = $user->getId();
-						header('Location: /OpenClassrooms/');
-						exit;
+						if ($user->getRoles()) {
+							$_SESSION['ROLE_ADMIN'] = true;
+							header('Location: /OpenClassrooms/admin');
+							exit;
+						} else {
+							$_SESSION['ROLE_USER'] = true;
+							header('Location: /OpenClassrooms/');
+							exit;
+						}
 					} else {
 						$message = 'Identifiants de connexion incorrects';
 					}

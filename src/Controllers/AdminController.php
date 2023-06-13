@@ -38,9 +38,16 @@ class AdminController extends Controller
 
 		$posts = $adminManager->fetchvalidate();
 
-		return $this->twig->render('admin/posts.html.twig', [
-			'posts' => $posts
+		$message = $_SESSION['message'];
+
+		$output = $this->twig->render('admin/posts.html.twig', [
+			'posts' => $posts,
+			'message' => $message
 		]);
+
+		unset($_SESSION['message']);
+
+		return $output;
 	}
 
 	public function update($id)
@@ -59,16 +66,13 @@ class AdminController extends Controller
 				}
 
 				if (empty($errors)) {
-					// Utilisation de requêtes préparées pour l'update
-					$adminManager->update($id, $sta);
-					$message = 'Mise à jour réussie';
 
-					return $this->twig->render('admin/posts.html.twig', [
-						'id' => $id,
-						'sta' => $sta,
-						'message' => $message,
-						'errors' => $errors,
-					]);
+					$adminManager->update($id, $sta);
+
+					$_SESSION['message'] = 'Mise à jour réussie';
+
+					header('Location: /OpenClassrooms/admin/posts');
+					exit();
 				}
 			}
 		}

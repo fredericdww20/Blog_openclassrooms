@@ -109,7 +109,6 @@ class PostController extends Controller
 	}
 
 
-
 	public function list(): string
 	{
 		$postManager = new PostManager();
