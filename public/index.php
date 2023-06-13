@@ -32,7 +32,6 @@ Route::add('/admin', function () {
 	echo (new AdminController())->listvalidate();
 });
 
-
 // Route Session Logout
 Route::add('/logout', function () {
 	echo (new ConnectController())->logout();

@@ -36,14 +36,16 @@ class RegisterController extends Controller
 
 	public function isValid(array $data): bool
 	{
-		$firstname = htmlentities($data['firstname']);;
-		$lastname = htmlentities($data['lastname']);
-		$email = htmlentities($data['email']);
-		$password = htmlentities($data['password']);
-		if(empty($firstname) && empty($lastname) && empty($email) && empty($password)) {
+		$firstname = htmlspecialchars($data['firstname'], ENT_QUOTES, 'UTF-8');
+		$lastname = htmlspecialchars($data['lastname'], ENT_QUOTES, 'UTF-8');
+		$email = htmlspecialchars($data['email'], ENT_QUOTES, 'UTF-8');
+		$password = htmlspecialchars($data['password'], ENT_QUOTES, 'UTF-8');
+
+		if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) {
 			return false;
 		}
 
 		return true;
 	}
+
 }

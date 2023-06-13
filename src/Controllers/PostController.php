@@ -97,7 +97,6 @@ class PostController extends Controller
 			}
 		}
 
-
 		return $this->twig->render('list/edit.html.twig', [
 			'id' => $id,
 			'title' => $post->getTitle(),

@@ -117,6 +117,7 @@ class AdminManager
 		return $posts;
 	}
 
+	// Récuppére les posts
 	public function fetch(int $id)
 	{
 		$sql = 'SELECT * FROM post WHERE id = :id';
