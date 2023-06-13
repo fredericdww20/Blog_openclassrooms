@@ -26,11 +26,11 @@ Route::add('/profil', function () {
 });
 
 /// ADMINCONTROLLER //
+Route::add('/admin', function () {
+	echo (new AdminController())->index();
+});
 Route::add('/admin/posts', function () {
 	echo (new AdminController())->list();
-});
-Route::add('/admin/', function () {
-	echo (new AdminController())->listvalidate();
 });
 Route::add('/admin/comment', function () {
 	echo (new AdminController())->listcomment();
@@ -97,7 +97,6 @@ Route::add('/update/([0-9]*)', function ($id) {
 /// COMMENTCONTROLLER //
 Route::add('/comment', function () {
 	echo (new CommentController())->addcomment();
-
 });
 Route::add('/comment', function () {
 	echo (new CommentController())->addcomment();

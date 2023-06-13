@@ -20,15 +20,9 @@ class AdminController extends Controller
 		]);
 	}
 
-	public function listvalidate(): string
+	public function index(): string
 	{
-		$adminManager = new AdminManager();
-
-		$posts = $adminManager->fetchAll();
-
-		return $this->twig->render('admin/admin.html.twig', [
-			'posts' => $posts
-		]);
+		return $this->twig->render('admin/admin.html.twig');
 	}
 
 	public function list(): string

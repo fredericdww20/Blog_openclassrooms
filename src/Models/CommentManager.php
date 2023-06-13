@@ -57,5 +57,15 @@ class CommentManager
 		return $statement->fetchAll(PDO::FETCH_CLASS, Comment::class);
 	}
 
+	public function deleteByPostId($postId)
+	{
+		$sql = "DELETE FROM comment WHERE id_post = :post_id";
+		$stmt = $this->db->prepare($sql);
+		$stmt->bindValue(':post_id', $postId, PDO::PARAM_INT);
+		$stmt->execute();
+	}
+
+
+
 
 }
