@@ -35,10 +35,10 @@ Route::add('/admin/comment', function () {
 	echo (new AdminController())->listcomment();
 });
 Route::add('/admin/com/([0-9]*)', function ($id) {
-	echo (new AdminController())->updatecomment($id);
+	echo (new AdminController())->updatecomments($id);
 });
 Route::add('/admin/com/([0-9]*)', function ($id) {
-	echo (new AdminController())->updatecomment($id);
+	echo (new AdminController())->updatecomments($id);
 }, 'post');
 Route::add('/admin/validate/([0-9]*)', function ($id) {
 	echo (new AdminController())->update($id);

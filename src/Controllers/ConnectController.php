@@ -48,10 +48,6 @@ class ConnectController extends Controller
 		]);
 	}
 
-
-
-
-
 	public function logout()
 	{
 		session_start();

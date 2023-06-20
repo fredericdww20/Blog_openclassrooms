@@ -20,9 +20,8 @@ class CommentController extends Controller
 
 			$postId = intval($_POST['id_post']);
 
-			// Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
-			if (isset($_SESSION['USER_ID']) && is_int($_SESSION['USER_ID'])) {
-				$userId = $_SESSION['USER_ID'];
+			if (isset($_SESSION['id_user']) && is_int($_SESSION['id_user'])) {
+				$userId = $_SESSION['id_user'];
 
 				try {
 					$commentManager->commentate($_POST['title'], $_POST['commentary'], $postId, $userId);
@@ -56,14 +55,5 @@ class CommentController extends Controller
 			'comments' => $comments
 		]);
 	}
-
-	public function valisate() {
-
-
-	}
-
-
-
-
 
 }

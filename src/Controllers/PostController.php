@@ -14,20 +14,17 @@ class PostController extends Controller
 		$message = null;
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
 			$postManager = new PostManager();
-
-			$userId = $_SESSION['USER_ID'];
-
+			var_dump($_SESSION['id_user']);
+			$userId = $_SESSION['id_user'];
 			try {
 				$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
 				$message = 'Article envoyé';
 			} catch (PDOException $e) {
 				$message = 'Une erreur s\'est produite lors de la création de l\'article.';
-
 			}
 		} else {
 			$message = 'Veuillez remplir tous les champs du formulaire.';
 		}
-
 		return $this->twig->render('list/posts.html.twig', [
 			'message' => $message
 		]);

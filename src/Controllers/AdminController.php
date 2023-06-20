@@ -85,7 +85,7 @@ class AdminController extends Controller
 		]);
 	}
 
-	public function updatecomment($id)
+	public function updatecomments($id)
 	{
 		$adminManager = new AdminManager();
 		$message = null;
