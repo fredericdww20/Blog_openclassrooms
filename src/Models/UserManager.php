@@ -57,8 +57,8 @@ class UserManager
 			$_SESSION['lastname'] = $user->getLastname();
 			$_SESSION['firstname'] = $user->getFirstname();
 			$_SESSION['roles'] = $user->getRoles();
-			$_SESSION['user_id'] = $user->getId();
 
+			$_SESSION['USER_ID'] = $user->getId();
 			return $user;
 		}
 
