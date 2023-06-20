@@ -53,6 +53,8 @@ class UserManager
 		$user = $statement->fetchObject(User::class);
 
 		if ($user && password_verify($password, $user->getPassword())) {
+
+			$_SESSION['LOGGED_USER'] = $email;
 			$_SESSION['email'] = $user->getEmail();
 			$_SESSION['lastname'] = $user->getLastname();
 			$_SESSION['firstname'] = $user->getFirstname();
@@ -60,7 +62,6 @@ class UserManager
 			$_SESSION['user_id'] = $user->getId();
 			return $user;
 		}
-
 		return null;
 	}
 

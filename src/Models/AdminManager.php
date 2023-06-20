@@ -36,7 +36,7 @@ class AdminManager
 
 		return $this->fetch($id);
 	}
-	// Permet la msie à jour d'un commentaire pour le publier.
+	// Permet la misee à jour d'un commentaire pour le publier.
 
 	public function updatecomment(int $id, bool $sta): ?Comment
 	{
@@ -120,6 +120,29 @@ class AdminManager
 		}
 
 		return $posts;
+	}
+
+	// Récupère les 4 dernier commentaire valider.
+	public function fetchAllcomment()
+	{
+		$sql = 'SELECT * FROM comment WHERE sta = 1 ORDER BY created_at DESC LIMIT 4';
+
+		$statement = $this->pdo->prepare($sql);
+
+		$statement->execute();
+
+		$comments = [];
+		while (($row = $statement->fetch())) {
+			$comment = new Comment();
+			$comment->setId($row['id']);
+			$comment->setTitle($row['title']);
+			$comment->setCommentary($row['commentary']);;
+			$comment->setCreatedAt($row['created_at']);
+
+			$comment[] = $comments;
+		}
+
+		return $comments;
 	}
 
 	// Récupère les posts via l'id

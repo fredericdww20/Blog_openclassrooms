@@ -21,8 +21,8 @@ class CommentController extends Controller
 			$postId = intval($_POST['id_post']);
 
 			// Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
-			if (isset($_SESSION['USER_ID']) && is_int($_SESSION['USER_ID'])) {
-				$userId = $_SESSION['USER_ID'];
+			if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
+				$userId = $_SESSION['user_id'];
 
 				try {
 					$commentManager->commentate($_POST['title'], $_POST['commentary'], $postId, $userId);

@@ -22,14 +22,7 @@ class RegisterController extends Controller
 			if ($this->validateForm($_POST)) {
 				if (!$userManager->checkEmailExists($email)) {
 
-					$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-					$userId = $userManager->create($firstname, $lastname, $email, $hashedPassword);
-
-					session_start();
-
-					$_SESSION['USER_ID'] = $userId;
-					$_SESSION['LOGGED_USER'] = $email;
+					$userId = $userManager->create($firstname, $lastname, $email, $password);
 
 					header('Location: /OpenClassrooms/');
 					exit;

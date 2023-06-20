@@ -13,7 +13,7 @@ class AdminController extends Controller
 	{
 		$adminManager = new AdminManager();
 
-		$comments = $adminManager->fetchcomment();
+		$comments = $adminManager->fetchAllcomment();
 
 		return $this->twig->render('admin/comment.html.twig', [
 			'comments' => $comments
@@ -44,6 +44,7 @@ class AdminController extends Controller
 			'posts' => $posts,
 			'message' => $message
 		]);
+
 
 		unset($_SESSION['message']);
 

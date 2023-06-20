@@ -22,10 +22,10 @@ class ConnectController extends Controller
 
 					if ($user) {
 						// Assign the user's role to the session
-						$_SESSION['ROLES'] = $user->getRoles();
+						$_SESSION['roles'] = $user->getRoles();
 
 						// Check the user's role for redirection
-						if ($_SESSION['ROLES'] === 'ROLE_ADMIN') {
+						if ($_SESSION['roles'] === 'ROLE_ADMIN') {
 							header('Location: /OpenClassrooms/admin');
 							exit;
 						} else {
