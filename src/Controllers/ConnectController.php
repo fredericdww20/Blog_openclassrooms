@@ -21,17 +21,14 @@ class ConnectController extends Controller
 					$user = $userManager->authentication($email, $password);
 
 					if ($user) {
-						var_dump($_SESSION['roles']);
-						die();
-						$_SESSION['LOGGED_USER'] = $user->getEmail();
-						$_SESSION['USER_ID'] = $user->getId();
+						// Assign the user's role to the session
+						$_SESSION['ROLES'] = $user->getRoles();
 
-						if ($_SESSION['ROLE_ADMIN']) {
-							$_SESSION['ROLE_ADMIN'] = true;
+						// Check the user's role for redirection
+						if ($_SESSION['ROLES'] === 'ROLE_ADMIN') {
 							header('Location: /OpenClassrooms/admin');
 							exit;
 						} else {
-							$_SESSION['ROLE_USER'] = true;
 							header('Location: /OpenClassrooms/');
 							exit;
 						}
@@ -50,6 +47,7 @@ class ConnectController extends Controller
 			'message' => $message
 		]);
 	}
+
 
 
 

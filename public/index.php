@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 
-
 use App\Controllers\AdminController;
 use App\Controllers\RegisterController;
 use App\Controllers\MainController;
@@ -35,6 +34,12 @@ Route::add('/admin/posts', function () {
 Route::add('/admin/comment', function () {
 	echo (new AdminController())->listcomment();
 });
+Route::add('/admin/com/([0-9]*)', function ($id) {
+	echo (new AdminController())->updatecomment($id);
+});
+Route::add('/admin/com/([0-9]*)', function ($id) {
+	echo (new AdminController())->updatecomment($id);
+}, 'post');
 Route::add('/admin/validate/([0-9]*)', function ($id) {
 	echo (new AdminController())->update($id);
 });

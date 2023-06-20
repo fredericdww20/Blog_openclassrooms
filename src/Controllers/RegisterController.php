@@ -5,46 +5,61 @@ use App\Models\UserManager;
 
 class RegisterController extends Controller
 {
+	const ERROR_EMAIL_EXISTS = 'Cet email est déjà utilisé.';
+	const ERROR_MISSING_FIELDS = 'Veuillez remplir tous les champs.';
+
 	public function register()
 	{
-		if (!empty($_POST)) {
-			$userManager = new UserManager();
+		$userManager = new UserManager();
+		$errorMessage = null;
 
+		if (!empty($_POST)) {
 			$firstname = htmlentities($_POST['firstname']);
 			$lastname = htmlentities($_POST['lastname']);
 			$email = htmlentities($_POST['email']);
-			$password = htmlentities($_POST['password']);
+			$password = $_POST['password'];
 
-			if ($this->isValid($_POST)) {
+			if ($this->validateForm($_POST)) {
 				if (!$userManager->checkEmailExists($email)) {
-					$userManager->create($firstname, $lastname, $email, $password);
 
-					header('Location: /OpenClassrooms/login');
+					$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+					$userId = $userManager->create($firstname, $lastname, $email, $hashedPassword);
+
+					session_start();
+
+					$_SESSION['USER_ID'] = $userId;
+					$_SESSION['LOGGED_USER'] = $email;
+
+					header('Location: /OpenClassrooms/');
 					exit;
+
 				} else {
-					$errorMessage = 'Cet email est déjà utilisé.';
+					$errorMessage = self::ERROR_EMAIL_EXISTS;
 				}
 			} else {
-				$errorMessage = 'Veuillez remplir tous les champs.';
+				$errorMessage = self::ERROR_MISSING_FIELDS;
 			}
 		}
 
 		return $this->twig->render('register/register.html.twig', [
-			'errorMessage' => $errorMessage ?? null
+			'errorMessage' => $errorMessage
 		]);
 	}
 
-	public function isValid(array $data): bool
+	private function validateForm($formData): bool
 	{
-		$firstname = htmlspecialchars($data['firstname'], ENT_QUOTES, 'UTF-8');
-		$lastname = htmlspecialchars($data['lastname'], ENT_QUOTES, 'UTF-8');
-		$email = htmlspecialchars($data['email'], ENT_QUOTES, 'UTF-8');
-		$password = htmlspecialchars($data['password'], ENT_QUOTES, 'UTF-8');
+		return $this->validateFields($formData);
+	}
 
-		if (empty($firstname) || empty($lastname) || empty($email) || empty($password)) {
-			return false;
+	private function validateFields($formData): bool
+	{
+		$fields = ['firstname', 'lastname', 'email', 'password'];
+		foreach ($fields as $field) {
+			if (empty($formData[$field])) {
+				return false;
+			}
 		}
-
 		return true;
 	}
 

@@ -24,7 +24,6 @@ class CommentManager
 		}
 	}
 
-
 	public function commentate(string $title, string $commentary, int $postId, int $userId): void
 	{
 		$sql = 'INSERT INTO comment (title, commentary, sta, id_post, id_user) VALUES (:title, :commentary, :sta, :postId, :userId)';
@@ -56,16 +55,5 @@ class CommentManager
 
 		return $statement->fetchAll(PDO::FETCH_CLASS, Comment::class);
 	}
-
-	public function deleteByPostId($postId)
-	{
-		$sql = "DELETE FROM comment WHERE id_post = :post_id";
-		$stmt = $this->db->prepare($sql);
-		$stmt->bindValue(':post_id', $postId, PDO::PARAM_INT);
-		$stmt->execute();
-	}
-
-
-
 
 }
