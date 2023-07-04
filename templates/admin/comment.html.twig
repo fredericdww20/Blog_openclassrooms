@@ -169,13 +169,16 @@
         </aside>
 
         <main class="p-4 md:ml-64 h-auto pt-20">
-            <h3 class="mb-3  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">Les dernier commentaire à
+            <h3 class="mb-3  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">Les dernier commentaires à
                 valider</h3>
 
             <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4">
 
 
                 <div class="relative overflow-x-auto">
+                    {% if message is not empty  %}
+                        <div class="m-5 text-red-600 uppercase bg-gray-50 dark:bg-red-700 dark:text-red-400">{{ message }}</div>
+                    {% endif %}
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -193,7 +196,9 @@
                             </th>
                         </tr>
                         </thead>
+
                         {% for comment in comments %}
+
                             <tbody>
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"

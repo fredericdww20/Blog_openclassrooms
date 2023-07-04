@@ -13,11 +13,18 @@ class AdminController extends Controller
 	{
 		$adminManager = new AdminManager();
 
-		$comments = $adminManager->fetchAllcomment();
+		$comments = $adminManager->fetchcomment();
 
-		return $this->twig->render('admin/comment.html.twig', [
-			'comments' => $comments
+		$message = $_SESSION['message'];
+
+		$output = $this->twig->render('admin/comment.html.twig', [
+			'comments' => $comments,
+			'message' => $message
 		]);
+
+		unset($_SESSION['message']);
+
+		return $output;
 	}
 
 	public function listvalidate(): string
@@ -31,7 +38,6 @@ class AdminController extends Controller
 		]);
 	}
 
-
 	public function list(): string
 	{
 		$adminManager = new AdminManager();
@@ -44,7 +50,6 @@ class AdminController extends Controller
 			'posts' => $posts,
 			'message' => $message
 		]);
-
 
 		unset($_SESSION['message']);
 
