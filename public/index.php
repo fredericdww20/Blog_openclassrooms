@@ -18,6 +18,9 @@ use Steampixel\Route;
 Route::add('/', function () {
 	echo (new MainController())->index();
 });
+Route::add('/', function () {
+	echo (new MainController())->swiftmailer();
+}, 'post');
 
 /// USERCONTROLLER //
 Route::add('/profil', function () {
