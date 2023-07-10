@@ -48,8 +48,7 @@ class ConnectController extends Controller
 			}
 		}
 		return $this->twig->render('login/login.html.twig', [
-			'message' => $message
-		]);
+			'message' => $message]);
 	}
 	/**
 	 * @return void
