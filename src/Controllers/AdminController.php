@@ -93,10 +93,15 @@ class AdminController extends Controller
 					$errors[] = 'Le champ "sta" est requis.';
 				}
 				if (empty($errors)) {
-					$adminManager->updatecomment($id, $sta);
-					$_SESSION['message'] = 'Mise à jour réussie';
-					header('Location: /OpenClassrooms/admin/comment');
-					exit();
+					try {
+						$adminManager->updatecomment($id, $sta);
+						$_SESSION['message'] = 'Mise à jour réussie';
+						header('Location: /OpenClassrooms/admin/comment');
+						return; // Renvoie un message de succès si nécessaire
+					} catch (Exception $e) {
+						// Gérer l'exception ou envoie l'erreur
+						$errors[] = 'Une erreur s\'est produite lors de la mise à jour du commentaire.';
+					}
 				}
 			}
 		}
@@ -107,4 +112,5 @@ class AdminController extends Controller
 			'errors' => $errors,
 		]);
 	}
+
 }
