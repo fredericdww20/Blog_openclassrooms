@@ -97,7 +97,7 @@ class AdminController extends Controller
 						$adminManager->updatecomment($id, $sta);
 						$_SESSION['message'] = 'Mise à jour réussie';
 						header('Location: /OpenClassrooms/admin/comment');
-						return; // Renvoie un message de succès si nécessaire
+						return; // Renvoie un message de succès si la mise à jour à reussie
 					} catch (Exception $e) {
 						// Gérer l'exception ou envoie l'erreur
 						$errors[] = 'Une erreur s\'est produite lors de la mise à jour du commentaire.';
