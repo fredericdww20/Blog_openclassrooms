@@ -4,13 +4,20 @@ namespace App\Controllers;
 
 use App\Models\CommentManager;
 use App\Models\PostManager;
-
 use PDOException;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-
+/**
+ * Class CommentController
+ */
 class CommentController extends Controller
 {
+	/**
+	 * @return string
+	 * @throws RuntimeError
+	 * @throws SyntaxError
+	 * @throws \Twig\Error\LoaderError
+	 */
 	public function addcomment(): string
 	{
 		$message = null;
