@@ -48,6 +48,12 @@
                         {% if session ['LOGGED_USER'] == true %}
                             <li class="mr-3">
                                 <a class="inline-block py-2 px-4 text-black font-bold no-underline"
+                                   href="/OpenClassrooms/profil">Votre profil</a>
+                            </li>
+                        {% endif %}
+                        {% if session ['LOGGED_USER'] == true %}
+                            <li class="mr-3">
+                                <a class="inline-block py-2 px-4 text-black font-bold no-underline"
                                    href="/OpenClassrooms/logout">Déconnexion</a>
                             </li>
                         {% endif %}

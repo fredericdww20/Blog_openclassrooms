@@ -14,6 +14,7 @@ use App\Controllers\CommentController;
 use App\Controllers\UserController;
 use Steampixel\Route;
 
+
 // Route Home
 Route::add('/', function () {
 	echo (new MainController())->index();

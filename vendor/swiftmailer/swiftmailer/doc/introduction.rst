@@ -1,7 +1,13 @@
-Introduction
-============
+Swiftmailer: A feature-rich PHP Mailer
+======================================
 
-Swift Mailer is a for sending e-mails from PHP applications.
+Swift Mailer is a component based library for sending e-mails from PHP applications.
+
+**Swiftmailer will stop being maintained at the end of November 2021.**
+
+Please, move to `Symfony Mailer <https://symfony.com/doc/current/mailer.html>`_ at your earliest convenience.
+`Symfony Mailer <https://symfony.com/doc/current/mailer.html>`_ is the next evolution of Swiftmailer.
+It provides the same features with support for modern PHP code and support for third-party providers.
 
 System Requirements
 -------------------
@@ -38,7 +44,7 @@ Here is the simplest way to send emails with Swift Mailer::
     $mailer = new Swift_Mailer($transport);
 
     // Create a message
-    $message = new Swift_Message('Wonderful Subject')
+    $message = (new Swift_Message('Wonderful Subject'))
       ->setFrom(['john@doe.com' => 'John Doe'])
       ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
       ->setBody('Here is the message itself')
@@ -47,7 +53,7 @@ Here is the simplest way to send emails with Swift Mailer::
     // Send the message
     $result = $mailer->send($message);
 
-You can also use Sendmail as a transport:
+You can also use Sendmail as a transport::
 
     // Sendmail
     $transport = new Swift_SendmailTransport('/usr/sbin/sendmail -bs');
@@ -55,7 +61,7 @@ You can also use Sendmail as a transport:
 Getting Help
 ------------
 
+For general support, use `Stack Overflow <https://stackoverflow.com>`_.
+
 For bug reports and feature requests, create a new ticket in `GitHub
 <https://github.com/swiftmailer/swiftmailer/issues>`_.
-
-For general support, use Stack Overflow.

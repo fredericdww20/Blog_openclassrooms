@@ -121,29 +121,6 @@ class AdminManager
 		return $posts;
 	}
 
-	// Récupère les 4 dernier commentaires valider.
-	public function fetchAllcomment()
-	{
-		$sql = 'SELECT * FROM comment WHERE sta = 1 ORDER BY created_at DESC LIMIT 4';
-
-		$statement = $this->pdo->prepare($sql);
-
-		$statement->execute();
-
-		$comments = [];
-		while (($row = $statement->fetch())) {
-			$comment = new Comment();
-			$comment->setId($row['id']);
-			$comment->setTitle($row['title']);
-			$comment->setCommentary($row['commentary']);;
-			$comment->setCreatedAt($row['created_at']);
-
-			$comments[] = $comment;
-		}
-
-		return $comments;
-	}
-
 	// Récupère les posts via l'id
 	public function fetch(int $id)
 	{

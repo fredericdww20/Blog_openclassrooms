@@ -3,7 +3,7 @@
         "twig/twig": "^3.5",
         "steampixel/simple-php-router": "^0.7.1",
         "ext-pdo": "*",
-        "swiftmailer/swiftmailer": "6.0"
+        "swiftmailer/swiftmailer": "6.3"
     },
     "autoload": {
         "psr-4": {

@@ -31,7 +31,7 @@ recipients are delivered to successfully then the value 5 will be returned::
     $mailer = new Swift_Mailer($transport);
 
     // Create a message
-    $message = new Swift_Message('Wonderful Subject')
+    $message = (new Swift_Message('Wonderful Subject'))
       ->setFrom(['john@doe.com' => 'John Doe'])
       ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
       ->setBody('Here is the message itself')
@@ -95,7 +95,8 @@ within your application and adjust the settings accordingly if the code is
 moved or if the SMTP server is changed.
 
 Some SMTP servers -- Google for example -- use encryption for security reasons.
-Swift Mailer supports using both SSL and TLS encryption settings.
+Swift Mailer supports using both ``ssl`` (SMTPS = SMTP over TLS) and ``tls``
+(SMTP with STARTTLS) encryption settings.
 
 Using the SMTP Transport
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -129,11 +130,14 @@ A connection to the SMTP server will be established upon the first call to
 Encrypted SMTP
 ^^^^^^^^^^^^^^
 
-You can use SSL or TLS encryption with the SMTP Transport by specifying it as a
-parameter or with a method call::
+You can use ``ssl`` (SMTPS) or ``tls`` (STARTTLS) encryption with the SMTP Transport
+by specifying it as a parameter or with a method call::
 
     // Create the Transport
+    // Option #1: SMTPS = SMTP over TLS (always encrypted):
     $transport = new Swift_SmtpTransport('smtp.example.org', 587, 'ssl');
+    // Option #2: SMTP with STARTTLS (best effort encryption):
+    $transport = new Swift_SmtpTransport('smtp.example.org', 587, 'tls');
 
     // Create the Mailer using your created Transport
     $mailer = new Swift_Mailer($transport);
@@ -143,11 +147,22 @@ A connection to the SMTP server will be established upon the first call to
 settings.
 
 .. note::
-
-    For SSL or TLS encryption to work your PHP installation must have
+    For SMTPS or STARTTLS encryption to work your PHP installation must have
     appropriate OpenSSL transports wrappers. You can check if "tls" and/or
     "ssl" are present in your PHP installation by using the PHP function
     ``stream_get_transports()``.
+
+.. note::
+    If you are using Mailcatcher_, make sure you do not set the encryption
+    for the ``Swift_SmtpTransport``, since Mailcatcher does not support encryption.
+
+.. note::
+    When in doubt, try ``ssl`` first for higher security, since the communication
+    is always encrypted.
+
+.. note::
+    Usually, port 587 or 465 is used for encrypted SMTP. Check the documentation
+    of your mail provider.
 
 SMTP with a Username and Password
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -156,7 +171,7 @@ Some servers require authentication. You can provide a username and password
 with ``setUsername()`` and ``setPassword()`` methods::
 
     // Create the Transport the call setUsername() and setPassword()
-    $transport = new Swift_SmtpTransport('smtp.example.org', 25)
+    $transport = (new Swift_SmtpTransport('smtp.example.org', 25))
       ->setUsername('username')
       ->setPassword('password')
       ;
@@ -291,7 +306,7 @@ recipients are delivered to successfully then the value 5 will be returned::
     $mailer = new Swift_Mailer($transport);
 
     // Create a message
-    $message = new Swift_Message('Wonderful Subject')
+    $message = (new Swift_Message('Wonderful Subject'))
       ->setFrom(['john@doe.com' => 'John Doe'])
       ->setTo(['receiver@domain.org', 'other@domain.org' => 'A name'])
       ->setBody('Here is the message itself')
@@ -343,10 +358,11 @@ Mailer will throw a ``Swift_RfcComplianceException``.
 
 If you add recipients automatically based on a data source that may contain
 invalid email addresses, you can prevent possible exceptions by validating the
-addresses using ``Swift_Validate::email($email)`` and only adding addresses
-that validate. Another way would be to wrap your ``setTo()``, ``setCc()`` and
-``setBcc()`` calls in a try-catch block and handle the
-``Swift_RfcComplianceException`` in the catch block.
+addresses using ``Egulias\EmailValidator\EmailValidator`` (a dependency that is
+installed with Swift Mailer) and only adding addresses that validate. Another
+way would be to wrap your ``setTo()``, ``setCc()`` and ``setBcc()`` calls in a
+try-catch block and handle the ``Swift_RfcComplianceException`` in the catch
+block.
 
 Handling invalid addresses properly is especially important when sending emails
 in large batches since a single invalid address might cause an unhandled
@@ -365,7 +381,7 @@ exception and stop the execution or your script early.
         $mailer = new Swift_Mailer($transport);
 
         // Create a message
-        $message = new Swift_Message('Wonderful Subject')
+        $message = (new Swift_Message('Wonderful Subject'))
           ->setFrom(['john@doe.com' => 'John Doe'])
           ->setBody('Here is the message itself')
           ;
@@ -444,3 +460,5 @@ added to the array provided by-reference.
     empty array and then failures will be added to that array. If the variable
     already exists it will be type-cast to an array and failures will be added
     to it.
+
+.. _Mailcatcher: https://mailcatcher.me/
