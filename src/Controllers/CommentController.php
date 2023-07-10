@@ -30,7 +30,7 @@ class CommentController extends Controller
 				} catch (PDOException $e) {
 					$message = 'Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage();
 				}
-			} else {
+			}  {
 				$message = 'ID d\'utilisateur invalide.';
 			}
 		} else {
