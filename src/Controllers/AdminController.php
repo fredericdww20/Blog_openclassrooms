@@ -13,14 +13,11 @@ class AdminController extends Controller
 		$adminManager = new AdminManager();
 		$comments = $adminManager->fetchcomment();
 		$message = $_SESSION['message'];
-
 		$output = $this->twig->render('admin/comment.html.twig', [
 			'comments' => $comments,
 			'message' => $message
 		]);
-
 		unset($_SESSION['message']);
-
 		return $output;
 	}
 
