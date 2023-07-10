@@ -4,11 +4,17 @@ namespace App\Controllers;
 
 use App\Models\PostManager;
 use App\Models\CommentManager;
-
-
-
+/**
+ * Class PostController
+ */
 class PostController extends Controller
 {
+	/**
+	 * @return string
+	 * @throws \Twig\Error\LoaderError
+	 * @throws \Twig\Error\RuntimeError
+	 * @throws \Twig\Error\SyntaxError
+	 */
 	public function addpost(): string
 	{
 		$message = null;
