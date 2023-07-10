@@ -6,6 +6,9 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
 
+/**
+ * Page principale + mailswift
+ */
 class MainController extends Controller
 {
 	// Rendu vers la page principale
