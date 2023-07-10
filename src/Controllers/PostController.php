@@ -35,6 +35,7 @@ class PostController extends Controller
 		]);
 	}
 
+
 	public function show($id)
 	{
 		$postManager = new PostManager();
