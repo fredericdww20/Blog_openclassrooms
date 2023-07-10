@@ -7,7 +7,7 @@ use Swift_Message;
 use Swift_SmtpTransport;
 
 /**
- * Page principale + mailswift
+ * Affichage page principale +  controller mailswift
  */
 class MainController extends Controller
 {
