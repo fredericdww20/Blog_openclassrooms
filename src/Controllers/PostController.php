@@ -13,10 +13,8 @@ class PostController extends Controller
 	{
 		$message = null;
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-
-			$postManager = new PostManager();
-
-			$userId = $_SESSION['user_id'];
+				$postManager = new PostManager();
+				$userId = $_SESSION['user_id'];
 			try {
 				$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
 				$message = 'Article envoyé';
@@ -35,33 +33,24 @@ class PostController extends Controller
 	{
 		$postManager = new PostManager();
 		$commentsManager = new CommentManager();
-
 		$post = $postManager->fetch($id);
-
 		$comments = $commentsManager->fetch($id);
-
 		return $this->twig->render('list/post.html.twig', [
 			'post' => $post,
 			'comments' => $comments,
 		]);
 	}
-
 	public function delete($id)
 	{
 		$postManager = new PostManager();
-
 		$postManager->delete($id);
-
 	}
-
 	public function update($id)
 	{
 		$postManager = new PostManager();
 		$post = $postManager->fetch($id);
-
 		$message = null;
 		$errors = [];
-
 		if (isset($_POST['title'], $_POST['description'], $_POST['chapo'])) {
 			$title = $_POST['title'];
 			$description = $_POST['description'];
@@ -79,15 +68,11 @@ class PostController extends Controller
 
 			if (empty($errors)) {
 				$postManager->update($id, $title, $description, $chapo);
-
 				$dateUpdated = date('Y-m-d H:i:s');
 				$postManager->updateDateUpdated($id, $dateUpdated);
-
 				$message = 'Article modifié';
-
 				header('Location: /OpenClassrooms/post/' . $id . '?message=Article modifié');
 				exit();
-
 			} else {
 				$errorString = urlencode(implode('<br>', $errors));
 				header('Location: /OpenClassrooms/post/' . $id . '?error=' . $errorString);
@@ -105,14 +90,10 @@ class PostController extends Controller
 			'errors' => $errors
 		]);
 	}
-
-
 	public function list(): string
 	{
 		$postManager = new PostManager();
-
 		$posts = $postManager->fetchAll();
-
 		return $this->twig->render('list/list.html.twig', [
 			'posts' => $posts
 		]);
