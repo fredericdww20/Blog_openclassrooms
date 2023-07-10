@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 namespace App\Controllers;
 
 use App\Models\UserManager;
@@ -7,19 +9,22 @@ use App\Models\User;
 
 class ConnectController extends Controller
 {
+	/**
+	 * @return string|void
+	 * @throws \Twig\Error\LoaderError
+	 * @throws \Twig\Error\RuntimeError
+	 * @throws \Twig\Error\SyntaxError
+	 */
 	public function connect()
 	{
 		$userManager = new UserManager();
 		$message = null;
-
 		if (isset($_POST['email']) && isset($_POST['password'])) {
 			$email = $_POST['email'];
 			$password = $_POST['password'];
-
 			try {
 				if ($userManager->checkEmailExists($email)) {
 					$user = $userManager->authentication($email, $password);
-
 					if ($user) {
 						// Assign the user's role to the session
 						$_SESSION['roles'] = $user->getRoles();
@@ -42,17 +47,17 @@ class ConnectController extends Controller
 				$message = 'Une erreur s\'est produite lors de l\'authentification';
 			}
 		}
-
 		return $this->twig->render('login/login.html.twig', [
 			'message' => $message
 		]);
 	}
-
+	/**
+	 * @return void
+	 */
 	public function logout()
 	{
 		session_start();
 		$_SESSION = array();
-
 		if (ini_get("session.use_cookies")) {
 			$params = session_get_cookie_params();
 			setcookie(
@@ -65,11 +70,9 @@ class ConnectController extends Controller
 				$params["httponly"]
 			);
 		}
-
 		session_destroy();
 		header('Location: /OpenClassrooms/');
 		exit;
 	}
-
 }
 
