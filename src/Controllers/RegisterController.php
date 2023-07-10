@@ -35,9 +35,7 @@ class RegisterController extends Controller
 			}
 		}
 
-		return $this->twig->render('register/register.html.twig', [
-			'errorMessage' => $errorMessage
-		]);
+		return $this->twig->render('register/register.html.twig', ['errorMessage' => $errorMessage]);
 	}
 
 	private function validateForm($formData): bool

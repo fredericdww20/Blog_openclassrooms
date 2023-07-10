@@ -19,8 +19,8 @@ class PostController extends Controller
 	{
 		$message = null;
 		if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-				$postManager = new PostManager();
-				$userId = $_SESSION['user_id'];
+			$postManager = new PostManager();
+			$userId = $_SESSION['user_id'];
 			try {
 				$postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
 				$message = 'Article envoyé';
