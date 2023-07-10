@@ -8,13 +8,10 @@ use App\Models\AdminManager;
 
 class AdminController extends Controller
 {
-
 	public function listcomment(): string
 	{
 		$adminManager = new AdminManager();
-
 		$comments = $adminManager->fetchcomment();
-
 		$message = $_SESSION['message'];
 
 		$output = $this->twig->render('admin/comment.html.twig', [
