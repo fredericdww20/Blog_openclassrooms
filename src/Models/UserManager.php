@@ -63,7 +63,7 @@ class UserManager
 		}
 		return null;
 	}
-	// On récupére les informations de l'utilisateur 
+	// On récupére les informations de l'utilisateur
 	public function fetchuser()
 	{
 		$sql = 'SELECT * FROM user';

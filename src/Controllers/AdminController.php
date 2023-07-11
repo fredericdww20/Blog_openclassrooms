@@ -66,7 +66,7 @@ class AdminController extends Controller
 					$_SESSION['message'] = 'Mise à jour réussie';
 
 					header('Location: /OpenClassrooms/admin/posts');
-					exit();
+					return; // Renvoie un message de succès si la mise à jour à reussie
 				}
 			}
 		}

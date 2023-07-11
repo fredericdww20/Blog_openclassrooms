@@ -24,7 +24,7 @@ Route::add('/', function () {
 }, 'post');
 
 /// USERCONTROLLER //
-Route::add('/profile', function () {
+Route::add('/profil', function () {
 	echo (new UserController())->infouser();
 });
 
