@@ -25,8 +25,7 @@ class RegisterController extends Controller
 
                     $userManager->create($firstname, $lastname, $email, $password);
 
-                    header('Location: /OpenClassrooms/');
-                    exit;
+                    $this->redirect('/OpenClassrooms/');
 
                 } else {
                     $errorMessage = self::ERROR_EMAIL_EXISTS;
