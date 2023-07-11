@@ -9,17 +9,17 @@ class Request
     public function __construct(private readonly array $data)
     {
         foreach ($data as $key => $element) {
-            $data[$key] = StringHelper::cleanString($element);
+            $data[$key] = StringHelper::cleanString($element, true);
         }
     }
 
     public function get(string $key): ?string
     {
-        return isset($this->data[$key]) ?: null;
+        return $this->data[$key] ?? null;
     }
 
-    public function getData(): array
+    public function isPost(): bool
     {
-        return $this->data;
+        return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 }

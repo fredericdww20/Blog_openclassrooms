@@ -90,7 +90,7 @@ class PostManager
 
     public function update(int $id, string $title, string $description, string $chapo): ?Post
     {
-        $sql = 'UPDATE post SET title = :title, description = :description, chapo = :chapo WHERE id = :id';
+        $sql = 'UPDATE post SET title = :title, description = :description, updated_at = :updated_at, chapo = :chapo WHERE id = :id';
 
         $statement = $this->pdo->prepare($sql);
 
@@ -99,22 +99,9 @@ class PostManager
             'title' => $title,
             'description' => $description,
             'chapo' => $chapo,
+            'updated_at' => date('Y-m-d H:i:s')
         ]);
 
         return $this->fetch($id);
     }
-
-    public function updateDateUpdated($id, $dateUpdated)
-    {
-        $sql = 'UPDATE post SET updated_at = :updated_at WHERE id = :id';
-
-        $statement = $this->pdo->prepare($sql);
-
-        $statement->execute([
-            'id' => $id,
-            'updated_at' => $dateUpdated
-        ]);
-    }
-
-
 }
