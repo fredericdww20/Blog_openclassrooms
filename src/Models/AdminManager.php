@@ -51,9 +51,12 @@ class AdminManager
 
         return $statement->fetchObject(Post::class);
     }
-
+    /**
+     * @param int $id
+     * @param bool $sta
+     * @return Comment|null
+     */
     // Récupère les commentaires à valider.
-
     public function updatecomment(int $id, bool $sta): ?Comment
     {
         $sql = 'UPDATE comment SET sta = :sta WHERE id = :id';

@@ -40,9 +40,8 @@ class PostController extends Controller
             } catch (PDOException $e) {
                 $message = 'Une erreur s\'est produite lors de la création de l\'article.';
             }
-        } else {
-            $message = 'Veuillez remplir tous les champs du formulaire.';
         }
+        $message = 'Veuillez remplir tous les champs du formulaire.';
         return $this->twig->render('list/posts.html.twig', [
             'message' => $message
         ]);
@@ -96,7 +95,7 @@ class PostController extends Controller
                 $this->redirect('/OpenClassrooms/post/' . $id . '?error=' . $errorString);
             }
         }
-        
+
         return $this->twig->render('list/edit.html.twig', [
             'post' => $post,
             'message' => $message,
