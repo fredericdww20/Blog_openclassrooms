@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         $adminManager = new AdminManager();
         $comments = $adminManager->fetchcomment();
-        $message = $_SESSION['message'];
+        $message = $_SESSION['message'] ?? null;
         $output = $this->twig->render('admin/comment.html.twig', [
             'comments' => $comments,
             'message' => $message
@@ -35,7 +35,7 @@ class AdminController extends Controller
     {
         $adminManager = new AdminManager();
         $posts = $adminManager->fetchvalidate();
-        $message = $_SESSION['message'];
+        $message = $_SESSION['message'] ?? null;
         $output = $this->twig->render('admin/posts.html.twig', [
             'posts' => $posts,
             'message' => $message
@@ -60,8 +60,7 @@ class AdminController extends Controller
                 if (empty($errors)) {
                     $adminManager->update($id, $sta);
                     $_SESSION['message'] = 'Mise à jour réussie';
-                    header('Location: /OpenClassrooms/admin/posts');
-                    return; // Renvoie un message de succès si la mise à jour à reussie
+                    $this->redirect('/OpenClassrooms/admin/posts');
                 }
             }
         }

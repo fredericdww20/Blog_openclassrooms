@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\CommentManager;
 use App\Models\PostManager;
+use App\Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -64,10 +65,13 @@ class PostController extends Controller
         $post = $postManager->fetch($id);
         $message = null;
         $errors = [];
-        if (isset($_POST['title'], $_POST['description'], $_POST['chapo'])) {
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $chapo = $_POST['chapo'];
+
+        $request = new Request($_POST);
+        $title = $request->get('title');
+        $description = $request->get('description');
+        $chapo = $request->get('chapo');
+
+        if ($title && $description && $chapo) {
 
             if (empty($title)) {
                 $errors[] = 'Le titre est requis.';
