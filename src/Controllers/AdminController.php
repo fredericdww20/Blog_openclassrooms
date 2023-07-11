@@ -8,10 +8,16 @@ namespace App\Controllers;
 use App\Models\AdminManager;
 
 /**
- * Class AdminController
+ * Class AdminController.
  */
 class AdminController extends Controller
 {
+    /**
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function listcomment(): string
     {
         $adminManager = new AdminManager();
