@@ -54,17 +54,12 @@ class AdminController extends Controller
 		if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
 			if (isset($_POST['sta'])) {
 				$sta = htmlspecialchars($_POST['sta'], ENT_QUOTES, 'UTF-8');
-
 				if (empty($sta)) {
 					$errors[] = 'Le champ "sta" est requis.';
 				}
-
 				if (empty($errors)) {
-
 					$adminManager->update($id, $sta);
-
 					$_SESSION['message'] = 'Mise à jour réussie';
-
 					header('Location: /OpenClassrooms/admin/posts');
 					return; // Renvoie un message de succès si la mise à jour à reussie
 				}
