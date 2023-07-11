@@ -72,8 +72,7 @@ class ConnectController extends Controller
             );
         }
         session_destroy();
-        header('Location: /OpenClassrooms/');
-        exit;
+        $this->redirect('/OpenClassrooms/');
     }
 }
 
