@@ -7,7 +7,9 @@ namespace App\Controllers;
 
 use App\Models\AdminManager;
 
-
+/**
+ * Class AdminController
+ */
 class AdminController extends Controller
 {
     public function listcomment(): string
