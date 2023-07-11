@@ -6,7 +6,6 @@ namespace App\Controllers;
 
 use App\Models\UserManager;
 use App\Models\User;
-
 class ConnectController extends Controller
 {
 	/**

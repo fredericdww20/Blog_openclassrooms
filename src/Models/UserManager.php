@@ -8,7 +8,7 @@ use PDO;
 class UserManager
 {
 	private PDO $pdo;
-
+	// Connexion à la base de données
 	public function __construct()
 	{
 		try {
@@ -40,7 +40,7 @@ class UserManager
 			'password' => password_hash($password, PASSWORD_DEFAULT),
 		]);
 	}
-
+	// Vérifie les information de l'utilisateur au moment de la connexion
 	public function authentication(string $email, string $password)
 	{
 		$sql = 'SELECT id, email, password, firstname, lastname, roles FROM user WHERE email = :email';
@@ -51,7 +51,6 @@ class UserManager
 		]);
 
 		$user = $statement->fetchObject(User::class);
-
 		if ($user && password_verify($password, $user->getPassword())) {
 
 			$_SESSION['LOGGED_USER'] = $email;
@@ -64,7 +63,18 @@ class UserManager
 		}
 		return null;
 	}
+	// On récupére les informations de l'utilisateur 
+	public function fetchuser()
+	{
+		$sql = 'SELECT * FROM user';
 
+		$statement = $this->pdo->prepare($sql);
+		$statement->execute();
+
+		return $statement->fetchObject(Post::class);
+	}
+
+	// Vérification de l'existance de l'email en base de données
 	public function checkEmailExists(string $email): bool
 	{
 		$sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
@@ -73,11 +83,7 @@ class UserManager
 		$statement->execute([
 			'email' => $email,
 		]);
-
 		$count = $statement->fetchColumn();
-
 		return ($count > 0);
 	}
-
-
 }

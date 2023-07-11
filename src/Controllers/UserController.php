@@ -6,8 +6,12 @@ use App\Models\UserManager;
 
 class UserController extends Controller
 {
-	public function profil()
+	public function infouser()
 	{
-		return $this->twig->render('profil/profil.html.twig');
+		$userManager = new Usermanager();
+		$user = $userManager->fetchuser();
+		return $this->twig->render('profil/profil.html.twig', [
+			'user' => $user,
+		]);
 	}
 }

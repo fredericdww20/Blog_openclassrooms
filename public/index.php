@@ -24,9 +24,10 @@ Route::add('/', function () {
 }, 'post');
 
 /// USERCONTROLLER //
-Route::add('/profil', function () {
-	echo (new UserController())->profil();
+Route::add('/profile', function () {
+	echo (new UserController())->infouser();
 });
+
 
 /// ADMINCONTROLLER //
 Route::add('/admin', function () {
@@ -72,7 +73,6 @@ Route::add('/login', function () {
 Route::add('/inscription', function () {
 	echo (new RegisterController())->register();
 });
-
 Route::add('/inscription', function () {
 	echo (new RegisterController())->register();
 }, 'post');

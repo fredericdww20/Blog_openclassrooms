@@ -22,7 +22,7 @@ class RegisterController extends Controller
 			if ($this->validateForm($_POST)) {
 				if (!$userManager->checkEmailExists($email)) {
 
-					$userId = $userManager->create($firstname, $lastname, $email, $password);
+					$userManager->create($firstname, $lastname, $email, $password);
 
 					header('Location: /OpenClassrooms/');
 					exit;
@@ -34,7 +34,6 @@ class RegisterController extends Controller
 				$errorMessage = self::ERROR_MISSING_FIELDS;
 			}
 		}
-
 		return $this->twig->render('register/register.html.twig', ['errorMessage' => $errorMessage]);
 	}
 
@@ -53,5 +52,4 @@ class RegisterController extends Controller
 		}
 		return true;
 	}
-
 }
