@@ -10,6 +10,7 @@ use App\Models\AdminManager;
 
 /**
  * Class AdminController.
+ *
  * @version Release: 1.0
  */
 class AdminController extends Controller
