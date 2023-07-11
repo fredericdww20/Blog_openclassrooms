@@ -10,6 +10,7 @@ use App\Models\AdminManager;
 
 /**
  * Class AdminController.
+ * @version Release: 1.0
  */
 class AdminController extends Controller
 {
@@ -32,6 +33,12 @@ class AdminController extends Controller
         return $output;
     }
 
+    /**
+     * @return string
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function listvalidate(): string
     {
         $adminManager = new AdminManager();
