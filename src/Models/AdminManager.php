@@ -6,147 +6,153 @@ use PDO;
 
 class AdminManager
 {
-	private PDO $pdo;
+    private PDO $pdo;
 
-	public function __construct()
-	{
-		try {
-			$options = [
-				PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-				PDO::ATTR_EMULATE_PREPARES => false,
-			];
+    public function __construct()
+    {
+        try {
+            $options = [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ];
 
-			$this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
-		} catch (PDOException $e) {
-			die('Erreur de connexion : ' . $e->getMessage());
-		}
-	}
+            $this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
+        } catch (PDOException $e) {
+            die('Erreur de connexion : ' . $e->getMessage());
+        }
+    }
 
-	// Permet la mise à jour d'un post pour le publier.
-	public function update(int $id, bool $sta): ?Post
-	{
-		$sql = 'UPDATE post SET sta = :sta WHERE id = :id';
-		$statement = $this->pdo->prepare($sql);
+    // Permet la mise à jour d'un post pour le publier.
+    public function update(int $id, bool $sta): ?Post
+    {
+        $sql = 'UPDATE post SET sta = :sta WHERE id = :id';
+        $statement = $this->pdo->prepare($sql);
 
-		$statement->execute([
-			'id' => $id,
-			'sta' => $sta,
-		]);
+        $statement->execute([
+            'id' => $id,
+            'sta' => $sta,
+        ]);
 
-		return $this->fetch($id);
-	}
+        return $this->fetch($id);
+    }
 
-	// Permet la mise à jour d'un commentaire pour le publier.
-	public function updatecomment(int $id, bool $sta): ?Comment
-	{
-		$sql = 'UPDATE comment SET sta = :sta WHERE id = :id';
-		$statement = $this->pdo->prepare($sql);
+    // Permet la mise à jour d'un commentaire pour le publier.
 
-		$statement->execute([
-			'id' => $id,
-			'sta' => $sta,
-		]);
+    public function fetch(int $id)
+    {
+        $sql = 'SELECT * FROM post WHERE id = :id';
 
-		return $this->fetchcomments($id);
-	}
+        $statement = $this->pdo->prepare($sql);
 
-	// Récupère les commentaires à valider.
-	public function fetchcomment()
-	{
-		$sql = 'SELECT * FROM comment WHERE sta = 0';
+        $statement->execute([
+            'id' => $id
+        ]);
 
-		$statement = $this->pdo->prepare($sql);
+        return $statement->fetchObject(Post::class);
+    }
 
-		$statement->execute();
+    // Récupère les commentaires à valider.
 
-		$comments = [];
-		while ($row = $statement->fetch()) {
-			$comment = new Comment();
-			$comment->setId($row['id']);
-			$comment->setTitle($row['title']);
-			$comment->setCommentary($row['commentary']);
-			$comment->setCreatedAt($row['created_at']);
-			$comments[] = $comment;
-		}
+    public function updatecomment(int $id, bool $sta): ?Comment
+    {
+        $sql = 'UPDATE comment SET sta = :sta WHERE id = :id';
+        $statement = $this->pdo->prepare($sql);
 
-		return $comments;
-	}
+        $statement->execute([
+            'id' => $id,
+            'sta' => $sta,
+        ]);
 
-	// Récupère les posts à valider.
-	public function fetchvalidate()
-	{
-		$sql = 'SELECT * FROM post WHERE sta = 0';
+        return $this->fetchcomments($id);
+    }
 
-		$statement = $this->pdo->prepare($sql);
+    // Récupère les posts à valider.
 
-		$statement->execute();
+    public function fetchcomments(int $id)
+    {
+        $sql = 'SELECT * FROM comment WHERE id = :id';
 
-		$posts = [];
-		while (($row = $statement->fetch())) {
-			$post = new Post();
-			$post->setId($row['id']);
-			$post->setTitle($row['title']);
-			$post->setChapo($row['chapo']);
-			$post->setDescription($row['description']);
-			$post->setCreated_at($row['created_at']);
+        $statement = $this->pdo->prepare($sql);
 
-			$posts[] = $post;
-		}
+        $statement->execute([
+            'id' => $id
+        ]);
 
-		return $posts;
-	}
+        return $statement->fetchObject(Comment::class);
+    }
 
-	// Récupère les 4 dernier posts valider.
-	public function fetchAll()
-	{
-		$sql = 'SELECT * FROM post WHERE sta = 1 ORDER BY created_at DESC LIMIT 4';
+    // Récupère les 4 dernier posts valider.
 
-		$statement = $this->pdo->prepare($sql);
+    public function fetchcomment()
+    {
+        $sql = 'SELECT * FROM comment WHERE sta = 0';
 
-		$statement->execute();
+        $statement = $this->pdo->prepare($sql);
 
-		$posts = [];
-		while (($row = $statement->fetch())) {
-			$post = new Post();
-			$post->setId($row['id']);
-			$post->setTitle($row['title']);
-			$post->setChapo($row['chapo']);
-			$post->setDescription($row['description']);
-			$post->setCreated_at($row['created_at']);
+        $statement->execute();
 
-			$posts[] = $post;
-		}
+        $comments = [];
+        while ($row = $statement->fetch()) {
+            $comment = new Comment();
+            $comment->setId($row['id']);
+            $comment->setTitle($row['title']);
+            $comment->setCommentary($row['commentary']);
+            $comment->setCreatedAt($row['created_at']);
+            $comments[] = $comment;
+        }
 
-		return $posts;
-	}
+        return $comments;
+    }
 
-	// Récupère les posts via l'id
-	public function fetch(int $id)
-	{
-		$sql = 'SELECT * FROM post WHERE id = :id';
+    // Récupère les posts via l'id
 
-		$statement = $this->pdo->prepare($sql);
+    public function fetchvalidate()
+    {
+        $sql = 'SELECT * FROM post WHERE sta = 0';
 
-		$statement->execute([
-			'id' => $id
-		]);
+        $statement = $this->pdo->prepare($sql);
 
-		return $statement->fetchObject(Post::class);
-	}
+        $statement->execute();
 
-	// Récupére les commentaire via l'id
-	public function fetchcomments(int $id)
-	{
-		$sql = 'SELECT * FROM comment WHERE id = :id';
+        $posts = [];
+        while (($row = $statement->fetch())) {
+            $post = new Post();
+            $post->setId($row['id']);
+            $post->setTitle($row['title']);
+            $post->setChapo($row['chapo']);
+            $post->setDescription($row['description']);
+            $post->setCreated_at($row['created_at']);
 
-		$statement = $this->pdo->prepare($sql);
+            $posts[] = $post;
+        }
 
-		$statement->execute([
-			'id' => $id
-		]);
+        return $posts;
+    }
 
-		return $statement->fetchObject(Comment::class);
-	}
+    // Récupére les commentaire via l'id
+
+    public function fetchAll()
+    {
+        $sql = 'SELECT * FROM post WHERE sta = 1 ORDER BY created_at DESC LIMIT 4';
+
+        $statement = $this->pdo->prepare($sql);
+
+        $statement->execute();
+
+        $posts = [];
+        while (($row = $statement->fetch())) {
+            $post = new Post();
+            $post->setId($row['id']);
+            $post->setTitle($row['title']);
+            $post->setChapo($row['chapo']);
+            $post->setDescription($row['description']);
+            $post->setCreated_at($row['created_at']);
+
+            $posts[] = $post;
+        }
+
+        return $posts;
+    }
 
 }

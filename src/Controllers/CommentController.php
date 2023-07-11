@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CommentManager;
 use App\Models\PostManager;
 use PDOException;
+use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
@@ -17,7 +18,7 @@ class CommentController extends Controller
      * @return string
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \Twig\Error\LoaderError
+     * @throws LoaderError
      */
     public function addcomment(): string
     {
