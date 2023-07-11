@@ -62,7 +62,7 @@ class MainController extends Controller
 			->setTo(['blog@vedayshop.fr'])
 			->setBody($content);
 
-		$result = $mailer->send($message);
+		$mailer->send($message);
 
 		$message = 'Message envoyé';
 
