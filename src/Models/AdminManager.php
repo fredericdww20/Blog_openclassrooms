@@ -21,6 +21,15 @@ class AdminManager
             die('Erreur de connexion : ' . $e->getMessage());
         }
     }
+    public function startScript() {
+        try {
+            $this->pdo->exec("SET sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION'");
+            echo "Le script de démarrage s'est exécuté avec succès !";
+        } catch (PDOException $e) {
+            die('Erreur de script de démarrage : ' . $e->getMessage());
+        }
+    }
+
     // Permet la mise à jour d'un post pour le publier.
     public function update(int $id, bool $sta): ?Post
     {
