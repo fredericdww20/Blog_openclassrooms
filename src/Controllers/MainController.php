@@ -27,17 +27,16 @@ class MainController extends Controller
         $lastname = $request->get('lastname');
         $email = $request->get('email');
         $sujet = $request->get('sujet');
-        $content = $request->get('content');
+        $content = $request->get('message');
 
         // Validation des données du formulaire
         if (!$name || !$lastname || !$email || !$sujet || !$content || !StringHelper::isValidEmail($email)) {
             // Les champs requis ne sont pas remplis
             $message = 'Veuillez remplir tous les champs du formulaire.';
-            //return $this->twig->render('main/index.html.twig', [
-                //'message' => $message,
-            //]);
+            return $this->twig->render('main/index.html.twig', [
+                'message' => $message,
+            ]);
 
-            // Ne fonctionne pas !!!
         }
         // Envoi du message
         $transport = (new Swift_SmtpTransport('mail.vedayshop.fr', 465, 'ssl'))

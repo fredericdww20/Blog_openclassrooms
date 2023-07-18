@@ -30,23 +30,23 @@ class PostController extends Controller
      * @throws SyntaxError
      */
     public function addpost(): string
-    {
-        $message = null;
-        if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-            $userId = $_SESSION['user_id'];
-            try {
-                $this->postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
-                $message = 'Article envoyé';
-            } catch (PDOException $e) {
-                $message = 'Une erreur s\'est produite lors de la création de l\'article.';
-            }
-        } else {
-            $message = 'Veuillez remplir tous les champs du formulaire.';
+{
+    $message = null;
+    if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
+        $userId = $_SESSION['user_id'];
+        try {
+            $this->postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
+            $message = 'Article envoyé pour validation';
+        } catch (PDOException $e) {
+            $message = 'Une erreur s\'est produite lors de la création de l\'article.';
         }
-        return $this->twig->render('list/posts.html.twig', [
-            'message' => $message
-        ]);
+    } else {
+        $message = 'Veuillez remplir tous les champs du formulaire.';
     }
+    return $this->twig->render('list/posts.html.twig', [
+        'message' => $message
+    ]);
+}
 
     public function show($id)
     {
@@ -62,8 +62,18 @@ class PostController extends Controller
 
     public function delete($id)
     {
-        $this->postManager->delete($id);
+        $userId = $_SESSION['id_user'];
+        $isAdmin = $_SESSION['ROLE_ADMIN'];
+
+        $post = $this->postManager->fetch($id);
+        if ($post['id_user'] === $userId || $isAdmin) {
+
+            $this->postManager->delete($id);
+        } else {
+            throw new Exception("Vous n'êtes pas autorisé à supprimer ce post.");
+        }
     }
+
 
     public function update($id)
     {
