@@ -48,7 +48,6 @@ class PostController extends Controller
         ]);
     }
 
-
     public function show($id)
     {
         $commentsManager = new CommentManager();
@@ -96,7 +95,7 @@ class PostController extends Controller
                 $this->redirect('/OpenClassrooms/post/' . $id . '?error=' . $errorString);
             }
         }
-        
+
         return $this->twig->render('list/edit.html.twig', [
             'post' => $post,
             'message' => $message,
