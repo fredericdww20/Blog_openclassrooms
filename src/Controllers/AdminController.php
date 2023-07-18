@@ -116,7 +116,7 @@ class AdminController extends Controller
                 }
             }
         }
-        return $this->twig->render('admin/editco mment.html.twig', [
+        return $this->twig->render('admin/editcomment.html.twig', [
             'id' => $id,
             'sta' => $sta,
             'message' => $message,
