@@ -33,11 +33,12 @@ class MainController extends Controller
         if (!$name || !$lastname || !$email || !$sujet || !$content || !StringHelper::isValidEmail($email)) {
             // Les champs requis ne sont pas remplis
             $message = 'Veuillez remplir tous les champs du formulaire.';
+            //return $this->twig->render('main/index.html.twig', [
+                //'message' => $message,
+            //]);
 
-            $this->redirect('/');
+            // Ne fonctionne pas !!!
         }
-
-
         // Envoi du message
         $transport = (new Swift_SmtpTransport('mail.vedayshop.fr', 465, 'ssl'))
             ->setUsername('blog@vedayshop.fr')
