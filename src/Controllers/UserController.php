@@ -10,6 +10,7 @@ class UserController extends Controller
     {
         $userManager = new Usermanager();
         $user = $userManager->fetchuser();
+
         return $this->twig->render('profil/profil.html.twig', [
             'user' => $user,
         ]);
