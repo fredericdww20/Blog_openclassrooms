@@ -53,7 +53,7 @@ class PostController extends Controller
         $commentsManager = new CommentManager();
         $post = $this->postManager->fetch($id);
         $comments = $commentsManager->fetch($id);
-        
+
         return $this->twig->render('list/post.html.twig', [
             'post' => $post,
             'comments' => $comments,
