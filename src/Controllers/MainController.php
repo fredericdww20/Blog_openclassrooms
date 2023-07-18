@@ -31,12 +31,9 @@ class MainController extends Controller
 
         // Validation des données du formulaire
         if (!$name || !$lastname || !$email || !$sujet || !$content || !StringHelper::isValidEmail($email)) {
-            // Les champs requis ne sont pas remplis
-            $message = 'Veuillez remplir tous les champs du formulaire.';
 
-            $this->redirect('/');
+            $this->redirect('/OpenClassrooms/');
         }
-
 
         // Envoi du message
         $transport = (new Swift_SmtpTransport('mail.vedayshop.fr', 465, 'ssl'))
