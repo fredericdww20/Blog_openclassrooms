@@ -25,6 +25,17 @@ class UserManager
         }
     }
 
+    public function addimage(string $image)
+    {
+        $sql ='INSERT INTO image (image) VALUES (:image)';
+
+        $statement = $this->pdo->prepare($sql);
+
+        $statement->execute([
+            'image' => $image,
+        ]);
+    }
+
     // Fonction enregistrement utilisateur en base de données
     public function create(string $lastname, string $firstname, string $email, string $password)
     {
