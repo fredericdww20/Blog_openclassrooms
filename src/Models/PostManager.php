@@ -65,9 +65,7 @@ class PostManager
     public function fetch(int $id)
     {
         $sql = 'SELECT * FROM post WHERE id = :id';
-
         $statement = $this->pdo->prepare($sql);
-
         $statement->execute([
             'id' => $id
         ]);
@@ -78,9 +76,7 @@ class PostManager
     public function delete(int $id)
     {
         $sql = 'DElETE FROM post WHERE id = :id';
-
         $statement = $this->pdo->prepare($sql);
-
         $statement->execute([
             'id' => $id
         ]);
