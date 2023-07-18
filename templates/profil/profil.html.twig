@@ -51,6 +51,12 @@
     </div>
 </section>
 
+<form  action="/OpenClassrooms/add" method="POST">
+    <input type="hidden" name="MAX_FILE_SIZE" value="250000" />
+    <input type="file" name="image" size=50 />
+    <input type="submit" value="Envoyer" />
+</form>
+
 <h1>Profil de {{ user.firstname }} {{ user.lastname }}</h1>
 
 <p>Email : {{ user.email }}</p>
