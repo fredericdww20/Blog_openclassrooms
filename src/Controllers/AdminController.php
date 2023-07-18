@@ -13,6 +13,7 @@ class AdminController extends Controller
     public function listcomment(): string
     {
         $adminManager = new AdminManager();
+        $adminManager->startScript() ?? null;
         $comments = $adminManager->fetchcomment();
         $message = $_SESSION['message'] ?? null;
         $output = $this->twig->render('admin/comment.html.twig', [
