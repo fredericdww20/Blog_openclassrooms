@@ -9,6 +9,23 @@ class User
     private string $lastname;
     private string $firstname;
     private string $roles;
+    private string $image;
+
+    /**
+     * @return string
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image): void
+    {
+        $this->image = $image;
+    }
     private int $id;
 
     public function getId(): int
