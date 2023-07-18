@@ -4,16 +4,69 @@
 <body class="leading-normal tracking-normal text-white gradient"
       style="font-family: 'Source Sans Pro', sans-serif;">
 <div class="pt-24">
-    <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
-        <!--Left Col-->
-        <div class="flex flex-col w-full md:w-2/5 justify-center items-start text-center md:text-left">
-            <h1 class="my-4 text-5xl font-bold leading-tight">
-                Bienvenue sur votre profil {{ session.firstname }} {{ session.lastname }}
-            </h1>
-        </div>
-        <!--Right Col-->
-        <div class="md:w-3/5 py-6 text-center">
-            <img class="w-20 h-20" src="../assets/img/global-network.png"/>
+
+</div>
+<div class="w-full lg:w-4/12 px-4 mx-auto">
+    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
+        <div class="px-6">
+            <div class="flex flex-wrap justify-center">
+                <div class="w-full px-4 flex justify-center">
+                    <div class="relative">
+                        <img alt="..." src="https://demos.creative-tim.com/notus-js/assets/img/team-2-800x800.jpg" class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
+                    </div>
+                </div>
+                <div class="w-full px-4 text-center mt-20">
+                    <div class="flex justify-center py-4 lg:pt-4 pt-8">
+                        <div class="mr-4 p-3 text-center">
+              <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                {{ user.post_count }}
+              </span>
+                            <span class="text-sm text-blueGray-400">Nombre(s) de publication(s)</span>
+                        </div>
+                        <div class="mr-4 p-3 text-center">
+              <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
+                {{ user.comment_count }}
+              </span>
+                            <span class="text-sm text-blueGray-400">Nombre(s) de commentaire(s)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
+                    {{ user.firstname }} {{ user.lastname }}
+                </h3>
+                <h4 class="text-xs font-semibold leading-normal mb-2 text-blueGray-700 mb-2">{{ user.email }}</h4>
+                <div class="text-sm leading-normal mt-2 mb-1 text-blueGray-400 font-bold uppercase">
+                    <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                    Limoges
+                </div>
+                <div class="mb-2 text-blueGray-600 mt-3">
+                    <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+                    Alternant en Développeur
+                    d'application - PHP/Symfony
+                </div>
+                <div class="mb-2 text-blueGray-600">
+                    <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
+                    OpenClassroom
+                </div>
+            </div>
+            <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
+                <div class="flex flex-wrap justify-center">
+                    <div class="w-full lg:w-9/12 px-4">
+                        <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
+                            An artist of considerable range, Jenna the name taken
+                            by Melbourne-raised, Brooklyn-based Nick Murphy
+                            writes, performs and records all of his own music,
+                            giving it a warm, intimate feel with a solid groove
+                            structure. An artist of considerable range.
+                        </p>
+                        <a href="javascript:void(0);" class="font-normal text-pink-500">
+                            Show more
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -39,26 +92,7 @@
         </g>
     </svg>
 </div>
-<section class="bg-white border-b py-8">
-    <div class="container max-w-5xl mx-auto m-8">
-        <div class="flex min-h-full items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div class="w-full max-w-md space-y-8">
-                <div>
-                    <p>Text ici</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<h1>Profil de {{ user.firstname }} {{ user.lastname }}</h1>
-
-<p>Email : {{ user.email }}</p>
-
-</p>
-
-<p>ID : {{ user.id }}</p>
-
+</body>
 {% endblock %}
 
 {% block javascripts %}

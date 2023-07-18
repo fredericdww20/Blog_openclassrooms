@@ -69,7 +69,11 @@ class UserManager
     // On récupére les informations de l'utilisateur
     public function fetchuser()
     {
-        $sql = 'SELECT * FROM user';
+        $sql = 'SELECT user.*, COUNT(DISTINCT post.id) AS post_count, COUNT(comment.id) AS comment_count
+            FROM user
+            LEFT JOIN post ON user.id = post.id_user
+            LEFT JOIN comment ON user.id = comment.id_user
+            GROUP BY user.id';
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute();

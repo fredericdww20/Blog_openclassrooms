@@ -48,10 +48,10 @@
                                  alt="Bonnie Avatar">
                         </a>
                         <div class="p-2">
-                            <p class=" text-slate-900 dark:text-gray-400">{{ post.title }}</p>
-                            <p class=" text-slate-900 dark:text-gray-400">{{ post.chapo }}</p>
-                            <p class=" text-slate-900 dark:text-gray-400">{{ post.description }}</p>
-                            <p class=" text-slate-900 dark:text-gray-400">{{ post.created_at }}</p>
+                            <h1 class=" underline decoration-pink-500 mb-2 text-lg text-slate-900 dark:text-gray-400 ">{{ post.title }}</h1>
+                            <p class="italic mb-2 text-slate-900 dark:text-gray-400 ">{{ post.chapo }}</p>
+                            <p class=" mb-2 text-slate-900 dark:text-gray-400">{{ post.description }}</p>
+                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Dernière mise à jour le : {{ post.updated_at }}</p>
                         </div>
                     </div>
                     {% if session ['LOGGED_USER'] == true %}
@@ -61,7 +61,7 @@
                            type="button">
                             Supprimer le post
                         </a>
-                        <a href="/update/{{ post.id }}"
+                        <a href="update/{{ post.id }}"
                            class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Modifier le post
