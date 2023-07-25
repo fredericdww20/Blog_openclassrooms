@@ -82,15 +82,4 @@ class UserManager
     }
 
     // Vérification de l'existance de l'email en base de données
-    public function checkEmailExists(string $email): bool
-    {
-        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
-
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute([
-            'email' => $email,
-        ]);
-        $count = $statement->fetchColumn();
-        return ($count > 0);
-    }
 }
