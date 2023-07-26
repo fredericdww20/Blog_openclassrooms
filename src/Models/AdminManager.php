@@ -20,7 +20,6 @@ class AdminManager
         } catch (PDOException $e) {
             echo 'Erreur de connexion';
             exit();
-
         }
     }
     public function startScript() {
