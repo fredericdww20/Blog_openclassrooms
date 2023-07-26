@@ -73,7 +73,7 @@ class UserManager
             FROM user
             LEFT JOIN post ON user.id = post.id_user
             LEFT JOIN comment ON user.id = comment.id_user
-            GROUP BY user.id';
+            WHERE user.id';
 
         $statement = $this->pdo->prepare($sql);
         $statement->execute();
@@ -82,4 +82,30 @@ class UserManager
     }
 
     // Vérification de l'existance de l'email en base de données
+    private function validateForm($formData): bool
+    {
+        return $this->validateFields($formData);
+    }
+
+    private function validateFields($formData): bool
+    {
+        $fields = ['firstname', 'lastname', 'email', 'password'];
+        foreach ($fields as $field) {
+            if (empty($formData[$field])) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public function checkEmailExists(string $email): bool
+    {
+        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'email' => $email,
+        ]);
+        $count = $statement->fetchColumn();
+        return ($count > 0);
+    }
 }

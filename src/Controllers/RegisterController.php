@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Helper\StringHelper;
 use App\Models\UserManager;
-use App\Request;
 
 class RegisterController extends Controller
 {
@@ -16,24 +14,44 @@ class RegisterController extends Controller
         $userManager = new UserManager();
         $errorMessage = null;
 
-        $request = new Request($_POST);
 
-        $firstname = $request->get('firstname');
-        $lastname = $request->get('lastname');
-        $email = $request->get('email');
-        $password = $request->get('password');
+        if (!empty($_POST)) {
+            $firstname = htmlentities($_POST['firstname']);
+            $lastname = htmlentities($_POST['lastname']);
+            $email = htmlentities($_POST['email']);
+            $password = $_POST['password'];
 
-        if (!$firstname || !$lastname || !$email || $password || !StringHelper::isValidEmail($email) || !StringHelper::isValidEmail($email) ) {
+            if ($this->validateForm($_POST)) {
+                if (!$userManager->checkEmailExists($email)) {
 
-            $userManager->create($firstname, $lastname, $email, $password);
-            $message = 'Message';
-            return $this->twig->render('main/index.html.twig', [
-                'message' => $message,
-            ]);
+                    $userManager->create($firstname, $lastname, $email, $password);
+
+                    header('Location: /OpenClassrooms/');
+                    exit;
+
+                } else {
+                    $errorMessage = self::ERROR_EMAIL_EXISTS;
+                }
+            } else {
+                $errorMessage = self::ERROR_MISSING_FIELDS;
+            }
         }
+        return $this->twig->render('register/register.html.twig', ['errorMessage' => $errorMessage]);
     }
 
+    private function validateForm($formData): bool
+    {
+        return $this->validateFields($formData);
+    }
 
-
-
+    private function validateFields($formData): bool
+    {
+        $fields = ['firstname', 'lastname', 'email', 'password'];
+        foreach ($fields as $field) {
+            if (empty($formData[$field])) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
