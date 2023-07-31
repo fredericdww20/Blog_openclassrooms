@@ -17,63 +17,72 @@ class ConnectController extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws \Exception
      */
     public function connect()
     {
         $userManager = new UserManager();
         $message = null;
-        if (isset($_POST['email']) && isset($_POST['password'])) {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            try {
-                if ($userManager->checkEmailExists($email)) {
-                    $user = $userManager->authentication($email, $password);
-                    if ($user) {
-                        // Assign the user's role to the session
-                        $_SESSION['roles'] = $user->getRoles();
+        // Generate CSRF token and store it in a session variable
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        }
+        $csrfToken = $_SESSION['csrf_token'];
 
-                        // Check the user's role for redirection
-                        if ($_SESSION['roles'] === 'ROLE_ADMIN') {
-                            $this->redirect('/OpenClassrooms/admin');
+        $userManager = new UserManager();
+        $message = null;
 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Validate CSRF token
+            if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $csrfToken) {
+                $message = 'Invalid CSRF token. Please try again.';
+            } else {
+                $email = $_POST['email'];
+                $password = $_POST['password'];
+                try {
+                    if ($userManager->checkEmailExists($email)) {
+                        $user = $userManager->authentication($email, $password);
+                        if ($user) {
+                            // Assign the user's role to the session
+                            $_SESSION['roles'] = $user->getRoles();
+
+                            // Check the user's role for redirection
+                            if ($_SESSION['roles'] === 'ROLE_ADMIN') {
+                                $this->redirect('/OpenClassrooms/admin');
+                            } else {
+                                $this->redirect('/OpenClassrooms/');
+                            }
                         } else {
-                            $this->redirect('/OpenClassrooms/');
+                            $message = 'Identifiants de connexion incorrects';
                         }
                     } else {
-                        $message = 'Identifiants de connexion incorrects';
+                        $message = 'Utilisateur non trouvé';
                     }
-                } else {
-                    $message = 'Utilisateur non trouvé';
+                } catch (Exception $e) {
+                    $message = 'Une erreur s\'est produite lors de l\'authentification';
                 }
-            } catch (Exception $e) {
-                $message = 'Une erreur s\'est produite lors de l\'authentification';
             }
         }
-        return $this->twig->render('login/login.html.twig', [
-            'message' => $message]);
-    }
 
-    /**
-     * @return void
-     */
-    public function logout()
-    {
-        session_start();
-        $_SESSION = array();
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                time() - 42000,
-                $params["path"],
-                $params["domain"],
-                $params["secure"],
-                $params["httponly"]
-            );
-        }
-        session_destroy();
-        header('Location: /OpenClassrooms/');
-    }
-}
+        return $this->twig->render('login/login.html.twig', ['message' => $message, 'csrfToken' => $csrfToken]);
+    }}
+
+//public function logout()
+//{
+  //  $_SESSION = array();
+
+    //if (ini_get("session.use_cookies")) {
+      //  $params = session_get_cookie_params();
+        //setcookie(
+          //  session_name(),
+            //'',
+            //time() - 42000,
+            //$params["path"],
+            //$params["domain"],
+            //$params["secure"],
+            //$params["httponly"]
+        //);
+    //}
+    //session_destroy();
+    //header('Location: /OpenClassrooms/');/}
 
