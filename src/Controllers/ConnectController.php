@@ -23,7 +23,7 @@ class ConnectController extends Controller
     {
         $userManager = new UserManager();
         $message = null;
-        // Generate CSRF token and store it in a session variable
+
         if (!isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }

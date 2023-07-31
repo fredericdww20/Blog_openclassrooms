@@ -4,12 +4,14 @@ namespace App\Models;
 
 use PDO;
 
+require_once __DIR__ . '/config.php';
 class PostManager
 {
 
     private PDO $pdo;
 
     public function __construct() {
+
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -17,11 +19,12 @@ class PostManager
         ];
 
         try {
-            $this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
+            $this->pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWORD, $options);
         } catch (PDOException $e) {
             echo 'Erreur de connexion';
             return;
         }
+
     }
 
     public function creatpost(string $title, string $description, string $chapo, int $userId)

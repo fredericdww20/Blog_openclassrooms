@@ -7,6 +7,7 @@ error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 
+
 use App\Controllers\AdminController;
 use App\Controllers\CommentController;
 use App\Controllers\ConnectController;
@@ -59,9 +60,9 @@ Route::add('/admin/validate/([0-9]*)', function ($id) {
 
 
 /// CONNECTCONTROLLER //
-Route::add('/logout', function () {
-    echo (new ConnectController())->logout();
-});
+//Route::add('/logout', function () {
+    //echo (new ConnectController())->logout();
+//});
 Route::add('/login', function () {
     echo (new ConnectController())->connect();
 });
