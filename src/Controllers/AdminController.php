@@ -28,6 +28,7 @@ class AdminController extends Controller
     {
         $adminManager = new AdminManager();
         $posts = $adminManager->fetchAll();
+
         return $this->twig->render('admin/admin.html.twig', [
             'posts' => $posts]);
     }
