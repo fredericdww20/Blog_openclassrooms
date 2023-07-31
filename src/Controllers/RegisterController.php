@@ -12,7 +12,8 @@ class RegisterController extends Controller
     public function register()
     {
         $userManager = new UserManager();
-        
+        $errorMessage = null;
+
         if (!empty($_POST)) {
             $firstname = htmlentities($_POST['firstname']);
             $lastname = htmlentities($_POST['lastname']);

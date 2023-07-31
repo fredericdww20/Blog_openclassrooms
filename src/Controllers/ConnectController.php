@@ -34,11 +34,10 @@ class ConnectController extends Controller
 
                         // Check the user's role for redirection
                         if ($_SESSION['roles'] === 'ROLE_ADMIN') {
-                            header('Location: /OpenClassrooms/admin');
-                            exit;
+                            $this->redirect('/OpenClassrooms/admin');
+
                         } else {
-                            header('Location: /OpenClassrooms/');
-                            exit;
+                            $this->redirect('/OpenClassrooms/');
                         }
                     } else {
                         $message = 'Identifiants de connexion incorrects';
