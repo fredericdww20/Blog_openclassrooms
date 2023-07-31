@@ -20,7 +20,7 @@ class CommentManager
             $this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
         } catch (PDOException $e) {
             echo 'Erreur de connexion';
-            exit();
+            return;
         }
     }
 
