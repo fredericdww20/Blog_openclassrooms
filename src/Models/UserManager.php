@@ -20,7 +20,8 @@ class UserManager
         try {
             $this->pdo = new PDO('mysql:host=fportemer.fr;dbname=pofr8259_blogopen;charset=utf8', 'pofr8259_blogopen', 'aW3GTb^~r@WA', $options);
         } catch (PDOException $e) {
-            die('Erreur de connexion : ' . $e->getMessage());
+            echo 'Erreur de connexion';
+            exit();
         }
     }
 
