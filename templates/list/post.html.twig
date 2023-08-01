@@ -51,7 +51,7 @@
                             <h1 class=" underline decoration-pink-500 mb-2 text-lg text-slate-900 dark:text-gray-400 ">{{ post.title }}</h1>
                             <p class="italic mb-2 text-slate-900 dark:text-gray-400 ">{{ post.chapo }}</p>
                             <p class=" mb-2 text-slate-900 dark:text-gray-400">{{ post.description }}</p>
-                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Dernière mise à jour le : {{ post.updated_at }}</p>
+                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Dernière mise à jour le : {{ post.getCreated_at() | date("d/m/Y") }}</p>
                         </div>
                     </div>
                     {% if session ['LOGGED_USER'] == true %}

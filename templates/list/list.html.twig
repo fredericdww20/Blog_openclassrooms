@@ -2,6 +2,7 @@
 
 {% block body %}
 
+
 <body class="leading-normal tracking-normal text-white gradient"
       style="font-family: 'Source Sans Pro', sans-serif;">
 <div class="pt-24">
@@ -43,6 +44,9 @@
 <section class="bg-white border-b py-8">
     <div class="container mx-auto">
         <div class=" m-9 grid grid-cols-3 gap-3 place-content-stretch ">
+            {% if message is not empty  %}
+                <div class="text-center m-5 text-green-600 bg-gray-50 dark:bg-green-700 dark:text-green-400">{{ message }}</div>
+            {% endif %}
 
             {% for post in posts %}
 
@@ -56,7 +60,7 @@
                         <div class="p-2">
                             <h1 class=" underline decoration-pink-500 mb-2 text-lg text-slate-900 dark:text-gray-400">{{ post.title }}</h1>
                             <p class=" mb-2 text-slate-900 dark:text-gray-400">{{ post.chapo }}</p>
-                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Crée le : {{ post.getCreated_at() }}</p>
+                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Crée le : {{ post.getCreated_at() | date("d/m/Y") }}</p>
                         </div>
                     </div>
                     <div class="text-center"> <a href="post/{{ post.id }}"

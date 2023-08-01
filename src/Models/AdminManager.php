@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use PDO;
+use PDOException;
 
 require_once __DIR__ . '/config.php';
 class AdminManager
@@ -11,16 +12,17 @@ class AdminManager
 
     public function __construct() {
 
-        $options = [
+        $pdoOptions = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
 
         try {
-            $this->pdo = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWORD, $options);
+            $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
+            $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
         } catch (PDOException $e) {
-            echo 'Erreur de connexion';
+            echo 'Connection error: ' . $e->getMessage();
             return;
         }
 
