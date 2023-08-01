@@ -66,6 +66,7 @@ class AdminController extends Controller
             }
         }
 
+
         return $this->twig->render('admin/edit.html.twig', [
             'id' => $id,
             'sta' => $sta,

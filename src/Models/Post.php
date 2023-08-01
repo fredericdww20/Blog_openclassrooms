@@ -11,6 +11,7 @@ class Post
     private bool $sta;
     private string $updated_at;
     private string $created_at;
+    private int $id_user;
 
     public function getId(): int
     {
@@ -80,6 +81,11 @@ class Post
     public function setCreated_at(string $created_at): void
     {
         $this->created_at = $created_at;
+    }
+
+    public function getIdUser(): int
+    {
+        return $this->id_user;
     }
 
 }

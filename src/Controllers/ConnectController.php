@@ -33,9 +33,9 @@ class ConnectController extends Controller
         $message = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Validate CSRF token
+
             if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $csrfToken) {
-                $message = 'Invalid CSRF token. Please try again.';
+                $message = 'Jeton CSRF non valide. Veuillez réessayer.';
             } else {
                 $email = $_POST['email'];
                 $password = $_POST['password'];
@@ -43,10 +43,9 @@ class ConnectController extends Controller
                     if ($userManager->checkEmailExists($email)) {
                         $user = $userManager->authentication($email, $password);
                         if ($user) {
-                            // Assign the user's role to the session
+
                             $_SESSION['roles'] = $user->getRoles();
 
-                            // Check the user's role for redirection
                             if ($_SESSION['roles'] === 'ROLE_ADMIN') {
                                 $this->redirect('/OpenClassrooms/admin');
                             } else {
@@ -65,24 +64,28 @@ class ConnectController extends Controller
         }
 
         return $this->twig->render('login/login.html.twig', ['message' => $message, 'csrfToken' => $csrfToken]);
-    }}
+    }
 
-//public function logout()
-//{
-  //  $_SESSION = array();
 
-    //if (ini_get("session.use_cookies")) {
-      //  $params = session_get_cookie_params();
-        //setcookie(
-          //  session_name(),
-            //'',
-            //time() - 42000,
-            //$params["path"],
-            //$params["domain"],
-            //$params["secure"],
-            //$params["httponly"]
-        //);
-    //}
-    //session_destroy();
-    //header('Location: /OpenClassrooms/');/}
+    public function logout()
+    {
+        $_SESSION = array();
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+
+        session_destroy();
+        header('Location: /OpenClassrooms/');
+    }
+}
 

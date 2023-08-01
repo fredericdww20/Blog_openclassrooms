@@ -5,7 +5,6 @@ namespace App\Models;
 use PDO;
 use PDOException;
 
-require_once __DIR__ . '/config.php';
 class AdminManager
 {
     private PDO $pdo;

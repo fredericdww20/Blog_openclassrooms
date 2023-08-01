@@ -66,20 +66,17 @@ class PostController extends Controller
         $role = $_SESSION['roles'] === 'ROLE_ADMIN';
 
         $post = $this->postManager->fetch($id);
-        if ($role || $post->getId() === $userId) {
+        if ($role || $post->getIdUser() === $userId) {
 
             $this->postManager->delete($id);
 
-            $_SESSION['message'] = 'Suppression réussie';
-            $this->redirect('/OpenClassrooms/admin/posts' . '?message=Suppression réussie');
+            $this->addSuccess('Suppression réussie');
         } else {
-            $_SESSION['message'] = 'Vous ne pouvez pas supprimer ce post';
-            $this->redirect('/OpenClassrooms/admin/posts' . '?message=Vous ne pouvez pas supprimer ce post');
+           $this->addError('Vous ne pouvez pas supprimer ce post');
         }
 
-        // Si user impossible de supprimer un post
-        // SI user admin possible de supprimer un post
 
+        $this->redirect('/OpenClassrooms/posts');
     }
 
 

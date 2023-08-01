@@ -40,14 +40,11 @@
         </g>
     </svg>
 </div>
+{% include '_message.html.twig' %}
 
 <section class="bg-white border-b py-8">
     <div class="container mx-auto">
         <div class=" m-9 grid grid-cols-3 gap-3 place-content-stretch ">
-            {% if message is not empty  %}
-                <div class="text-center m-5 text-green-600 bg-gray-50 dark:bg-green-700 dark:text-green-400">{{ message }}</div>
-            {% endif %}
-
             {% for post in posts %}
 
                 <section class="z-50 pb-5 bg-white dark:bg-gray-900">

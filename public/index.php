@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../config.php';
 
 
 use App\Controllers\AdminController;
@@ -44,24 +45,25 @@ Route::add('/admin/posts', function () {
 Route::add('/admin/comment', function () {
     echo (new AdminController())->listcomment();
 });
-Route::add('/admin/com/([0-9]*)', function ($id) {
+Route::add('/admin/com/([0-9]+)', function ($id) {
     echo (new AdminController())->updatecomments($id);
 });
-Route::add('/admin/com/([0-9]*)', function ($id) {
+Route::add('/admin/com/([0-9]+)', function ($id) {
     echo (new AdminController())->updatecomments($id);
 }, 'post');
-Route::add('/admin/validate/([0-9]*)', function ($id) {
+
+Route::add('/admin/validate/([0-9]+)', function ($id) {
     echo (new AdminController())->update($id);
 });
-Route::add('/admin/validate/([0-9]*)', function ($id) {
+Route::add('/admin/validate/([0-9]+)', function ($id) {
     echo (new AdminController())->update($id);
 }, 'post');
 
 
 /// CONNECTCONTROLLER //
-//Route::add('/logout', function () {
-    //echo (new ConnectController())->logout();
-//});
+Route::add('/logout', function () {
+    echo (new ConnectController())->logout();
+});
 Route::add('/login', function () {
     echo (new ConnectController())->connect();
 });
@@ -92,11 +94,11 @@ Route::add('/posts', function () {
 Route::add('/post/([0-9]*)', function ($id) {
     echo (new PostController())->show($id);
 });
+
 Route::add('/delete/([0-9]*)', function ($id) {
     (new PostController())->delete($id);
-    header('Location: /OpenClassrooms/posts');
-    exit();
 });
+
 Route::add('/update/([0-9]*)', function ($id) {
     echo (new PostController())->update($id);
 });
