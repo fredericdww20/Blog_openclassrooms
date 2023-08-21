@@ -24,7 +24,7 @@ class RegisterController extends Controller
                 if (!$userManager->checkEmailExists($email)) {
 
                     $userManager->create($firstname, $lastname, $email, $password);
-
+                    $this->addSuccess('Inscription réussie');
                     $this->redirect('/OpenClassrooms/');
 
                 } else {

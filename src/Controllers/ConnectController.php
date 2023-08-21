@@ -22,49 +22,47 @@ class ConnectController extends Controller
     public function connect()
     {
         $userManager = new UserManager();
-        $message = null;
 
         if (!isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
         $csrfToken = $_SESSION['csrf_token'];
 
-        $userManager = new UserManager();
-        $message = null;
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $csrfToken) {
-                $message = 'Jeton CSRF non valide. Veuillez réessayer.';
+                $this->addError('Jeton CSRF non valide. Veuillez réessayer.');
             } else {
                 $email = $_POST['email'];
                 $password = $_POST['password'];
-                try {
-                    if ($userManager->checkEmailExists($email)) {
-                        $user = $userManager->authentication($email, $password);
-                        if ($user) {
 
-                            $_SESSION['roles'] = $user->getRoles();
+                if ($userManager->checkEmailExists($email)) {
+                    $user = $userManager->authentication($email, $password);
+                    if ($user) {
+                        $_SESSION['roles'] = $user->getRoles();
 
-                            if ($_SESSION['roles'] === 'ROLE_ADMIN') {
-                                $this->redirect('/OpenClassrooms/admin');
-                            } else {
-                                $this->redirect('/OpenClassrooms/');
-                            }
+                        if ($_SESSION['roles'] === 'ROLE_ADMIN') {
+                            $this->addSuccess('Connexion en tant qu\'administrateur réussie.');
+                            $this->redirect('/OpenClassrooms/admin');
+                            return;  // Arrêt de la fonction après la redirection
                         } else {
-                            $message = 'Identifiants de connexion incorrects';
+                            $this->addSuccess('Connexion réussie.');
+                            $this->redirect('/OpenClassrooms/');
+                            return;  // Arrêt de la fonction après la redirection
                         }
                     } else {
-                        $message = 'Utilisateur non trouvé';
+                        $this->addError('Identifiants de connexion incorrects');
                     }
-                } catch (Exception $e) {
-                    $message = 'Une erreur s\'est produite lors de l\'authentification';
+                } else {
+                    $this->addError('Utilisateur non trouvé');
                 }
             }
         }
 
-        return $this->twig->render('login/login.html.twig', ['message' => $message, 'csrfToken' => $csrfToken]);
+        $this->redirect('/OpenClassrooms/login');  /
+        // Ne fonctionne pas
     }
+
+
 
 
     public function logout()

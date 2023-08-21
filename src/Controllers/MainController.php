@@ -14,6 +14,10 @@ use Swift_SmtpTransport;
 class MainController extends Controller
 {
     // Rendu vers la page principale
+
+
+    private string $addSuccess;
+
     public function index()
     {
         return $this->twig->render('main/index.html.twig');
@@ -32,10 +36,8 @@ class MainController extends Controller
         // Validation des données du formulaire
         if (!$name || !$lastname || !$email || !$sujet || !$content || !StringHelper::isValidEmail($email)) {
             // Les champs requis ne sont pas remplis
-            $message = 'Veuillez remplir tous les champs du formulaire.';
-            return $this->twig->render('main/index.html.twig', [
-                'message' => $message,
-            ]);
+            $this->addError = 'Veuillez remplir tous les champs du formulaire.';
+            return $this->twig->render('main/index.html.twig');
 
         }
         // Envoi du message
@@ -52,11 +54,10 @@ class MainController extends Controller
 
         $mailer->send($message);
 
-        $message = 'Message envoyé';
+        $this->addSuccess('Message envoyé');
 
-        return $this->twig->render('main/index.html.twig', [
-            'message' => $message,
-        ]);
+        $this->redirect('/OpenClassrooms/');
+        // Message ne fonctionne pas !!!
     }
 
 }

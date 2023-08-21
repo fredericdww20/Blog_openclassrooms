@@ -8,7 +8,6 @@ class UserController extends Controller
 {
     public function infouser()
     {
-
         $loggedInUserId = $_SESSION['user_id'];
 
         $userManager = new Usermanager();

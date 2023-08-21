@@ -1,3 +1,5 @@
-{% for key, value in messages %}
-    <div class="message message-{{ key }}">{{ value }}</div>
+{% for message in messages %}
+    <div class="message message-{{ message.type }}">
+        {{ message.message }}
+    </div>
 {% endfor %}

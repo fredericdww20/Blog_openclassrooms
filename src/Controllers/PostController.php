@@ -30,23 +30,24 @@ class PostController extends Controller
      * @throws SyntaxError
      */
     public function addpost(): string
-{
-    $message = null;
-    if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-        $userId = $_SESSION['user_id'];
-        try {
-            $this->postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
-            $message = 'Article envoyé pour validation';
-        } catch (PDOException $e) {
-            $message = 'Une erreur s\'est produite lors de la création de l\'article.';
+    {
+        if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
+
+            $userId = $_SESSION['user_id'];
+
+            try {
+                $this->postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
+                $this->addSuccess('Article envoyé pour validation');
+            } catch (PDOException $e) {
+                $this->addError('Une erreur s\'est produite lors de la création de l\'article.');
+            }
+        } else {
+            $this->addError('Veuillez remplir tous les champs.');
         }
-    } else {
-        $message = 'Veuillez remplir tous les champs du formulaire.';
+        $this->redirect('/OpenClassrooms/add');
     }
-    return $this->twig->render('list/posts.html.twig', [
-        'message' => $message
-    ]);
-}
+
+
 
     public function show($id)
     {
@@ -75,8 +76,8 @@ class PostController extends Controller
            $this->addError('Vous ne pouvez pas supprimer ce post');
         }
 
-
         $this->redirect('/OpenClassrooms/posts');
+
     }
 
 
@@ -104,18 +105,16 @@ class PostController extends Controller
 
             if (empty($errors)) {
                 $this->postManager->update($id, $title, $description, $chapo);
-                $message = 'Article modifié';
-                $this->redirect('/OpenClassrooms/post/' . $id . '?message=Article modifié');
+                $this->addSuccess('Article modifié');
+                $this->redirect('/OpenClassrooms/post/' . $id);
             } else {
-                $errorString = urlencode(implode('<br>', $errors));
-                $this->redirect('/OpenClassrooms/post/' . $id . '?error=' . $errorString);
+                $this->addError('Erreur dans la modification du post');
+                $this->redirect('/OpenClassrooms/post/' . $id);
             }
         }
 
         return $this->twig->render('list/edit.html.twig', [
             'post' => $post,
-            'message' => $message,
-            'errors' => $errors
         ]);
     }
 

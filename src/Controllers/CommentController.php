@@ -22,8 +22,6 @@ class CommentController extends Controller
      */
     public function addcomment(): string
     {
-        $message = null;
-
         if (!empty($_POST['title']) && !empty($_POST['commentary']) && !empty($_POST['id_post'])) {
             $commentManager = new CommentManager();
 
@@ -35,25 +33,21 @@ class CommentController extends Controller
 
                 try {
                     $commentManager->commentate($_POST['title'], $_POST['commentary'], $postId, $userId);
-                    $message = 'Commentaire envoyé';
+                    $this->addSuccess('Commentaire envoyé');
                 } catch (PDOException $e) {
-                    $message = 'Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage();
+                    $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
                 }
-            }
-            {
-                $message = 'ID d\'utilisateur invalide.';
+            }else {
+                $this->addError('Veuillez remplir tous les champs du formulaire.');
             }
         } else {
-            $message = 'Veuillez remplir tous les champs du formulaire.';
+            $this->addError('ID d\'utilisateur invalide.');
         }
 
         $postManager = new PostManager();
         $post = $postManager->fetch($postId);
 
-        return $this->twig->render('list/post.html.twig', [
-            'message' => $message,
-            'post' => $post,
-        ]);
+        $this->redirect('/OpenClassrooms/post/' . $postId);
     }
 
     public function showComment($id)

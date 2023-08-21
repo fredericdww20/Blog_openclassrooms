@@ -35,13 +35,12 @@
         </g>
     </svg>
 </div>
-{% include '_message.html.twig' %}
 
 <section class="bg-white border-b py-8">
     <div class="container max-w-5xl mx-auto m-8">
         <div class="flex min-h-full items-center justify-center px-4 sm:px-6 lg:px-8">
             <div class="w-full max-w-md space-y-8">
-
+                <div class="rounded-lg sm:rounded-none sm:rounded-l-lg bg-white text-center">{% include '_message.html.twig' %}</div>
                 <section class="z-50 pb-5 bg-white dark:bg-gray-900">
                     <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
                         <a href="#">
@@ -78,7 +77,6 @@
             </div>
         </div>
     </div>
-
     <section class="bg-white dark:bg-gray-900 py-8 lg:py-16">
         <div class="max-w-2xl mx-auto px-4">
             <div class="flex justify-between items-center mb-6">
@@ -114,8 +112,8 @@
                     <div class="flex items-center">
                         <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
                                     class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                                    alt="Michael Gough">{{ comment.lastname }} {{ comment.firstname }}</p>
+                                    src="https://cdn-icons-png.flaticon.com/512/1531/1531344.png"
+                                    alt="image">{{ comment.lastname }} {{ comment.firstname }}</p>
                         <p class="text-sm text-gray-600 dark:text-gray-400"><time>Publier le : {{ comment.created_at|date("d/m/Y H:i:s", "Europe/Paris") }}</time></p>
                     </div>
                     {% if session ['LOGGED_USER'] == true %}

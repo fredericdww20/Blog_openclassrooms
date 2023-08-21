@@ -53,11 +53,7 @@
                            class="font-medium text-black-400 hover:text-grey-500">Crée votre compte</a>
                     </p>
 
-                    {% if message is defined and message is not empty %}
-                        <div class="error-message">
-                            <p class="m-3 text-center font-medium text-red-400 hover:text-red-500">{{ message }}</p>
-                        </div>
-                    {% endif %}
+                    <div class="bg-white text-center text-black">{% include '_message.html.twig' %}</div>
                 </div>
 
                 <form class="space-y-6 " action="/OpenClassrooms/login" method="POST">

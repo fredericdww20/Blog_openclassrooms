@@ -40,13 +40,13 @@
         </g>
     </svg>
 </div>
-{% include '_message.html.twig' %}
+
 
 <section class="bg-white border-b py-8">
     <div class="container mx-auto">
+        <div class="bg-white text-center text-black">{% include '_message.html.twig' %}</div>
         <div class=" m-9 grid grid-cols-3 gap-3 place-content-stretch ">
             {% for post in posts %}
-
                 <section class="z-50 pb-5 bg-white dark:bg-gray-900">
                     <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
                         <a href="#">

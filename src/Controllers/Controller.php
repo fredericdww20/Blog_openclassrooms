@@ -30,12 +30,12 @@ abstract class Controller
 
     public function addSuccess(string $message): void
     {
-        $this->messages['success'] = $message;
+        $this->messages[] = ['type' => 'success', 'message' => $message];
     }
 
     public function addError(string $message): void
     {
-        $this->messages['error'] = $message;
+        $this->messages[] = ['type' => 'error', 'message' => $message];
     }
 
     public function redirect(string $path): void {
