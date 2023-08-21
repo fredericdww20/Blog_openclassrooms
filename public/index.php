@@ -94,7 +94,6 @@ Route::add('/posts', function () {
 Route::add('/post/([0-9]*)', function ($id) {
     echo (new PostController())->show($id);
 });
-
 Route::add('/delete/([0-9]*)', function ($id) {
     (new PostController())->delete($id);
 });
@@ -107,12 +106,23 @@ Route::add('/update/([0-9]*)', function ($id) {
 }, 'post');
 
 
+
 /// COMMENTCONTROLLER //
 Route::add('/comment', function () {
     echo (new CommentController())->addcomment();
 });
 Route::add('/comment', function () {
     echo (new CommentController())->addcomment();
+}, 'post');
+Route::add('/deletecomment/([0-9]*)', function ($id) {
+    echo (new CommentController())->deleteComment($id);
+});
+
+Route::add('/updatecomment/([0-9]*)', function ($id) {
+    echo (new CommentController())->updateComment($id);
+});
+Route::add('/updatecomment/([0-9]*)', function ($id) {
+    echo (new CommentController())->updateComment($id);
 }, 'post');
 
 // Run the router

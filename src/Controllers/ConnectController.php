@@ -58,7 +58,7 @@ class ConnectController extends Controller
             }
         }
 
-        $this->redirect('/OpenClassrooms/login');  /
+        $this->redirect('/OpenClassrooms/login');
         // Ne fonctionne pas
     }
 

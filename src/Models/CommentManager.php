@@ -60,4 +60,43 @@ class CommentManager
         return $statement->fetchAll(PDO::FETCH_CLASS, Comment::class);
     }
 
+    public function delete(int $id): bool
+    {
+        $sql = 'DELETE FROM comment WHERE id = :id';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'id' => $id
+        ]);
+
+        return $statement->fetchObject(Comment::class);
+    }
+
+    public function fetchcomment(int $id)
+    {
+        $sql = 'SELECT * FROM comment WHERE id = :id';
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute([
+            'id' => $id
+        ]);
+
+        return $statement->fetchObject(Comment::class);
+    }
+
+    public function update(int $id, string $title, string $commentary)
+    {
+        $sql = 'UPDATE comment SET title = :title, commentary = :commentary, sta = 0 WHERE id = :id';
+
+        $statement = $this->pdo->prepare($sql);
+
+        $statement->execute([
+            'id' => $id,
+            'title' => $title,
+            'commentary' => $commentary
+        ]);
+
+        return $this->fetch($id);
+    }
+
+
+
 }
