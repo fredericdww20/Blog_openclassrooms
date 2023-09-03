@@ -58,12 +58,9 @@ class ConnectController extends Controller
             }
         }
 
-        $this->redirect('/OpenClassrooms/login');
+        return $this->twig->render('login/login.html.twig', ['csrfToken' => $csrfToken]);
         // Ne fonctionne pas
     }
-
-
-
 
     public function logout()
     {

@@ -31,21 +31,21 @@ class PostController extends Controller
      */
     public function addpost(): string
     {
+        $message = null;
         if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-
             $userId = $_SESSION['user_id'];
-
             try {
                 $this->postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
-                $this->addSuccess('Article envoyé pour validation');
+                $message = 'Article envoyé pour validation';
             } catch (PDOException $e) {
-                $this->addError('Une erreur s\'est produite lors de la création de l\'article.');
+                $message = 'Une erreur s\'est produite lors de la création de l\'article.';
             }
-        } else {
-            $this->addError('Veuillez remplir tous les champs.');
         }
-        $this->redirect('/OpenClassrooms/add');
+        return $this->twig->render('list/posts.html.twig', [
+            'message' => $message
+        ]);
     }
+
 
 
 

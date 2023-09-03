@@ -96,7 +96,7 @@ class CommentController extends Controller
         $commentary = $request->get('commentary');
 
         $commentuser = $this->commentManager->fetch($id);
-        $postId = $commentuser['post_id'] ?? null;
+        $postId = $commentuser->post_id ?? null;
 
         $comment = $this->commentManager->fetchcomment($id);
 
