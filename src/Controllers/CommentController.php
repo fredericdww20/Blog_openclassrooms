@@ -32,17 +32,23 @@ class CommentController extends Controller
      */
     public function addcomment(): string
     {
-        if (!empty($_POST['title']) && !empty($_POST['commentary']) && !empty($_POST['id_post'])) {
+        // Récupérez les données POST dans des variables locales sécurisées
+        $title = $_POST['title'] ?? '';
+        $commentary = $_POST['commentary'] ?? '';
+        $id_post = $_POST['id_post'] ?? '';
+
+        // Vérifiez si les données sont présentes et non vides
+        if (!empty($title) && !empty($commentary) && !empty($id_post)) {
             $commentManager = new CommentManager();
 
-            $postId = intval($_POST['id_post']);
+            $postId = intval($id_post);
 
             // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
             if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
                 $userId = $_SESSION['user_id'];
 
                 try {
-                    $commentManager->commentate($_POST['title'], $_POST['commentary'], $postId, $userId);
+                    $commentManager->commentate($title, $commentary, $postId, $userId);
                     $this->addSuccess('Commentaire envoyé');
                 } catch (PDOException $e) {
                     $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
@@ -59,6 +65,7 @@ class CommentController extends Controller
 
         $this->redirect('/OpenClassrooms/post/' . $postId);
     }
+
 
     public function deleteComment($id)
     {
@@ -95,10 +102,8 @@ class CommentController extends Controller
         $title = $request->get('title');
         $commentary = $request->get('commentary');
 
-        $commentuser = $this->commentManager->fetch($id);
-        $postId = $commentuser->post_id ?? null;
-
         $comment = $this->commentManager->fetchcomment($id);
+
 
         $userId = $_SESSION['user_id'] ?? null;
         $role = isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_ADMIN';
@@ -112,21 +117,18 @@ class CommentController extends Controller
             if (!$commentary) {
                 $errors[] = 'Le commentaire est requis.';
             }
-
             if (!$role && $comment->getIdUser() !== $userId) {
                 $errors[] = 'Vous ne pouvez pas mettre à jour ce commentaire';
             }
-
             if (empty($errors)) {
-
                 $this->commentManager->update($id, $title, $commentary);
                 $this->addSuccess('Modification du commentaire validée');
-                $this->redirect('/OpenClassrooms/post/' . $postId);
+                $this->redirect('/OpenClassrooms/post/' . $comment->getIdPost());
             } else {
                 foreach ($errors as $error) {
                     $this->addError($error);
                 }
-                $this->redirect('/OpenClassrooms/post/' . $postId);
+                $this->redirect('/OpenClassrooms/post/' . $comment->getIdPost());
             }
         }
 
@@ -134,6 +136,7 @@ class CommentController extends Controller
             'comment' => $comment,
         ]);
     }
+
 
     public function showComment($id)
     {

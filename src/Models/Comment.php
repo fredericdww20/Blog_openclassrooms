@@ -4,6 +4,7 @@ namespace App\Models;
 
 class Comment
 {
+
     private ?int $id = 0;
     private string $title;
     private string $commentary;
@@ -11,6 +12,7 @@ class Comment
     private string $id_post;
     private string $id_user;
     private string $sta;
+
 
     public function getCreatedAt(): string
     {

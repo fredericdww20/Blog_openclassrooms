@@ -45,7 +45,7 @@ class CommentManager
 
     public function fetch(int $id)
     {
-        $sql = 'SELECT c.*, u.lastname, u.firstname
+        $sql = 'SELECT p.id as post_id, c.*, u.lastname, u.firstname
             FROM comment AS c 
             JOIN post AS p ON c.id_post = p.id 
             JOIN user AS u ON p.id_user = u.id 
@@ -58,8 +58,8 @@ class CommentManager
         ]);
 
         return $statement->fetchAll(PDO::FETCH_CLASS, Comment::class);
-    }
 
+    }
     public function delete(int $id): bool
     {
         $sql = 'DELETE FROM comment WHERE id = :id';
