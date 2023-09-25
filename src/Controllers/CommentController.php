@@ -30,42 +30,49 @@ class CommentController extends Controller
      * @throws SyntaxError
      * @throws LoaderError
      */
+
     public function addcomment(): string
     {
-        // Récupérez les données POST dans des variables locales sécurisées
-        $title = $_POST['title'] ?? '';
-        $commentary = $_POST['commentary'] ?? '';
-        $id_post = $_POST['id_post'] ?? '';
+        // Utilisez la fonction isPost pour vérifier si la requête est une requête POST
+        $request = new Request();
+        if ($request->isPost()) {
+            // Récupérez les données POST dans des variables locales sécurisées
+            $title = $_POST['title'] ?? '';
+            $commentary = $_POST['commentary'] ?? '';
+            $id_post = $_POST['id_post'] ?? '';
 
-        // Vérifiez si les données sont présentes et non vides
-        if (!empty($title) && !empty($commentary) && !empty($id_post)) {
-            $commentManager = new CommentManager();
+            // Vérifiez si les données sont présentes et non vides
+            if (!empty($title) && !empty($commentary) && !empty($id_post)) {
+                $commentManager = new CommentManager();
 
-            $postId = intval($id_post);
+                $postId = intval($id_post);
 
-            // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
-            if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
-                $userId = $_SESSION['user_id'];
+                // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
+                if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
+                    $userId = $_SESSION['user_id'];
 
-                try {
-                    $commentManager->commentate($title, $commentary, $postId, $userId);
-                    $this->addSuccess('Commentaire envoyé');
-                } catch (PDOException $e) {
-                    $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
+                    try {
+                        $commentManager->commentate($title, $commentary, $postId, $userId);
+                        $this->addSuccess('Commentaire envoyé');
+                    } catch (PDOException $e) {
+                        $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
+                    }
+                } else {
+                    $this->addError('Veuillez remplir tous les champs du formulaire.');
                 }
             } else {
-                $this->addError('Veuillez remplir tous les champs du formulaire.');
+                $this->addError('ID d\'utilisateur invalide.');
             }
+
+            $postManager = new PostManager();
+            $post = $postManager->fetch($postId);
+
+            $this->redirect('/OpenClassrooms/post/' . $postId);
         } else {
-            $this->addError('ID d\'utilisateur invalide.');
+            // Traitez le cas où ce n'est pas une requête POST
+            $this->addError('La requête n\'est pas une requête POST.');
         }
-
-        $postManager = new PostManager();
-        $post = $postManager->fetch($postId);
-
-        $this->redirect('/OpenClassrooms/post/' . $postId);
     }
-
 
     public function deleteComment($id)
     {
