@@ -23,4 +23,13 @@ class Request
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
+    public function getPostData(string $key = null): mixed
+    {
+        if ($key === null) {
+            return $_POST;
+        }
+
+        return $this->data['post'][$key] ?? null;
+    }
+
 }

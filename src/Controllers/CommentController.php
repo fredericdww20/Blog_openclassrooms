@@ -37,9 +37,9 @@ class CommentController extends Controller
         $request = new Request();
         if ($request->isPost()) {
             // Récupérez les données POST dans des variables locales sécurisées
-            $title = $_POST['title'] ?? '';
-            $commentary = $_POST['commentary'] ?? '';
-            $id_post = $_POST['id_post'] ?? '';
+            $title = $request->getPostData('title');
+            $commentary = $request->getPostData('commentary');
+            $id_post = $request->getPostData('id_post');
 
             // Vérifiez si les données sont présentes et non vides
             if (!empty($title) && !empty($commentary) && !empty($id_post)) {
