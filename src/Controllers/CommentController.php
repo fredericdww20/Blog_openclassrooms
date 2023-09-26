@@ -76,15 +76,18 @@ class CommentController extends Controller
 
     public function deleteComment($id)
     {
+        // Utilisez la classe Request pour obtenir les données de session
+        $request = new Request([
+            'session' => $_SESSION,
+            // Autres données, si nécessaire
+        ]);
 
-        $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-        $role = isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_ADMIN';
-
+        $userId = $request->getSessionData('user_id');
+        $role = $request->getSessionData('roles') === 'ROLE_ADMIN';
 
         $post = $this->commentManager->fetchcomment($id);
 
         if (!$post) {
-
             $this->addError('Commentaire introuvable.');
             $this->redirect('/OpenClassrooms/post/' . $id);
             return;
@@ -97,6 +100,7 @@ class CommentController extends Controller
         } else {
             $this->addError('Vous ne pouvez pas supprimer ce post');
         }
+
         $postId = $post->getId();
         $postManager = new PostManager();
         $post = $postManager->fetch($postId);
