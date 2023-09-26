@@ -52,10 +52,9 @@ class AdminController extends Controller
         $errors = [];
         $sta = null;
 
-        // Créez une instance de la classe Request
+        // Créez une instance de la classe Request pour gérer les données POST
         $request = new Request([
             'post' => $_POST,
-            // Autres données, si nécessaire
         ]);
 
         if ($request->isPost()) {
@@ -68,18 +67,20 @@ class AdminController extends Controller
 
             if (empty($errors)) {
                 $adminManager->update($id, $sta);
-                $_SESSION['message'] = 'Mise à jour réussie';
+                $_SESSION['message'] = 'Mise à jour réussie'; // Utilisation de $_SESSION
                 $this->redirect('/OpenClassrooms/admin/posts');
+                return; // Arrêtez la fonction après la redirection
             }
         }
 
         return $this->twig->render('admin/edit.html.twig', [
             'id' => $id,
             'sta' => $sta,
-            'message' => $message,
+            'message' => isset($_SESSION['message']) ? $_SESSION['message'] : null,
             'errors' => $errors,
         ]);
     }
+
 
     public function updatecomments($id)
     {
