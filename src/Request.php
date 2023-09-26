@@ -17,7 +17,6 @@ class Request
         }
 
     }
-
     public function get(string $key): ?string
     {
         return $this->data[$key] ?? null;
@@ -35,6 +34,7 @@ class Request
         }
         return $this->data['post'][$key] ?? null;
     }
+
     public function setSessionData($key, $value): void
     {
         $_SESSION[$key] = $value;

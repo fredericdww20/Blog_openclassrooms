@@ -10,19 +10,27 @@ use App\Request;
 
 class AdminController extends Controller
 {
+    /*
+     * Affiche la liste des commentaires a valider sur la page d'administration
+     */
     public function listcomment(): string
     {
+        $request = new Request([]);
+
         $adminManager = new AdminManager();
         $comments = $adminManager->fetchcomment();
-        $message = $_SESSION['message'] ?? null;
+        $message = $request->getSessionData('message') ?? null;
         $output = $this->twig->render('admin/comment.html.twig', [
             'comments' => $comments,
             'message' => $message
         ]);
-        unset($_SESSION['message']);
+        unset($message);
         return $output;
     }
 
+    /*
+     * Affiche la liste des posts a valider sur la page d'administration
+     */
     public function listvalidate(): string
     {
         $adminManager = new AdminManager();
@@ -32,19 +40,27 @@ class AdminController extends Controller
             'posts' => $posts]);
     }
 
+    /*
+     * Affiche la liste de post valider sur la page d'administration
+     */
     public function list(): string
     {
+        $request = new Request([]);
+
         $adminManager = new AdminManager();
         $posts = $adminManager->fetchvalidate();
-        $message = $_SESSION['message'] ?? null;
+        $message = $request->getSessionData('message') ?? null;
         $output = $this->twig->render('admin/posts.html.twig', [
             'posts' => $posts,
             'message' => $message
         ]);
-        unset($_SESSION['message']);
+        unset($message);
         return $output;
     }
 
+    /*
+     * Fonction de validation des posts depuis administration
+     */
     public function update($id)
     {
         $adminManager = new AdminManager();
@@ -53,13 +69,11 @@ class AdminController extends Controller
         $sta = null;
 
         // Créez une instance de la classe Request pour gérer les données POST
-        $request = new Request([
-            'post' => $_POST,
-        ]);
+        $request = new Request($_POST);
 
         if ($request->isPost()) {
             // Utilisez la méthode getPostData pour obtenir les données POST
-            $sta = $request->getPostData('sta');
+            $sta = $request->get('sta');
 
             if (empty($sta)) {
                 $errors[] = 'Le champ "sta" est requis.';
@@ -67,37 +81,32 @@ class AdminController extends Controller
 
             if (empty($errors)) {
                 $adminManager->update($id, $sta);
-                $_SESSION['message'] = 'Mise à jour réussie'; // Utilisation de $_SESSION
+                $this->addSuccess('Mise à jour réussie');
                 $this->redirect('/OpenClassrooms/admin/posts');
-                return; // Arrêtez la fonction après la redirection
             }
         }
 
         return $this->twig->render('admin/edit.html.twig', [
             'id' => $id,
             'sta' => $sta,
-            'message' => isset($_SESSION['message']) ? $_SESSION['message'] : null,
             'errors' => $errors,
         ]);
     }
 
-
-    public function updatecomments($id)
+    /*
+     * Fonction de validation des commentaires depuis administration
+     */
+    public function updatecomments($id): string
     {
+        $request = new Request($_POST);
+
         $adminManager = new AdminManager();
         $message = null;
         $errors = [];
         $sta = null;
 
-        // Créez une instance de la classe Request
-        $request = new Request([
-            'post' => $_POST,
-            // Autres données, si nécessaire
-        ]);
-
         if ($request->isPost()) {
-            // Utilisez la méthode getPostData pour obtenir les données POST
-            $sta = $request->getPostData('sta');
+            $sta = $request->get('sta');
 
             if (empty($sta)) {
                 $errors[] = 'Le champ "sta" est requis.';
@@ -106,11 +115,10 @@ class AdminController extends Controller
             if (empty($errors)) {
                 try {
                     $adminManager->updatecomment($id, $sta);
-                    $_SESSION['message'] = 'Mise à jour réussie';
-                    header('Location: /OpenClassrooms/admin/comment');
-                    return; // Renvoie un message de succès si la mise à jour a réussi
+                    $this->addSuccess('Mise à jour réussie');
+                    $this->redirect('/OpenClassrooms/admin/comment');
                 } catch (Exception $e) {
-                    // Gérer l'exception ou envoyer l'erreur
+                    // Gérer l'exception ou envoie l'erreur
                     $errors[] = 'Une erreur s\'est produite lors de la mise à jour du commentaire.';
                 }
             }

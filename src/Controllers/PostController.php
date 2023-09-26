@@ -29,18 +29,19 @@ class PostController extends Controller
      * @throws RuntimeError
      * @throws SyntaxError
      */
+
+    /*
+     * Fonction ajouter un post
+     */
     public function addpost(): string
     {
         $message = null;
-        $request = new Request([
-            'post' => $_POST,
-            'session' => $_SESSION,
-        ]);
+        $request = new Request($_POST);
 
         if ($request->isPost()) {
-            $title = $request->getPostData('title');
-            $description = $request->getPostData('description');
-            $chapo = $request->getPostData('chapo');
+            $title = $request->get('title');
+            $description = $request->get('description');
+            $chapo = $request->get('chapo');
 
             // Utilisez la méthode getSessionData pour obtenir des données de session
             $userId = $request->getSessionData('user_id');
@@ -71,10 +72,15 @@ class PostController extends Controller
         ]);
     }
 
+    /*
+     * Fonction supprimer un post
+     */
     public function delete($id)
     {
-        $userId = $_SESSION['user_id'];
-        $role = $_SESSION['roles'] === 'ROLE_ADMIN';
+        $request = new Request([]);
+
+        $userId = $request->getSessionData('user_id');
+        $role = $request->getSessionData('roles') === 'ROLE_ADMIN';
 
         $post = $this->postManager->fetch($id);
         if ($role || $post->getIdUser() === $userId) {
@@ -90,7 +96,9 @@ class PostController extends Controller
 
     }
 
-
+    /*
+     * Fonction modifier un post
+     */
     public function update($id)
     {
         $request = new Request($_POST);
@@ -128,6 +136,9 @@ class PostController extends Controller
         ]);
     }
 
+    /*
+     * Fonction qui affiche tous les posts
+     */
     public function list(): string
     {
         $posts = $this->postManager->fetchAll();
