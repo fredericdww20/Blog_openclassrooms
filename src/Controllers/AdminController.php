@@ -52,20 +52,26 @@ class AdminController extends Controller
         $errors = [];
         $sta = null;
 
-        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['sta'])) {
-                $sta = htmlspecialchars($_POST['sta'], ENT_QUOTES, 'UTF-8');
-                if (empty($sta)) {
-                    $errors[] = 'Le champ "sta" est requis.';
-                }
-                if (empty($errors)) {
-                    $adminManager->update($id, $sta);
-                    $_SESSION['message'] = 'Mise à jour réussie';
-                    $this->redirect('/OpenClassrooms/admin/posts');
-                }
+        // Créez une instance de la classe Request
+        $request = new Request([
+            'post' => $_POST,
+            // Autres données, si nécessaire
+        ]);
+
+        if ($request->isPost()) {
+            // Utilisez la méthode getPostData pour obtenir les données POST
+            $sta = $request->getPostData('sta');
+
+            if (empty($sta)) {
+                $errors[] = 'Le champ "sta" est requis.';
+            }
+
+            if (empty($errors)) {
+                $adminManager->update($id, $sta);
+                $_SESSION['message'] = 'Mise à jour réussie';
+                $this->redirect('/OpenClassrooms/admin/posts');
             }
         }
-
 
         return $this->twig->render('admin/edit.html.twig', [
             'id' => $id,

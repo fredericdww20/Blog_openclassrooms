@@ -28,7 +28,6 @@ class Request
         if ($key === null) {
             return $_POST;
         }
-
         return $this->data['post'][$key] ?? null;
     }
 
