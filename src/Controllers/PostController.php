@@ -32,19 +32,36 @@ class PostController extends Controller
     public function addpost(): string
     {
         $message = null;
-        if (!empty($_POST['title']) && !empty($_POST['description']) && !empty($_POST['chapo'])) {
-            $userId = $_SESSION['user_id'];
-            try {
-                $this->postManager->creatpost($_POST['title'], $_POST['description'], $_POST['chapo'], $userId);
-                $message = 'Article envoyé pour validation';
-            } catch (PDOException $e) {
-                $message = 'Une erreur s\'est produite lors de la création de l\'article.';
+        $request = new Request([
+            'session' => $_SESSION,
+            'post' => $_POST,
+        ]);
+
+        if ($request->isPost()) {
+            $title = $request->getPostData('title');
+            $description = $request->getPostData('description');
+            $chapo = $request->getPostData('chapo');
+
+            if (!empty($title) && !empty($description) && !empty($chapo)) {
+                $userId = $request->getSessionData('user_id');
+                try {
+                    $this->postManager->creatpost($title, $description, $chapo, $userId);
+                    $message = 'Article envoyé pour validation';
+                } catch (PDOException $e) {
+                    $message = 'Une erreur s\'est produite lors de la création de l\'article.';
+                }
             }
         }
+
         return $this->twig->render('list/posts.html.twig', [
             'message' => $message
         ]);
     }
+
+
+
+
+
 
 
 
