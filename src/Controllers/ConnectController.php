@@ -49,12 +49,13 @@ class ConnectController extends Controller
                         if ($_SESSION['roles'] === 'ROLE_ADMIN') {
                             $this->addSuccess('Connexion en tant qu\'administrateur réussie.');
                             $this->redirect('/OpenClassrooms/admin');
-                            return;  // Arrêt de la fonction après la redirection
+                            // Arrêt de la fonction après la redirection
                         } else {
                             $this->addSuccess('Connexion réussie.');
                             $this->redirect('/OpenClassrooms/');
-                            return;  // Arrêt de la fonction après la redirection
+                            // Arrêt de la fonction après la redirection
                         }
+                        return;
                     } else {
                         $this->addError('Identifiants de connexion incorrects');
                     }

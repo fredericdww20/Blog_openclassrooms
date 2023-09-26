@@ -63,7 +63,7 @@ class CommentController extends Controller
         }
         $this->redirect('/OpenClassrooms/post/' . $postId);
     }
-    
+
     public function deleteComment($id)
     {
         // Utilisez la classe Request pour obtenir les données de session
