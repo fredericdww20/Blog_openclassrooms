@@ -6,6 +6,7 @@
 namespace App\Controllers;
 
 use App\Models\UserManager;
+use App\Request;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -22,18 +23,23 @@ class ConnectController extends Controller
     public function connect()
     {
         $userManager = new UserManager();
+        $request = new Request([
+            'post' => $_POST,
+            'session' => $_SESSION,
+        ]);
 
         if (!isset($_SESSION['csrf_token'])) {
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
         $csrfToken = $_SESSION['csrf_token'];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $csrfToken) {
+        if ($request->isPost()) {
+            $postedCsrfToken = $request->getPostData('csrf_token');
+            if (empty($postedCsrfToken) || $postedCsrfToken !== $csrfToken) {
                 $this->addError('Jeton CSRF non valide. Veuillez réessayer.');
             } else {
-                $email = $_POST['email'];
-                $password = $_POST['password'];
+                $email = $request->getPostData('email');
+                $password = $request->getPostData('password');
 
                 if ($userManager->checkEmailExists($email)) {
                     $user = $userManager->authentication($email, $password);
@@ -57,9 +63,7 @@ class ConnectController extends Controller
                 }
             }
         }
-
         return $this->twig->render('login/login.html.twig', ['csrfToken' => $csrfToken]);
-        // Ne fonctionne pas
     }
 
     public function logout()
