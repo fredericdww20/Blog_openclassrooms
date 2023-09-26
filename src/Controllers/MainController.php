@@ -25,21 +25,23 @@ class MainController extends Controller
 
     public function swiftmailer()
     {
-        $request = new Request($_POST);
+        $request = new Request([
+            'post' => $_POST,
+        ]);
 
-        $name = $request->get('name');
-        $lastname = $request->get('lastname');
-        $email = $request->get('email');
-        $sujet = $request->get('sujet');
-        $content = $request->get('message');
+        $name = $request->getPostData('name');
+        $lastname = $request->getPostData('lastname');
+        $email = $request->getPostData('email');
+        $sujet = $request->getPostData('sujet');
+        $content = $request->getPostData('message');
 
         // Validation des données du formulaire
         if (!$name || !$lastname || !$email || !$sujet || !$content || !StringHelper::isValidEmail($email)) {
             // Les champs requis ne sont pas remplis
-            $this->addError = 'Veuillez remplir tous les champs du formulaire.';
+            $this->addError('Veuillez remplir tous les champs du formulaire.');
             return $this->twig->render('main/index.html.twig');
-
         }
+
         // Envoi du message
         $transport = (new Swift_SmtpTransport('mail.vedayshop.fr', 465, 'ssl'))
             ->setUsername('blog@vedayshop.fr')
@@ -57,7 +59,6 @@ class MainController extends Controller
         $this->addSuccess('Message envoyé');
 
         $this->redirect('/OpenClassrooms/');
-        // Message ne fonctionne pas !!!
     }
 
 }
