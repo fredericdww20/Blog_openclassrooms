@@ -33,46 +33,38 @@ class CommentController extends Controller
 
     public function addcomment(): string
     {
-        $request = new Request([
-            'post' => $_POST,
-            'session' => $_SESSION,
-        ]);
-
         // Récupérez les données POST dans des variables locales sécurisées en utilisant la classe Request
-        $title = $request->getPostData('title') ?? '';
-        $commentary = $request->getPostData('commentary') ?? '';
-        $id_post = $request->getPostData('id_post') ?? '';
+        $title = $_POST['title'] ?? '';
+        $commentary = $_POST['commentary'] ?? '';
+        $id_post = $_POST['id_post'] ?? '';
 
-        $postId = null; // Initialisez la variable postId ici
+        // Initialisez la variable $postId ici
+        $postId = null;
 
         // Vérifiez si les données sont présentes et non vides
         if (!empty($title) && !empty($commentary) && !empty($id_post)) {
             $commentManager = new CommentManager();
             $postId = intval($id_post);
 
-            // Utilisez la méthode getSessionData pour obtenir l'ID de l'utilisateur depuis la session
-            $userId = $request->getSessionData('user_id');
-
-            if (!empty($userId) && is_int($userId)) {
+            // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
+            if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
+                $userId = $_SESSION['user_id'];
                 try {
                     $commentManager->commentate($title, $commentary, $postId, $userId);
                     $this->addSuccess('Commentaire envoyé');
                 } catch (PDOException $e) {
                     $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
+                    $this->redirect('/OpenClassrooms/post/' . $postId);
                 }
             } else {
                 $this->addError('Vous devez vous connecter pour poster un commentaire');
             }
         }
-
         // Vérifiez que $postId est défini avant de rediriger
         if (!empty($postId)) {
             $this->redirect('/OpenClassrooms/post/' . $postId);
         }
-
-        return ''; // Retournez quelque chose de significatif ici si nécessaire
     }
-
     public function deleteComment($id)
     {
         // Utilisez la classe Request pour obtenir les données de session
