@@ -9,7 +9,11 @@ class Request
     public function __construct(private readonly array $data)
     {
         foreach ($data as $key => $element) {
-            $data[$key] = StringHelper::cleanString($element, true);
+            if (is_string($element)) {
+                $data[$key] = StringHelper::cleanString($element, true);
+            } else {
+                $data[$key] = $element; // Ne nettoyez pas les éléments qui ne sont pas des chaînes
+            }
         }
     }
 

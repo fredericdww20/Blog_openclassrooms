@@ -4,8 +4,8 @@
  */
 
 namespace App\Controllers;
-
 use App\Models\AdminManager;
+use App\Request;
 
 
 class AdminController extends Controller
