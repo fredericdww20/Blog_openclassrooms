@@ -35,6 +35,20 @@ class Request
         }
         return $this->data['post'][$key] ?? null;
     }
+    public function setSessionData($key, $value): void
+    {
+        $_SESSION[$key] = $value;
+    }
+
+    public function getSessionData($key)
+    {
+        return $_SESSION[$key] ?? null;
+    }
+
+    public function deleteSessionData($key): void
+    {
+        unset($_SESSION[$key]);
+    }
 
 
 }
