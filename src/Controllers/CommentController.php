@@ -82,8 +82,8 @@ class CommentController extends Controller
             // Autres données, si nécessaire
         ]);
 
-        $userId = $request->getSessionData('user_id');
-        $role = $request->getSessionData('roles') === 'ROLE_ADMIN';
+        $userId = $request->getPostData('user_id');
+        $role = $request->getPostData('roles') === 'ROLE_ADMIN';
 
         $post = $this->commentManager->fetchcomment($id);
 
