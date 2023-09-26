@@ -30,42 +30,33 @@ class PostController extends Controller
      * @throws SyntaxError
      */
     public function addpost(): string
-    {
-        $message = null;
-        $request = new Request([
-            'session' => $_SESSION,
-            'post' => $_POST,
-        ]);
+{
+    $message = null;
+    $request = new Request([
+        'post' => $_POST,
+        'session' => $_SESSION,
+    ]);
 
-        if ($request->isPost()) {
-            $title = $request->getPostData('title');
-            $description = $request->getPostData('description');
-            $chapo = $request->getPostData('chapo');
+    if ($request->isPost()) {
+        $title = $request->getPostData('title');
+        $description = $request->getPostData('description');
+        $chapo = $request->getPostData('chapo');
 
-            if (!empty($title) && !empty($description) && !empty($chapo)) {
-                $userId = $request->getSessionData('user_id');
-                try {
-                    $this->postManager->creatpost($title, $description, $chapo, $userId);
-                    $message = 'Article envoyé pour validation';
-                } catch (PDOException $e) {
-                    $message = 'Une erreur s\'est produite lors de la création de l\'article.';
-                }
+        if (!empty($title) && !empty($description) && !empty($chapo)) {
+            $userId = $_SESSION['user_id'];
+            try {
+                $this->postManager->creatpost($title, $description, $chapo, $userId);
+                $message = 'Article envoyé pour validation';
+            } catch (PDOException $e) {
+                $message = 'Une erreur s\'est produite lors de la création de l\'article.';
             }
         }
-
-        return $this->twig->render('list/posts.html.twig', [
-            'message' => $message
-        ]);
     }
 
-
-
-
-
-
-
-
-
+    return $this->twig->render('list/posts.html.twig', [
+        'message' => $message
+    ]);
+}
     public function show($id)
     {
         $commentsManager = new CommentManager();
