@@ -21,7 +21,7 @@ class RegisterController extends Controller
             $email = $request->get('email');
             $password = $request->get('password');
 
-            if ($this->validateForm($_POST)) {
+            if ($this->validateForm($request->getPostData())) {
                 if (!$userManager->checkEmailExists($email)) {
                     $userManager->create($firstname, $lastname, $email, $password);
                     $this->addSuccess('Inscription réussie');

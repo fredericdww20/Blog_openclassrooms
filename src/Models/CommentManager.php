@@ -24,6 +24,7 @@ class CommentManager
         } catch (PDOException $e) {
             // Lancer une exception personnalisée au lieu d'utiliser echo
             throw new DatabaseConnectionException('Connection error: ' . $e->getMessage());
+
         }
     }
 
