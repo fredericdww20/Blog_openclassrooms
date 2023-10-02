@@ -20,8 +20,10 @@ class ConnectController extends Controller
      * @throws SyntaxError
      * @throws \Exception
      */
-    public function connect(Request $request): string
+    public function connect(): string
     {
+        $request = new Request($_POST);
+
         $userManager = new UserManager();
 
         if (!$request->getSessionData('csrf_token')) {
@@ -30,12 +32,12 @@ class ConnectController extends Controller
         $csrfToken = $request->getSessionData('csrf_token');
 
         if ($request->isPost()) {
-            $postedCsrfToken = $request->getPostData('csrf_token');
+            $postedCsrfToken = $request->get('csrf_token');
             if (empty($postedCsrfToken) || $postedCsrfToken !== $csrfToken) {
                 $this->addError('Jeton CSRF non valide. Veuillez réessayer.');
             } else {
-                $email = $request->getPostData('email');
-                $password = $request->getPostData('password');
+                $email = $request->get('email');
+                $password = $request->get('password');
 
                 if ($userManager->checkEmailExists($email)) {
                     $user = $userManager->authentication($email, $password);
