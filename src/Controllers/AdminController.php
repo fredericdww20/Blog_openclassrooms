@@ -63,17 +63,14 @@ class AdminController extends Controller
      */
     public function update($id)
     {
+        $request = new Request($_POST);
         $adminManager = new AdminManager();
         $message = null;
         $errors = [];
         $sta = null;
 
-        // Créez une instance de la classe Request pour gérer les données POST
-        $request = new Request($_POST);
-
         if ($request->isPost()) {
-            // Utilisez la méthode getPostData pour obtenir les données POST
-            $sta = $request->get('sta');
+            $sta = $request->getPostData('sta');
 
             if (empty($sta)) {
                 $errors[] = 'Le champ "sta" est requis.';

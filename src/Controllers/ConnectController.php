@@ -20,18 +20,14 @@ class ConnectController extends Controller
      * @throws SyntaxError
      * @throws \Exception
      */
-    public function connect()
+    public function connect(Request $request): string
     {
         $userManager = new UserManager();
-        $request = new Request([
-            'post' => $_POST,
-            'session' => $_SESSION,
-        ]);
 
-        if (!isset($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        if (!$request->getSessionData('csrf_token')) {
+            $request->setSessionData('csrf_token', bin2hex(random_bytes(32)));
         }
-        $csrfToken = $_SESSION['csrf_token'];
+        $csrfToken = $request->getSessionData('csrf_token');
 
         if ($request->isPost()) {
             $postedCsrfToken = $request->getPostData('csrf_token');
@@ -44,9 +40,9 @@ class ConnectController extends Controller
                 if ($userManager->checkEmailExists($email)) {
                     $user = $userManager->authentication($email, $password);
                     if ($user) {
-                        $_SESSION['roles'] = $user->getRoles();
+                        $request->setSessionData('roles', $user->getRoles());
 
-                        if ($_SESSION['roles'] === 'ROLE_ADMIN') {
+                        if ($request->getSessionData('roles') === 'ROLE_ADMIN') {
                             $this->addSuccess('Connexion en tant qu\'administrateur réussie.');
                             $this->redirect('/OpenClassrooms/admin');
                             // Arrêt de la fonction après la redirection
@@ -55,7 +51,7 @@ class ConnectController extends Controller
                             $this->redirect('/OpenClassrooms/');
                             // Arrêt de la fonction après la redirection
                         }
-                        return;
+                        return '';
                     } else {
                         $this->addError('Identifiants de connexion incorrects');
                     }
@@ -64,8 +60,10 @@ class ConnectController extends Controller
                 }
             }
         }
+
         return $this->twig->render('login/login.html.twig', ['csrfToken' => $csrfToken]);
     }
+
 
     public function logout()
     {

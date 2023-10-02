@@ -63,6 +63,8 @@ Route::add('/admin/validate/([0-9]+)', function ($id) {
 }, 'post');
 
 
+
+
 /// CONNECTCONTROLLER //
 Route::add('/logout', function () {
     echo (new ConnectController())->logout();

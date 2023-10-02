@@ -13,20 +13,19 @@ class RegisterController extends Controller
     {
         $userManager = new UserManager();
         $errorMessage = null;
+        $request = new \App\Request($_POST);
 
-        if (!empty($_POST)) {
-            $firstname = htmlentities($_POST['firstname']);
-            $lastname = htmlentities($_POST['lastname']);
-            $email = htmlentities($_POST['email']);
-            $password = $_POST['password'];
+        if ($request->isPost()) {
+            $firstname = $request->get('firstname');
+            $lastname = $request->get('lastname');
+            $email = $request->get('email');
+            $password = $request->get('password');
 
             if ($this->validateForm($_POST)) {
                 if (!$userManager->checkEmailExists($email)) {
-
                     $userManager->create($firstname, $lastname, $email, $password);
-                    $this->addSuccess('Inscription réussie');
+                    $this->addSuccess('Inscription réussie');
                     $this->redirect('/OpenClassrooms/');
-
                 } else {
                     $errorMessage = self::ERROR_EMAIL_EXISTS;
                 }
@@ -34,6 +33,7 @@ class RegisterController extends Controller
                 $errorMessage = self::ERROR_MISSING_FIELDS;
             }
         }
+
         return $this->twig->render('register/register.html.twig', ['errorMessage' => $errorMessage]);
     }
 
