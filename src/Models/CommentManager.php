@@ -10,8 +10,8 @@ class CommentManager
 {
     private PDO $pdo;
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $pdoOptions = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -22,10 +22,9 @@ class CommentManager
             $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
             $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
         } catch (PDOException $e) {
-            echo 'Connection error: ' . $e->getMessage();
-            return;
+            // Lancer une exception personnalisée au lieu d'utiliser echo
+            throw new DatabaseConnectionException('Connection error: ' . $e->getMessage());
         }
-
     }
 
     public function commentate(string $title, string $commentary, int $postId, int $userId): void
