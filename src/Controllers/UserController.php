@@ -3,12 +3,15 @@
 namespace App\Controllers;
 
 use App\Models\UserManager;
+use App\Request;
 
 class UserController extends Controller
 {
     public function infouser()
     {
-        $loggedInUserId = $_SESSION['user_id'];
+        $request = new Request($_POST);
+
+        $loggedInUserId = $request->get('user_id');
 
         $userManager = new Usermanager();
         $user = $userManager->fetchuser($loggedInUserId);
