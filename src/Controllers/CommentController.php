@@ -31,43 +31,47 @@ class CommentController extends Controller
      * @throws LoaderError
      */
 
-    public function addcomment(Request $request): string
+    public function addcomment(): string
     {
-        // Utilisez la fonction isPost pour vérifier si la requête est une requête POST
-        if ($request->isPost()) {
-            // Récupérez les données POST dans des variables locales sécurisées en utilisant la classe Request
-            $title = $request->getPostData('title');
-            $commentary = $request->getPostData('commentary');
-            $id_post = $request->getPostData('id_post');
-
-            // Vérifiez si les données sont présentes et non vides
-            if (!empty($title) && !empty($commentary) && !empty($id_post)) {
-                $commentManager = new CommentManager();
-                $postId = intval($id_post);
-
-                // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION en utilisant la classe Request
-                $userId = $request->getSessionData('user_id');
-                if (isset($userId) && is_int($userId)) {
-                    try {
-                        $commentManager->commentate($title, $commentary, $postId, $userId);
-                        $this->addSuccess('Commentaire envoyé');
-                    } catch (PDOException $e) {
-                        $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
-                    }
-                } else {
-                    $this->addError('Vous devez vous connecter pour poster un commentaire');
-                }
-            } else {
-                $this->addError('Veuillez remplir tous les champs du formulaire.');
-            }
-        } else {
-            // Traitez le cas où ce n'est pas une requête POST
+        $request = new Request($_POST);
+        if (!$request->isPost()) {
             $this->addError('La requête n\'est pas une requête POST.');
+            return $this->twig->render('your_template.twig');
         }
 
-        // Redirigez vers une page appropriée en cas d'erreur ou de succès
-        return  $this->redirect('/OpenClassrooms/post/' . $postId);
+        $title = $request->get('title');
+        $commentary = $request->get('commentary');
+        $id_post = $request->get('id_post');
+
+        if (empty($title) || empty($commentary) || empty($id_post)) {
+            $this->addError('Veuillez remplir tous les champs du formulaire.');
+            return $this->twig->render('your_template.twig');
+        }
+
+        $commentManager = new CommentManager();
+        $postManager = new PostManager();
+
+        $postId = intval($id_post);
+
+        if (!isset($_SESSION['user_id']) || !is_int($_SESSION['user_id'])) {
+            $this->addError('ID d\'utilisateur invalide.');
+            return $this->twig->render('your_template.twig');
+        }
+
+        $userId = $_SESSION['user_id'];
+
+        try {
+            $commentManager->commentate($title, $commentary, $postId, $userId);
+            $this->addSuccess('Commentaire envoyé');
+        } catch (PDOException $e) {
+            $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
+        }
+
+        $post = $postManager->fetch($postId);
+
+        $this->redirect('/OpenClassrooms/post/' . $postId);
     }
+
 
     public function deleteComment($id)
     {

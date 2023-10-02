@@ -6,7 +6,7 @@ use App\Helper\StringHelper;
 
 class Request
 {
-    public function __construct(private readonly array $data)
+    public function __construct(private readonly array $data = [])
     {
         foreach ($data as $key => $element) {
             if (is_string($element)) {

@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Request;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
@@ -39,8 +40,10 @@ abstract class Controller
     }
 
     public function redirect(string $path): void {
+
+        $request= new Request();
         if($this->messages) {
-            $_SESSION['message'] = $this->messages;
+            $request->setSessionData('message', $this->messages);
         }
 
         header('Location: ' . $path);
