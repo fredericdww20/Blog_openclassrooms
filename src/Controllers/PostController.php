@@ -35,8 +35,9 @@ class PostController extends Controller
      */
     public function addpost(): string
     {
+        global $request;
         $message = null;
-        $request = new Request($_POST);
+        $request = new Request($request->getPostData());
 
         if ($request->isPost()) {
             $title = $request->get('title');
