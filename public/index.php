@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../src/Request.php';
 
 
 use App\Controllers\AdminController;
@@ -15,8 +16,10 @@ use App\Controllers\MainController;
 use App\Controllers\PostController;
 use App\Controllers\RegisterController;
 use App\Controllers\UserController;
+use App\Request;
 use Steampixel\Route;
 
+$request = new Request($_POST);
 
 // Route Home
 Route::add('/', function () {
@@ -112,8 +115,11 @@ Route::add('/comment', function () {
     echo (new CommentController())->addcomment();
 });
 Route::add('/comment', function () {
-    echo (new CommentController())->addcomment();
-}, 'post');
+    $request = new Request([
+        'post' => $_POST,
+    ]);
+    echo (new CommentController())->addcomment($request);
+}, ['GET', 'POST']);
 Route::add('/deletecomment/([0-9]*)', function ($id) {
     echo (new CommentController())->deleteComment($id);
 });

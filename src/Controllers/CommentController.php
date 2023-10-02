@@ -31,14 +31,11 @@ class CommentController extends Controller
      * @throws LoaderError
      */
 
-    public function addcomment(): string
+    public function addcomment(Request $request): string
     {
         // Utilisez la fonction isPost pour vérifier si la requête est une requête POST
-        $request = new Request([
-            'post' => $_POST,
-        ]);
         if ($request->isPost()) {
-            // Récupérez les données POST dans des variables locales sécurisées
+            // Récupérez les données POST dans des variables locales sécurisées en utilisant la classe Request
             $title = $request->getPostData('title');
             $commentary = $request->getPostData('commentary');
             $id_post = $request->getPostData('id_post');
@@ -46,13 +43,11 @@ class CommentController extends Controller
             // Vérifiez si les données sont présentes et non vides
             if (!empty($title) && !empty($commentary) && !empty($id_post)) {
                 $commentManager = new CommentManager();
-
                 $postId = intval($id_post);
 
-                // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION
-                if (isset($_SESSION['user_id']) && is_int($_SESSION['user_id'])) {
-                    $userId = $_SESSION['user_id'];
-
+                // Vérifiez si l'ID de l'utilisateur est défini dans $_SESSION en utilisant la classe Request
+                $userId = $request->getSessionData('user_id');
+                if (isset($userId) && is_int($userId)) {
                     try {
                         $commentManager->commentate($title, $commentary, $postId, $userId);
                         $this->addSuccess('Commentaire envoyé');
@@ -60,20 +55,18 @@ class CommentController extends Controller
                         $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
                     }
                 } else {
-                    $this->addError('Veuillez remplir tous les champs du formulaire.');
+                    $this->addError('Vous devez vous connecter pour poster un commentaire');
                 }
             } else {
-                $this->addError('ID d\'utilisateur invalide.');
+                $this->addError('Veuillez remplir tous les champs du formulaire.');
             }
-
-            $postManager = new PostManager();
-            $post = $postManager->fetch($postId);
-
-            $this->redirect('/OpenClassrooms/post/' . $postId);
         } else {
             // Traitez le cas où ce n'est pas une requête POST
             $this->addError('La requête n\'est pas une requête POST.');
         }
+
+        // Redirigez vers une page appropriée en cas d'erreur ou de succès
+        return  $this->redirect('/OpenClassrooms/post/' . $postId);
     }
 
     public function deleteComment($id)

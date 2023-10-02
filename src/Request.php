@@ -27,6 +27,14 @@ class Request
         return $_SERVER['REQUEST_METHOD'] === 'POST';
     }
 
+    public function setSessionData($key, $value): void
+    {
+        $_SESSION[$key] = $value;
+    }
+    public function getSessionData($key)
+    {
+        return $_SESSION[$key] ?? null;
+    }
     public function getPostData(string $key = null): mixed
     {
         if ($key === null) {
@@ -35,15 +43,7 @@ class Request
         return $this->data['post'][$key] ?? null;
     }
 
-    public function setSessionData($key, $value): void
-    {
-        $_SESSION[$key] = $value;
-    }
 
-    public function getSessionData($key)
-    {
-        return $_SESSION[$key] ?? null;
-    }
 
     public function deleteSessionData($key): void
     {
