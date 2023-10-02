@@ -77,7 +77,7 @@ class UserManager
     {
         $request = new Request($_POST);
 
-        $loggedInUserId = $request->get('user_id');
+        $loggedInUserId = $request->getSessionData('user_id');
 
         $sql = 'SELECT user.*, COUNT(DISTINCT post.id) AS post_count, COUNT(comment.id) AS comment_count
             FROM user
