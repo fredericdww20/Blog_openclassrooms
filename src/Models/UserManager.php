@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Request;
 use PDO;
 use PDOException;
 
@@ -49,6 +50,8 @@ class UserManager
     // Vérifie les information de l'utilisateur au moment de la connexion
     public function authentication(string $email, string $password)
     {
+        $request = new Request($_POST);
+
         $sql = 'SELECT id, email, password, firstname, lastname, roles FROM user WHERE email = :email';
 
         $statement = $this->pdo->prepare($sql);
@@ -59,12 +62,12 @@ class UserManager
         $user = $statement->fetchObject(User::class);
         if ($user && password_verify($password, $user->getPassword())) {
 
-            $_SESSION['LOGGED_USER'] = $email;
-            $_SESSION['email'] = $user->getEmail();
-            $_SESSION['lastname'] = $user->getLastname();
-            $_SESSION['firstname'] = $user->getFirstname();
-            $_SESSION['roles'] = $user->getRoles();
-            $_SESSION['user_id'] = $user->getId();
+            $request->setSessionData('email', $user->getEmail());
+            $request->setSessionData('lastname', $user->getLastname());
+            $request->setSessionData('firstname', $user->getFirstname());
+            $request->setSessionData('roles', $user->getRoles());
+            $request->setSessionData('user_id', $user->getId());
+            $request->setSessionData('LOGGED_USER', $email);
             return $user;
         }
         return null;
