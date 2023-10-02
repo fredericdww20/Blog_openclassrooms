@@ -25,15 +25,12 @@ class MainController extends Controller
 
     public function swiftmailer()
     {
-        $request = new Request([
-            'post' => $_POST,
-        ]);
-
-        $name = $request->getPostData('name');
-        $lastname = $request->getPostData('lastname');
-        $email = $request->getPostData('email');
-        $sujet = $request->getPostData('sujet');
-        $content = $request->getPostData('message');
+        $request = new Request($_POST);
+        $name = $request->get('name');
+        $lastname = $request->get('lastname');
+        $email = $request->get('email');
+        $sujet = $request->get('sujet');
+        $content = $request->get('message');
 
         // Validation des données du formulaire
         if (!$name || !$lastname || !$email || !$sujet || !$content || !StringHelper::isValidEmail($email)) {
