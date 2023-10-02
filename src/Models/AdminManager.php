@@ -9,8 +9,8 @@ class AdminManager
 {
     private PDO $pdo;
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $pdoOptions = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -21,10 +21,11 @@ class AdminManager
             $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
             $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
         } catch (PDOException $e) {
-            echo 'Connection error: ' . $e->getMessage();
-            return;
+            // Enregistrez l'erreur dans un journal (log)
+            $logger = new Logger('error_logger');
+            $logger->pushHandler(new StreamHandler('path/to/log/file.log', Logger::ERROR));
+            $logger->error($e->getMessage());
         }
-
     }
 
     // Permet la mise à jour d'un post pour le publier.
