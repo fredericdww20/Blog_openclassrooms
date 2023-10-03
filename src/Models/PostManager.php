@@ -22,10 +22,10 @@ class PostManager
             $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
             $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
         } catch (PDOException $e) {
-            echo 'Connection error: ' . $e->getMessage();
+            $errorMessage = 'Connection error: ' . htmlspecialchars($e->getMessage());
+            echo $errorMessage;
             return;
         }
-
     }
 
     public function creatpost(string $title, string $description, string $chapo, int $userId)
