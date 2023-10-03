@@ -69,7 +69,9 @@ class ConnectController extends Controller
 
     public function logout()
     {
-        $_SESSION = array();
+
+        $request = new Request($_POST);
+        $request->deleteSessionData('user_id'); // Supprimer la clé 'user_id' de la session, ajustez en fonction de vos besoins
 
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
@@ -85,7 +87,7 @@ class ConnectController extends Controller
         }
 
         session_destroy();
-        header('Location: /OpenClassrooms/');
+        $this->redirect('/OpenClassrooms/');
     }
 }
 
