@@ -52,7 +52,8 @@ class CommentController extends Controller
         $commentManager = new CommentManager();
         $postManager = new PostManager();
 
-        $postId = intval($id_post);
+        // Utilisez (int) pour convertir $id_post en entier
+        $postId = (int) $id_post;
 
         $userId = $request->getSessionData('user_id');
 
@@ -72,6 +73,7 @@ class CommentController extends Controller
 
         $this->redirect('/OpenClassrooms/post/' . $postId);
     }
+
 
 
     public function deleteComment($id)
