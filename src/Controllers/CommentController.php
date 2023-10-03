@@ -77,13 +77,9 @@ class CommentController extends Controller
     public function deleteComment($id)
     {
         // Utilisez la classe Request pour obtenir les données de session
-        $request = new Request([
-            'session' => $_SESSION,
-            // Autres données, si nécessaire
-        ]);
-
-        $userId = $request->getPostData('user_id');
-        $role = $request->getPostData('roles') === 'ROLE_ADMIN';
+        $request = new Request();
+        $userId = $request->getSessionData('user_id');
+        $roles = $request->getSessionData('roles');
 
         $post = $this->commentManager->fetchcomment($id);
 
@@ -94,7 +90,7 @@ class CommentController extends Controller
         }
 
         // Vérifier les permissions pour la suppression
-        if ($role || $post->getIdUser() === $userId) {
+        if ($roles === 'ROLE_ADMIN' || $post->getIdUser() === $userId) {
             $this->commentManager->delete($id);
             $this->addSuccess('Suppression réussie');
         } else {
