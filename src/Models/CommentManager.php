@@ -23,8 +23,7 @@ class CommentManager
             $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
         } catch (PDOException $e) {
             // Lancer une exception personnalisée au lieu d'utiliser echo
-            throw new DatabaseConnectionException('Connection error: ' . $e->getMessage());
-
+            throw new DatabaseConnectionException('Connection error: ' . htmlspecialchars($e->getMessage()));
         }
     }
 
