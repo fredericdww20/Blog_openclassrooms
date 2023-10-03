@@ -111,9 +111,8 @@ class CommentController extends Controller
 
         $comment = $this->commentManager->fetchcomment($id);
 
-
-        $userId = $_SESSION['user_id'] ?? null;
-        $role = isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_ADMIN';
+        $userId = $request->getSessionData('user_id');
+        $roles = $request->getSessionData('roles');
 
         $errors = [];
 
@@ -124,7 +123,7 @@ class CommentController extends Controller
             if (!$commentary) {
                 $errors[] = 'Le commentaire est requis.';
             }
-            if (!$role && $comment->getIdUser() !== $userId) {
+            if ($roles !== 'ROLE_ADMIN' && $comment->getIdUser() !== $userId) {
                 $errors[] = 'Vous ne pouvez pas mettre à jour ce commentaire';
             }
             if (empty($errors)) {
