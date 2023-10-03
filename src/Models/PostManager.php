@@ -23,7 +23,7 @@ class PostManager
             $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
         } catch (PDOException $e) {
             $errorMessage = 'Connection error: ' . htmlspecialchars($e->getMessage());
-            echo $errorMessage;
+            echo '$errorMessage';
             return;
         }
     }
