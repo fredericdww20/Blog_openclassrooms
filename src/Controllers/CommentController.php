@@ -34,6 +34,7 @@ class CommentController extends Controller
     public function addcomment(): string
     {
         $request = new Request($_POST);
+
         if (!$request->isPost()) {
             $this->addError('La requête n\'est pas une requête POST.');
             return $this->twig->render('your_template.twig');
@@ -53,12 +54,12 @@ class CommentController extends Controller
 
         $postId = intval($id_post);
 
-        if (!isset($_SESSION['user_id']) || !is_int($_SESSION['user_id'])) {
+        $userId = $request->getSessionData('user_id');
+
+        if (!is_int($userId)) {
             $this->addError('ID d\'utilisateur invalide.');
             return $this->twig->render('your_template.twig');
         }
-
-        $userId = $_SESSION['user_id'];
 
         try {
             $commentManager->commentate($title, $commentary, $postId, $userId);
