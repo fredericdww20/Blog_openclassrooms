@@ -69,12 +69,12 @@ class ConnectController extends Controller
 
     public function logout()
     {
-
         $request = new Request($_POST);
         $request->deleteSessionData('user_id'); // Supprimer la clé 'user_id' de la session, ajustez en fonction de vos besoins
 
+        $params = session_get_cookie_params(); // Obtenez les paramètres de session sans appeler session_get_cookie_params()
+
         if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
             setcookie(
                 session_name(),
                 '',
