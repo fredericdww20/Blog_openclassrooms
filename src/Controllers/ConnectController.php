@@ -69,16 +69,16 @@ class ConnectController extends Controller
 
     public function logout()
     {
-        $request = new Request($_POST);
-        $request->deleteSessionData('user_id'); // Supprimer la clé 'user_id' de la session, ajustez en fonction de vos besoins
+        $request = new Request();
+        $request->deleteSessionData('user_id'); // Supprimez les données de session spécifiques
 
-        $params = session_get_cookie_params(); // Obtenez les paramètres de session sans appeler session_get_cookie_params()
-
+        // Définissez un cookie expiré pour supprimer le cookie de session
         if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
             setcookie(
                 session_name(),
                 '',
-                time() - 42000,
+                1,
                 $params["path"],
                 $params["domain"],
                 $params["secure"],
@@ -86,7 +86,9 @@ class ConnectController extends Controller
             );
         }
 
+        session_unset();
         session_destroy();
+
         $this->redirect('/OpenClassrooms/');
     }
 }
