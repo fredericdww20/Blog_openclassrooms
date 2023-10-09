@@ -72,7 +72,6 @@ class ConnectController extends Controller
         $request = new Request();
         $request->deleteSessionData('user_id'); // Supprimez les données de session spécifiques
 
-        // Définissez un cookie expiré pour supprimer le cookie de session
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
             setcookie(

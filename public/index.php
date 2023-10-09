@@ -37,6 +37,10 @@ Route::add('/profil', function () {
 
 /// ADMINCONTROLLER //
 Route::add('/admin', function () {
+    // Vérifiez si l'utilisateur est connecté et s'il a le rôle 'ROLE_ADMIN'
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+    }
     echo (new AdminController())->listvalidate();
 });
 Route::add('/admin', function () {
