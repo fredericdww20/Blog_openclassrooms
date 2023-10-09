@@ -1,146 +1,81 @@
-Contexte
-Ça y est, vous avez sauté le pas ! Le monde du développement web avec PHP est à portée de main et vous avez besoin de visibilité pour pouvoir convaincre vos futurs employeurs/clients en un seul regard. Vous êtes développeur PHP, il est donc temps de montrer vos talents au travers d’un blog à vos couleurs.
+# Blog Openclassrooms
 
-Description du besoin
-Le projet est donc de développer votre blog professionnel. Ce site web se décompose en deux grands groupes de pages :
+[![SymfonyInsight](https://insight.symfony.com/projects/84cd1851-bfb2-4c4c-8646-5b3b85b956b6/mini.svg)](https://insight.symfony.com/projects/84cd1851-bfb2-4c4c-8646-5b3b85b956b6)
 
-les pages utiles à tous les visiteurs ;
-les pages permettant d’administrer votre blog.
-Voici la liste des pages qui devront être accessibles depuis votre site web :
+## Description
 
-la page d'accueil ;
-la page listant l’ensemble des blog posts ;
-la page affichant un blog post ;
-la page permettant d’ajouter un blog post ;
-la page permettant de modifier un blog post ;
-les pages permettant de modifier/supprimer un blog post ;
-les pages de connexion/enregistrement des utilisateurs.
-Vous développerez une partie administration qui devra être accessible uniquement aux utilisateurs inscrits et validés.
+Ce projet est un blog réalisé dans le cadre de la formation de développeur d'application Php/Symfony dispensée par Openclassrooms. Il s'agit d'une application web permettant de créer, afficher, éditer et supprimer des articles de blog, ainsi que de laisser des commentaires sur les articles.
 
-Les pages d’administration seront donc accessibles sur conditions et vous veillerez à la sécurité de la partie administration.
+## Fonctionnalités
 
-Commençons par les pages utiles à tous les internautes.
+- Création d'un compte utilisateur avec authentification.
+- Création, affichage, édition et suppression d'articles de blog.
+- Ajout de commentaires sur les articles.
+- Gestion des utilisateurs avec des rôles (administrateur, utilisateur).
 
-Sur la page d’accueil, il faudra présenter les informations suivantes :
+## Prérequis
 
-votre nom et votre prénom ;
-une photo et/ou un logo ;
-une phrase d’accroche qui vous ressemble (exemple : “Martin Durand, le développeur qu’il vous faut !”) ;
-un menu permettant de naviguer parmi l’ensemble des pages de votre site web ;
-un formulaire de contact (à la soumission de ce formulaire, un e-mail avec toutes ces informations vous sera envoyé) avec les champs suivants :
-nom/prénom,
-e-mail de contact,
-message,
-un lien vers votre CV au format PDF ;
-et l’ensemble des liens vers les réseaux sociaux où l’on peut vous suivre (GitHub, LinkedIn, Twitter…).
-Sur la page listant tous les blogs posts (du plus récent au plus ancien), il faut afficher les informations suivantes pour chaque blog post :
+Avant de pouvoir exécuter le projet, assurez-vous d'avoir les éléments suivants installés :
 
-le titre ;
-la date de dernière modification ;
-le chapô ;
-et un lien vers le blog post.
-Sur la page présentant le détail d’un blog post, il faut afficher les informations suivantes :
+- PHP 8.1 ou une version ultérieure
+- Symfony CLI
+- Composer
+- MySQL ou un autre système de gestion de base de données
 
-le titre ;
-le chapô ;
-le contenu ;
-l’auteur ;
-la date de dernière mise à jour ;
-le formulaire permettant d’ajouter un commentaire (soumis pour validation) ;
-les listes des commentaires validés et publiés.
-Sur la page permettant de modifier un blog post, l’utilisateur a la possibilité de modifier les champs titre, chapô, auteur et contenu.
+## Installation
 
-Dans le footer menu, il doit figurer un lien pour accéder à l’administration du blog.
+1. Clonez ce dépôt sur votre machine locale :
 
-Contraintes
-Cette fois-ci, nous n’utiliserons pas WordPress. Tout sera développé par vos soins. Les seules lignes de code qui pourront provenir d’ailleurs seront celles du thème Bootstrap, que vous prendrez grand soin de choisir. La présentation, ça compte ! Il est également autorisé d’utiliser une ou plusieurs librairies externes à condition qu’elles soient intégrées grâce à Composer.
+```bash
+git clone https://github.com/votre-utilisateur/Openclassrooms.git
+```
 
-Attention, votre blog doit être navigable aisément sur un mobile (téléphone mobile, phablette, tablette…). C’est indispensable ! C’est indispensable :D
-Nous vous conseillons vivement d’utiliser un moteur de templating tel que Twig, mais ce n’est pas obligatoire.
+2. Accédez au répertoire du projet :
 
-Sur la partie administration, vous veillerez à ce que seules les personnes ayant le droit “administrateur” aient l’accès ; les autres utilisateurs pourront uniquement commenter les articles (avec validation avant publication).
+```bash
+cd Openclassrooms
+```
 
-Important : Vous vous assurerez qu’il n’y a pas de failles de sécurité (XSS, CSRF, SQL Injection, session hijacking, upload possible de script PHP…).
+3. Installez les dépendances du projet via Composer :
 
-Votre projet doit être poussé et disponible sur GitHub. Je vous conseille de travailler avec des pull requests. Dans la mesure où la majorité des communications concernant les projets sur GitHub se font en anglais, il faut que vos commits soient en anglais.
+```bash
+composer install
+```
 
-Vous devrez créer l’ensemble des issues (tickets) correspondant aux tâches que vous aurez à effectuer pour mener à bien le projet.
+4. Configurez les paramètres de connexion à la base de données dans le fichier `.env`.
+copiez le fichier `.env` en `.env.local` et modifiez les paramètres de connexion à la base de données.
 
-Veillez à bien valider vos tickets pour vous assurer que ceux-ci couvrent bien toutes les demandes du projet. Donnez une estimation indicative en temps ou en points d’effort (si la méthodologie agile vous est familière) et tentez de tenir cette estimation.
+5. Créez la base de données avec le fichier de migration Migrations/migate001.sql à importer dans votre base de données.
 
-L’écriture de ces tickets vous permettra de vous accorder sur un vocabulaire commun. Il est fortement apprécié qu’ils soient écrits en anglais !
+6. Lancez le serveur web :
 
-Nota Bene
-Votre projet devra être suivi via SymfonyInsight, ou Codacy pour la qualité du code. Vous veillerez à obtenir une médaille d'argent au minimum (pour SymfonyInsight). En complément, le respect des PSR est recommandé afin de proposer un code compréhensible et facilement évolutif.
+```bash
+cd public
+php -S localhost:8000
+```
 
-Si vous n’arrivez pas à vous décider sur le thème Bootstrap, en voici un qui pourrait vous convenir http://bit.ly/2emOTxY (source : startbootstrap.com).
+7. Accédez à l'application dans votre navigateur à l'adresse suivante :
 
-Dans le cas où une fonctionnalité vous semblerait mal expliquée ou manquante, parlez-en avec votre mentor afin de prendre une décision ensemble concernant les choix que vous souhaiteriez faire. Ce qui doit prévaloir doit être les délais.
+```
+http://localhost:8000
+```
 
-De l'aide pour aborder le projet étape par étape
-Afin de fluidifier votre avancement voici une proposition de manière de travailler :
+## Contribution
 
-Étape 1 - Prenez connaissance entièrement de l’énoncé et des spécifications détaillées.
-Étape 2 - Créez les diagrammes UML.
-Étape 3 - Créez le repository GitHub pour le projet.
-Étape 4 - Créez l’ensemble des issues sur le repository GitHub (https://github.com/username/nom_du_repo/issues/new).
-Étape 5 - Faites les estimations de l’ensemble de vos issues.
-Étape 6 - Entamez le développement de l’application et proposez des pull requests pour chacune des fonctionnalités/issues. (L’estimation se fera au fur et à mesure de votre développement et sera discutée avec votre mentor.)
-Étape 7 - Faites relire votre code à votre mentor (code proposé dans la ou les pull requests), et une fois validée(s) mergez la ou les pull requests dans la branche principale. (Cette relecture servira à valider votre implémentation des bonnes pratiques et la cohérence de votre code. La validation se fera en continu durant les sessions.)
-Étape 8 - Validez la qualité du code via SymfonyInsight ou Codacy.
-Étape 9 - Effectuez une démonstration de l’ensemble de l’application.
-Étape 10 - Préparez l’ensemble de vos livrables et soumettez-les sur la plateforme.
+Les contributions à ce projet sont les bienvenues. Voici comment vous pouvez contribuer :
 
-Prenez le temps de valider chaque étape avec votre mentor afin de vous assurer que vous avancez dans la bonne direction.
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and commit them.
+4. Push your branch to your forked repository.
+5. Submit a pull request.
 
-Livrables
-Un fichier au format TXT contenant un lien vers un repository Github contenant l’ensemble du projet :
-Tout le code nécessaire (fichiers PHP/HTML/JS/CSS) ;
-Un fichier README à la racine du dossier et contenant les instructions pour installer le projet ;
-Un dossier contenant les diagrammes UML au format PNG ou JPG dans un dossier nommé “diagrammes” à la racine du projet :
-diagrammes de cas d’utilisation
-diagramme de classes
-diagrammes de séquence
-Les issues sur le repository GitHub que vous aurez créé
-Un fichier au format TXT contenant un lien vers la dernière analyse SymfonyInsight ou Codacy (ou vers le projet public sur la plateforme).
-Pour faciliter votre passage devant le jury, déposez sur la plateforme, dans un dossier zip nommé “Titre_du_projet_nom_prénom”, avec tous les livrables du projet comme suit : Nom_Prénom_n° du livrable_nom du livrable__date de démarrage du projet. Cela donnera : 
+Veuillez-vous assurer de suivre les bonnes pratiques de développement et de respecter les normes de codage en vigueur.
 
-Nom_Prénom_1_repository_git_mmaaaa ;
-Nom_Prénom_2_analyse_code_mmaaaa.
-Par exemple, le premier livrable peut être nommé comme suit : Dupont_Jean_1_repository_git_012022.
+## Auteur
 
-Soutenance
-La soutenance, d’une durée maximum de 30 minutes, se déroulera en 3 étapes :
+Ce projet a été réalisé par Portemer Frederic, dans le cadre de la formation Openclassrooms.
 
-Présentation des livrables (20 minutes) 
-À l'oral, en condition réelle, vous présenterez votre projet. Votre évaluateur jouera le rôle du client. Voici comment vous pouvez organiser votre présentation :
-Présentation globale du projet : rappelez le contexte du projet, ainsi que l'analyse de besoin en vous focalisant sur une fonctionnalité et en présentant ses diagrammes UML. Résumez également l'organisation du projet et la méthodologie de gestion de projet adoptée.
-Démonstration de l'application : présentez l'ensemble des fonctionnalités de l'application.‌
-Présentez votre projet du point de vue technique cette fois-ci :
+## License
 
-montrez comment vous avez versionné votre projet ;
-présentez l'architecture technique que vous avez mise en place ;
-listez les librairies que vous avez choisies et expliquer comment vous les avez intégrées ;
-choisissez une pull request correspondant à une tâche sur GitHub et détaillez comment vous avez mené à bien cette tâche ;
-présentez une analyse SymfonyInsight ou Codacy et expliquez les correctifs apportés ;
-expliquez comment vous avez procédé pour garantir la mise en place des bonnes pratiques en vigueur.‌
-Discussion (5 minutes) 
-Echange de questions/réponses. L’évaluateur pourra revenir sur certains points pour vous questionner sur vos choix.
-Debriefing (5 minutes)
-Votre évaluateur reprendra son rôle de mentor et vous fera un retour sur votre prestation en soutenance.
- Votre présentation devrait durer 20 minutes (+/- 7 minutes). Puisque le respect de la durée des présentations est important en milieu professionnel, les présentations en dessous de 13 minutes ou au-dessus de 27 minutes peuvent être refusées. 
-
- 
-
- 
-
-
-Ressources‌
-Thèmes Bootstrap gratuits sur startbootstrap.com ;
-Moteur de templating Twig sur Sensiolabs ;
-Qu’est-ce qu’une pull request ;
-Créer une pull request ;
-Comment travailler avec le gestionnaire de paquet PHP Composer ;
-SensioLabsInsight ;
-PSR 1, 4 et 12.
-
+Ce projet est sous license [MIT](LICENSE).
