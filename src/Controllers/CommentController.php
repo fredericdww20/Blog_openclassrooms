@@ -68,7 +68,7 @@ class CommentController extends Controller
         } catch (PDOException $e) {
             $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
         }
-        
+
         $this->redirect('/OpenClassrooms/post/' . $postId);
     }
 

@@ -92,10 +92,7 @@ class UserManager
     }
 
     // Vérification de l'existance de l'email en base de données
-    private function validateForm($formData): bool
-    {
-        return $this->validateFields($formData);
-    }
+    
 
     private function validateFields($formData): bool
     {

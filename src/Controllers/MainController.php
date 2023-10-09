@@ -15,9 +15,6 @@ class MainController extends Controller
 {
     // Rendu vers la page principale
 
-
-    private string $addSuccess;
-
     public function index()
     {
         return $this->twig->render('main/index.html.twig');

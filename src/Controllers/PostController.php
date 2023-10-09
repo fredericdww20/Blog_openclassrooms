@@ -108,7 +108,6 @@ class PostController extends Controller
         $chapo = $request->get('chapo');
 
         $post = $this->postManager->fetch($id);
-        $message = null;
         $errors = [];
 
         if ($request->isPost() && $post) {
