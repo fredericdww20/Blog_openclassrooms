@@ -42,10 +42,9 @@ cd blog_openclassrooms
 composer install
 ```
 
-4. Configurez les paramètres de connexion à la base de données dans le fichier `.env`.
-copiez le fichier `.env` en `.env.local` et modifiez les paramètres de connexion à la base de données.
+4. Configurez les paramètres de connexion à la base de données dans le fichier `config.php` disponible à la racine du projet.
 
-5. Créez la base de données avec le fichier de migration Migrations/migate001.sql à importer dans votre base de données.
+5. Créez la base de données avec le fichier de migration pofr8259_blogopen.sql à importer dans votre base de données.
 
 6. Lancez le serveur web :
 
