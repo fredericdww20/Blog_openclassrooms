@@ -64,7 +64,6 @@ class AdminController extends Controller
     public function update($id)
     {
         $adminManager = new AdminManager();
-        $message = null;
         $errors = [];
         $sta = null;
 
