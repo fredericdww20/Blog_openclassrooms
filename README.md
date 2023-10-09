@@ -27,13 +27,13 @@ Avant de pouvoir exécuter le projet, assurez-vous d'avoir les éléments suivan
 1. Clonez ce dépôt sur votre machine locale :
 
 ```bash
-git clone https://github.com/votre-utilisateur/Openclassrooms.git
+git clone https://github.com/votre-utilisateur/blog_openclassrooms.git
 ```
 
 2. Accédez au répertoire du projet :
 
 ```bash
-cd Openclassrooms
+cd blog_openclassrooms
 ```
 
 3. Installez les dépendances du projet via Composer :
