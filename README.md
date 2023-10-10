@@ -18,7 +18,7 @@ Ce projet est un blog réalisé dans le cadre de la formation de développeur d'
 Avant de pouvoir exécuter le projet, assurez-vous d'avoir les éléments suivants installés :
 
 - PHP 8.1 ou une version ultérieure
-- Symfony CLI
+- Twig
 - Composer
 - MySQL ou un autre système de gestion de base de données
 
