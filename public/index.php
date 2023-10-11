@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-//ini_set('display_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 require_once '../vendor/autoload.php';
 require_once __DIR__ . '/../config.php';
-require_once __DIR__ . '/../src/Request.php';
+require_once __DIR__ . '/../src/Core/Request.php';
 
 
 use App\Controllers\AdminController;
@@ -16,7 +16,7 @@ use App\Controllers\MainController;
 use App\Controllers\PostController;
 use App\Controllers\RegisterController;
 use App\Controllers\UserController;
-use App\Request;
+use App\Core\Request;
 use Steampixel\Route;
 
 $request = new Request($_POST);
@@ -37,32 +37,76 @@ Route::add('/profil', function () {
 
 /// ADMINCONTROLLER //
 Route::add('/admin', function () {
-    // Vérifiez si l'utilisateur est connecté et s'il a le rôle 'ROLE_ADMIN'
     if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
         header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
     }
     echo (new AdminController())->listvalidate();
 });
 Route::add('/admin', function () {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->listcomment();
 });
 Route::add('/admin/posts', function () {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->list();
 });
 Route::add('/admin/comment', function () {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->listcomment();
 });
 Route::add('/admin/com/([0-9]+)', function ($id) {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->updatecomments($id);
 });
 Route::add('/admin/com/([0-9]+)', function ($id) {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->updatecomments($id);
 }, 'post');
 
 Route::add('/admin/validate/([0-9]+)', function ($id) {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->update($id);
 });
 Route::add('/admin/validate/([0-9]+)', function ($id) {
+    if (!isset($_SESSION['roles']) || $_SESSION['roles'] !== 'ROLE_ADMIN') {
+        header('Location: /OpenClassrooms/login');
+        if ($_SESSION['roles'] === 'ROLE_USER') {
+            header('Location: /OpenClassrooms/');
+        }
+    }
     echo (new AdminController())->update($id);
 }, 'post');
 

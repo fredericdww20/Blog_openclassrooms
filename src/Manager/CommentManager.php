@@ -1,30 +1,19 @@
 <?php
 
-namespace App\Models;
+namespace App\Manager;
 
+use App\Core\Database;
+use App\Models\Comment;
 use PDO;
-use PDOException;
 
 class CommentManager
 
 {
     private PDO $pdo;
 
-    public function __construct()
-    {
-        $pdoOptions = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-
-        try {
-            $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
-            $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
-        } catch (PDOException $e) {
-            // Lancer une exception personnalisée au lieu d'utiliser echo
-            throw new DatabaseConnectionException('Connection error: ' . htmlspecialchars($e->getMessage()));
-        }
+    // Connexion à la base de données
+    public function __construct() {
+        $this->pdo = Database::getInstance()->getPdo();
     }
 
     public function commentate(string $title, string $commentary, int $postId, int $userId): void
@@ -45,10 +34,10 @@ class CommentManager
     public function fetch(int $id)
     {
         $sql = 'SELECT p.id as post_id, c.*, u.lastname, u.firstname
-            FROM comment AS c 
-            JOIN post AS p ON c.id_post = p.id 
-            JOIN user AS u ON p.id_user = u.id 
-            WHERE p.id = :id AND c.sta = 1';
+    FROM comment AS c 
+    JOIN post AS p ON c.id_post = p.id 
+    JOIN user AS u ON c.id_user = u.id 
+    WHERE p.id = :id AND c.sta = 1';
 
         $statement = $this->pdo->prepare($sql);
 

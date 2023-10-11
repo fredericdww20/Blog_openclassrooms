@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\CommentManager;
-use App\Models\PostManager;
-use App\Request;
+use App\Core\Request;
+use App\Manager\CommentManager;
+use App\Manager\PostManager;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -12,7 +12,7 @@ use Twig\Error\SyntaxError;
 /**
  * Class PostController
  */
-class PostController extends Controller
+class PostController extends AbstractController
 {
     private PostManager $postManager;
 

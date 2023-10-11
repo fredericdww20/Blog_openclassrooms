@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\CommentManager;
-use App\Models\PostManager;
-use App\Request;
+use App\Core\Request;
+use App\Manager\CommentManager;
+use App\Manager\PostManager;
 use PDOException;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -13,7 +13,7 @@ use Twig\Error\SyntaxError;
 /**
  * Class CommentController
  */
-class CommentController extends Controller
+class CommentController extends AbstractController
 {
     private CommentManager $commentManager;
 
@@ -111,7 +111,7 @@ class CommentController extends Controller
 
         $comment = $this->commentManager->fetchcomment($id);
 
-        $userId = $request->getSessionData('user_id');
+        $userId = intval($request->getSessionData('user_id')); // Converti en int
         $roles = $request->getSessionData('roles');
 
         $errors = [];
@@ -123,9 +123,12 @@ class CommentController extends Controller
             if (!$commentary) {
                 $errors[] = 'Le commentaire est requis.';
             }
-            if ($roles !== 'ROLE_ADMIN' && $comment->getIdUser() !== $userId) {
+
+            // Converti l'ID de l'utilisateur du commentaire en int pour la comparaison
+            if ($roles !== 'ROLE_ADMIN' && intval($comment->getIdUser()) !== $userId) {
                 $errors[] = 'Vous ne pouvez pas mettre à jour ce commentaire';
             }
+
             if (empty($errors)) {
                 $this->commentManager->update($id, $title, $commentary);
                 $this->addSuccess('Modification du commentaire validée');
@@ -142,7 +145,6 @@ class CommentController extends Controller
             'comment' => $comment,
         ]);
     }
-
 
     public function showComment($id)
     {

@@ -2,15 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Request;
+use App\Core\Request;
 use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 
-abstract class Controller
+abstract class AbstractController
 {
     protected Environment $twig;
-
     private array $messages = [];
 
     public function __construct()
