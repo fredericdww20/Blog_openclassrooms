@@ -4,11 +4,11 @@
  */
 
 namespace App\Controllers;
-use App\Models\AdminManager;
-use App\Request;
+use App\Core\Request;
+use App\Manager\AdminManager;
 
 
-class AdminController extends Controller
+class AdminController extends AbstractController
 {
     /*
      * Affiche la liste des commentaires a valider sur la page d'administration

@@ -2,10 +2,10 @@
 
 namespace App\Controllers;
 
-use App\Models\UserManager;
-use App\Request;
+use App\Core\Request;
+use App\Manager\UserManager;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
     public function infouser()
     {

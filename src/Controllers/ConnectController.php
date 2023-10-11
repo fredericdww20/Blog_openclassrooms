@@ -5,13 +5,13 @@
 
 namespace App\Controllers;
 
-use App\Models\UserManager;
-use App\Request;
+use App\Core\Request;
+use App\Manager\UserManager;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class ConnectController extends Controller
+class ConnectController extends AbstractController
 {
     /**
      * @return string|void

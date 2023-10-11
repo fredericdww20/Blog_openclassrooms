@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\UserManager;
+use App\Manager\UserManager;
 
-class RegisterController extends Controller
+class RegisterController extends AbstractController
 {
     const ERROR_EMAIL_EXISTS = 'Cet email est déjà utilisé.';
     const ERROR_MISSING_FIELDS = 'Veuillez remplir tous les champs.';
@@ -13,7 +13,7 @@ class RegisterController extends Controller
     {
         $userManager = new UserManager();
         $errorMessage = null;
-        $request = new \App\Request($_POST);
+        $request = new \App\Core\Request($_POST);
 
         if ($request->isPost()) {
             $firstname = $request->get('firstname');
@@ -37,11 +37,17 @@ class RegisterController extends Controller
         return $this->twig->render('register/register.html.twig', ['errorMessage' => $errorMessage]);
     }
 
+    /*
+     *
+     */
     private function validateForm($formData): bool
     {
         return $this->validateFields($formData);
     }
 
+    /*
+     *
+     */
     private function validateFields($formData): bool
     {
         $fields = ['firstname', 'lastname', 'email', 'password'];

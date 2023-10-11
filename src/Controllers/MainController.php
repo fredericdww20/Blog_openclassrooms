@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Core\Request;
 use App\Helper\StringHelper;
-use App\Request;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -11,7 +11,7 @@ use Swift_SmtpTransport;
 /**
  * Affichage page principale + controller mailswift
  */
-class MainController extends Controller
+class MainController extends AbstractController
 {
     // Rendu vers la page principale
 

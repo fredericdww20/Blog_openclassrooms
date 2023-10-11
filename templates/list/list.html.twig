@@ -47,40 +47,37 @@
         <div class="bg-white text-center text-black">{% include '_message.html.twig' %}</div>
         <div class=" m-9 grid grid-cols-3 gap-3 place-content-stretch ">
             {% for post in posts %}
-                <section class="z-50 pb-5 bg-white dark:bg-gray-900">
-                    <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
+                    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                         <a href="#">
-                            <img class="p-3 w-40 rounded-lg sm:rounded-none sm:rounded-l-lg"
-                                 src="../../assets/img/news-report.png"
-                                 alt="Bonnie Avatar">
+                            <img class="mt-3 object-scale-down h-48 w-96 rounded-t-lg" src="../../assets/img/news-report.png" alt="" />
                         </a>
-                        <div class="p-2">
-                            <h1 class=" underline decoration-pink-500 mb-2 text-lg text-slate-900 dark:text-gray-400">{{ post.title }}</h1>
-                            <p class=" mb-2 text-slate-900 dark:text-gray-400">{{ post.chapo }}</p>
-                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Crée le : {{ post.getCreated_at() | date("d/m/Y") }}</p>
+                        <div class="p-5">
+                            <a href="#">
+                                <p class="m font-semibold normal-case text-gray-700 dark:text-gray-400">Crée le : {{ post.getCreated_at() | date("d/m/Y") }}</p>
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</h5>
+                            </a>
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ post.chapo }}</p>
+                            <div class="text-center"> <a href="post/{{ post.id }}"
+                                                         class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
+                                                         type="button">
+                                    Voir le post
+                                </a>
+                                {% if session ['LOGGED_USER'] == true %}
+                                    <a href="delete/{{ post.id }}"
+                                       class="m-2 text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
+                                       type="button">
+                                        Supprimer le post
+                                    </a>
+
+                                    <a href="update/{{ post.id }}"
+                                       class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
+                                       type="button">
+                                        Modifier le post
+                                    </a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                    <div class="text-center"> <a href="post/{{ post.id }}"
-                             class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
-                             type="button">
-                            Voir le post
-                        </a>
-                        {% if session ['LOGGED_USER'] == true %}
-                        <a href="delete/{{ post.id }}"
-                           class="m-2 text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
-                           type="button">
-                            Supprimer le post
-                        </a>
-
-                        <a href="update/{{ post.id }}"
-                           class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
-                           type="button">
-                            Modifier le post
-                        </a>
-                        {% endif %}
-                    </div>
-                </section>
-
             {% endfor %}
         </div>
     </div>

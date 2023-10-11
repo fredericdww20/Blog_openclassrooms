@@ -1,31 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Manager;
 
-use App\Request;
+use App\Core\Database;
+use App\Core\Request;
+use App\Models\Post;
+use App\Models\User;
 use PDO;
-use PDOException;
 
 class UserManager
 {
     private PDO $pdo;
 
     // Connexion à la base de données
-    public function __construct()
-    {
-        $pdoOptions = [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ];
-
-        try {
-            $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8';
-            $this->pdo = new PDO($dsn, DB_USER, DB_PASSWORD, $pdoOptions);
-        } catch (PDOException $e) {
-            // Lancer une exception personnalisée au lieu d'utiliser echo
-            throw new DatabaseConnectionException('Connection error: ' . $e->getMessage());
-        }
+    public function __construct() {
+        $this->pdo = Database::getInstance()->getPdo();
     }
 
     // Fonction enregistrement utilisateur en base de données
@@ -91,8 +80,8 @@ class UserManager
         return $statement->fetchObject(Post::class);
     }
 
-    // Vérification de l'existance de l'email en base de données
 
+    // Vérification de l'existance de l'email en base de données
 
     private function validateFields($formData): bool
     {
