@@ -81,7 +81,7 @@ class AdminController extends AbstractController
             if (empty($errors)) {
                 $adminManager->update($id, $sta);
                 $this->addSuccess('Mise à jour réussie');
-                $this->redirect('/OpenClassrooms/admin/posts');
+                $this->redirect('/admin/posts');
             }
         }
 
@@ -115,7 +115,7 @@ class AdminController extends AbstractController
                 try {
                     $adminManager->updatecomment($id, $sta);
                     $this->addSuccess('Mise à jour réussie');
-                    $this->redirect('/OpenClassrooms/admin/comment');
+                    $this->redirect('/admin/comment');
                 } catch (Exception $e) {
                     // Gérer l'exception ou envoie l'erreur
                     $errors[] = 'Une erreur s\'est produite lors de la mise à jour du commentaire.';

@@ -69,7 +69,8 @@ class CommentController extends AbstractController
             $this->addError('Une erreur s\'est produite lors de l\'envoi du commentaire : ' . $e->getMessage());
         }
 
-        $this->redirect('/OpenClassrooms/post/' . $postId);
+        $this->redirect('/post/' . $postId);
+        $this->redirect('/post/' . $postId);
     }
 
 
@@ -85,7 +86,7 @@ class CommentController extends AbstractController
 
         if (!$post) {
             $this->addError('Commentaire introuvable.');
-            $this->redirect('/OpenClassrooms/post/' . $id);
+            $this->redirect('/post/' . $id);
             return;
         }
 
@@ -100,7 +101,7 @@ class CommentController extends AbstractController
         $postId = $post->getId();
         $postManager = new PostManager();
         $post = $postManager->fetch($postId);
-        $this->redirect('/OpenClassrooms/post/' . $postId);
+        $this->redirect('/post/' . $postId);
     }
 
     public function updatecomment($id)
@@ -132,12 +133,12 @@ class CommentController extends AbstractController
             if (empty($errors)) {
                 $this->commentManager->update($id, $title, $commentary);
                 $this->addSuccess('Modification du commentaire validée');
-                $this->redirect('/OpenClassrooms/post/' . $comment->getIdPost());
+                $this->redirect('/post/' . $comment->getIdPost());
             } else {
                 foreach ($errors as $error) {
                     $this->addError($error);
                 }
-                $this->redirect('/OpenClassrooms/post/' . $comment->getIdPost());
+                $this->redirect('/post/' . $comment->getIdPost());
             }
         }
 

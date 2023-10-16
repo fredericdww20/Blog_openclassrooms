@@ -25,7 +25,6 @@ use App\Core\Router;
 
 
 $router = new Router();
-
 function isAdmin() {
     return isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_ADMIN';
 }
@@ -43,26 +42,28 @@ $router->addRoute('GET', '~^/$~', function() {
     $controller = new MainController();
     return new Response($controller->index());
 });
+
+$router->addRoute('GET', '~^/$~', function() {
+    require_once '.././src/Controllers/MainController.php';
+    $controller = new MainController();
+    return new \App\Core\Response($controller->swiftmailer());
+});
 $router->addRoute('POST', '~^/$~', function() {
     require_once '.././src/Controllers/MainController.php';
     $controller = new MainController();
     return new \App\Core\Response($controller->swiftmailer());
 });
-//Route::add('/', function () {
-//    echo (new MainController())->swiftmailer();
-//}, 'post');
-//
-///// USERCONTROLLER //
-//Route::add('/profil', function () {
-//    echo (new UserController())->infouser();
-//});
 
-
-
+// USERCONTROLLER //
+$router->addRoute('GET', '~^/profil$~', function() {
+    require_once '.././src/Controllers/UserController.php';
+    $controller = new UserController();
+    return new \App\Core\Response($controller->infouser());
+});
 
 /// ADMINCONTROLLER //
-// Fonction pour vérifier si l'utilisateur est un administrateur
-$router->addRoute('GET', '~^/admin$~', function() {
+
+$router->addRoute('GET', '~^/admin$~', function () {
     if (!isAdmin()) return redirectToAppropriatePage();
     $controller = new AdminController();
     return new \App\Core\Response($controller->listvalidate());
@@ -179,10 +180,17 @@ $router->addRoute('POST', '~^/update/([0-9]+)$~', function($id) {
     $controller = new PostController();
     return new \App\Core\Response($controller->update($id));
 });
-//
-//
 
-/////// COMMENTCONTROLLER //
+// COMMENTCONTROLLER //
+
+$router->addRoute('GET', '~^/comment$~', function() {
+    $controller = new CommentController();
+    return new \App\Core\Response($controller->addcomment());
+});
+$router->addRoute('POST', '~^/comment$~', function() {
+    $controller = new CommentController();
+    return new \App\Core\Response($controller->addcomment());
+});
 //Route::add('/comment', function () {
 //    echo (new CommentController())->addcomment();
 //});
@@ -203,5 +211,5 @@ $router->addRoute('POST', '~^/update/([0-9]+)$~', function($id) {
 //    echo (new CommentController())->updateComment($id);
 //}, 'post');
 
-
 $router->dispatch();
+

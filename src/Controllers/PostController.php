@@ -124,10 +124,10 @@ class PostController extends AbstractController
             if (empty($errors)) {
                 $this->postManager->update($id, $title, $description, $chapo);
                 $this->addSuccess('Article modifié');
-                $this->redirect('/OpenClassrooms/post/' . $id);
+                $this->redirect('/post/' . $id);
             } else {
                 $this->addError('Erreur dans la modification du post');
-                $this->redirect('/OpenClassrooms/post/' . $id);
+                $this->redirect('/post/' . $id);
             }
         }
 
