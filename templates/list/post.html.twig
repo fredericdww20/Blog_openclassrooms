@@ -44,11 +44,12 @@
                 <section class="z-50 pb-5 bg-white dark:bg-gray-900">
                     <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
                         <a href="#">
-                            <img class="p-3 w-40 rounded-lg sm:rounded-none sm:rounded-l-lg"
+                            <img class="p-3 w80 rounded-lg sm:rounded-none sm:rounded-l-lg"
                                  src="../../assets/img/news-report.png"
                                  alt="Bonnie Avatar">
                         </a>
                         <div class="p-2">
+                            <h2 class="mb-2 text-lg text-slate-900 dark:text-gray-400">Publié par {{ post.lastname }} {{ post.firstname }}</h2>
                             <h1 class=" underline decoration-pink-500 mb-2 text-lg text-slate-900 dark:text-gray-400 ">{{ post.title }}</h1>
                             <p class="italic mb-2 text-slate-900 dark:text-gray-400 ">{{ post.chapo }}</p>
                             <p class=" mb-2 text-slate-900 dark:text-gray-400">{{ post.description }}</p>
