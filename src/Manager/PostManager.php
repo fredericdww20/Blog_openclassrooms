@@ -56,11 +56,11 @@ class PostManager
 
     public function fetch(int $id)
     {
-        $sql = 'SELECT * FROM post WHERE id = :id';
+        $sql = 'SELECT post.*, user.lastname, user.firstname FROM post 
+            JOIN user ON post.id_user = user.id 
+            WHERE post.id = :id';
         $statement = $this->pdo->prepare($sql);
-        $statement->execute([
-            'id' => $id
-        ]);
+        $statement->execute(['id' => $id]);
 
         return $statement->fetchObject(Post::class);
     }
