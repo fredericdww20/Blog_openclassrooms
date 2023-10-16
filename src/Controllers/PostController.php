@@ -84,6 +84,7 @@ class PostController extends AbstractController
         $role = $request->getSessionData('roles') === 'ROLE_ADMIN';
 
         $post = $this->postManager->fetch($id);
+
         if ($role || $post->getIdUser() === $userId) {
 
             $this->postManager->delete($id);
