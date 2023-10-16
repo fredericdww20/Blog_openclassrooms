@@ -46,11 +46,11 @@ class ConnectController extends AbstractController
 
                         if ($request->getSessionData('roles') === 'ROLE_ADMIN') {
                             $this->addSuccess('Connexion en tant qu\'administrateur réussie.');
-                            $this->redirect('/OpenClassrooms/admin');
+                            $this->redirect('/admin');
                             // Arrêt de la fonction après la redirection
                         } else {
                             $this->addSuccess('Connexion réussie.');
-                            $this->redirect('/OpenClassrooms/');
+                            $this->redirect('/');
                             // Arrêt de la fonction après la redirection
                         }
                         return '';
@@ -88,7 +88,7 @@ class ConnectController extends AbstractController
         session_unset();
         session_destroy();
 
-        $this->redirect('/OpenClassrooms/');
+        $this->redirect('/');
     }
 }
 
