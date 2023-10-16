@@ -57,12 +57,12 @@
                     </div>
                     {% if session['user_id'] == post.getIdUser() %}
                     <div class="text-center">
-                        <a href="/OpenClassrooms/delete/{{ post.id }}"
+                        <a href="/delete/{{ post.id }}"
                            class="m-2 text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Supprimer le post
                         </a>
-                        <a href="/OpenClassrooms/update/{{ post.id }}"
+                        <a href="/update/{{ post.id }}"
                            class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Modifier le post
@@ -83,7 +83,7 @@
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Commentaire</h2>
             </div>
             {% if session ['LOGGED_USER'] == true %}
-            <form  action="/OpenClassrooms/comment" method="POST"  class="mb-6">
+            <form  action="/comment" method="POST"  class="mb-6">
                 <input type="hidden" name="id_post" value="{{ post.id }}">
                 <div class="mb-5">
                     <label for="title"

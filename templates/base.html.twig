@@ -24,7 +24,7 @@
             <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
                 <div class="pl-4 flex items-center">
                     <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
-                       href="#">
+                       href="/">
                         BLOG
                     </a>
                 </div>
@@ -41,41 +41,41 @@
                      id="nav-content">
                     <ul class="list-reset lg:flex justify-end flex-1 items-center">
                         <li class="mr-3">
-                            <a class="inline-block py-2 px-4 text-black font-bold no-underline" href="/OpenClassrooms/">Accueil</a>
+                            <a class="inline-block py-2 px-4 text-black font-bold no-underline" href="/">Accueil</a>
                         </li>
                         {% if session ['LOGGED_USER'] == false %}
                         <li class="mr-3">
                             <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                               href="/OpenClassrooms/login">Connexion</a>
+                               href="/login">Connexion</a>
                         </li>
                         {% endif %}
                         {% if session ['LOGGED_USER'] == true %}
                             <li class="mr-3">
                                 <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                                   href="/OpenClassrooms/profil">Votre profil</a>
+                                   href="/profil">Votre profil</a>
                             </li>
                         {% endif %}
                         {% if session ['LOGGED_USER'] == true %}
                             <li class="mr-3">
                                 <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                                   href="/OpenClassrooms/logout">Déconnexion</a>
+                                   href="/logout">Déconnexion</a>
                             </li>
                         {% endif %}
                         {% if session ['LOGGED_USER'] == false %}
                             <li class="mr-3">
                                 <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                                   href="/OpenClassrooms/inscription">Inscription</a>
+                                   href="/inscription">Inscription</a>
                             </li>
                         {% endif %}
                         {% if session ['LOGGED_USER'] == true %}
                         <li class="mr-3">
                             <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                               href="/OpenClassrooms/add">Ajouter un post</a>
+                               href="/add">Ajouter un post</a>
                         </li>
                         {% endif %}
                         <li class="mr-3">
                             <a class="inline-block py-2 px-4 text-black font-bold no-underline"
-                               href="/OpenClassrooms/posts">Tout les post</a>
+                               href="/posts">Tout les post</a>
                         </li>
                     </ul>
                 </div>
@@ -187,7 +187,7 @@
 
     <footer class="bg-white h-50">
         <section class="container mx-auto text-center py-6 mb-12">
-            <p class="inline-block text-center text-gray-500">Frederic Portemer - 2023</p> <span class="text-gray-500"> - </span> <a href="/OpenClassrooms/admin" class="inline-block text-center text-gray-500">Accès à l'administration</a>
+            <p class="inline-block text-center text-gray-500">Frederic Portemer - 2023</p> <span class="text-gray-500"> - </span> <a href="/admin" class="inline-block text-center text-gray-500">Accès à l'administration</a>
         </section>
     </footer>
 

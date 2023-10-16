@@ -52,7 +52,7 @@ class MainController extends AbstractController
 
         $this->addSuccess('Message envoyé');
 
-        $this->redirect('/OpenClassrooms/');
+        $this->redirect('/');
     }
 
 }

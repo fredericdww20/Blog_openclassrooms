@@ -35,8 +35,8 @@ class PostController extends AbstractController
      */
     public function addpost(): string
     {
-        global $request;
         $message = null;
+        $request = new Request($_POST);
         $request = new Request($request->getPostData());
 
         if ($request->isPost()) {
@@ -93,7 +93,7 @@ class PostController extends AbstractController
            $this->addError('Vous ne pouvez pas supprimer ce post');
         }
 
-        $this->redirect('/OpenClassrooms/posts');
+        $this->redirect('/posts');
 
     }
 
