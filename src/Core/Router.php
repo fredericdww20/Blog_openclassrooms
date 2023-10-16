@@ -5,6 +5,12 @@ namespace App\Core;
 class Router {
     private array $routes = [];
 
+    public static function redirect($path): void
+    {
+        header('Location: ' . $path);
+        exit();
+    }
+
     public function addRoute($method, $path, $callback): void
     {
         $this->routes[] = [

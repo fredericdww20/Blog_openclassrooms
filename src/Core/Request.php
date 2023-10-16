@@ -6,6 +6,7 @@ use App\Helper\StringHelper;
 
 class Request
 {
+
     /*
      * Nettoie chaque élément de ce tableau
      */

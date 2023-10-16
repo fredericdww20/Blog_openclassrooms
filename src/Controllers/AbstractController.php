@@ -38,13 +38,15 @@ abstract class AbstractController
         $this->messages[] = ['type' => 'error', 'message' => $message];
     }
 
-    public function redirect(string $path): void {
 
+    public function redirect($url)
+    {
         $request= new Request();
         if($this->messages) {
             $request->setSessionData('message', $this->messages);
         }
-
-        header('Location: ' . $path);
+        header('Location: ' . $url);
+        exit;
     }
+
 }

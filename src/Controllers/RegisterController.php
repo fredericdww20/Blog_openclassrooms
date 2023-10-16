@@ -25,7 +25,7 @@ class RegisterController extends AbstractController
                 if (!$userManager->checkEmailExists($email)) {
                     $userManager->create($firstname, $lastname, $email, $password);
                     $this->addSuccess('Inscription réussie');
-                    $this->redirect('/OpenClassrooms/');
+                    $this->redirect('/');
                 } else {
                     $errorMessage = self::ERROR_EMAIL_EXISTS;
                 }
