@@ -89,7 +89,6 @@ class CommentController extends AbstractController
             $this->redirect('/post/' . $id);
             return;
         }
-
         // Vérifier les permissions pour la suppression
         if ($roles === 'ROLE_ADMIN' || $post->getIdUser() === $userId) {
             $this->commentManager->delete($id);

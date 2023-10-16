@@ -88,4 +88,9 @@ class Post
         return $this->id_user;
     }
 
+    public function setIdUser(mixed $id_user)
+    {
+        $this->id_user = $id_user;
+    }
+
 }

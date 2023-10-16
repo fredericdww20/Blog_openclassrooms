@@ -32,7 +32,7 @@ class PostManager
 
     public function fetchAll()
     {
-        $sql = 'SELECT * FROM post WHERE sta = 1';
+        $sql = 'SELECT id, title, chapo, description, created_at, id_user FROM post WHERE sta = 1';
 
         $statement = $this->pdo->prepare($sql);
 
@@ -46,6 +46,7 @@ class PostManager
             $post->setChapo($row['chapo']);
             $post->setDescription($row['description']);
             $post->setCreated_at($row['created_at']);
+            $post->setIdUser($row['id_user']);
 
             $posts[] = $post;
         }

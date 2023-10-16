@@ -62,7 +62,8 @@
                                                          type="button">
                                     Voir le post
                                 </a>
-                                {% if session ['LOGGED_USER'] == true %}
+                                {% if post.getIdUser() is not null and session['user_id'] == post.getIdUser() %}
+
                                     <a href="/delete/{{ post.id }}"
                                        class="m-2 text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                                        type="button">

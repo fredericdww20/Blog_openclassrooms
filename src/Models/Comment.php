@@ -9,9 +9,11 @@ class Comment
     private string $title;
     private string $commentary;
     private string $created_at;
-    private string $id_post;
-    private string $id_user;
+    private int $id_post;
+    private int $id_user;
     private string $sta;
+
+
 
 
     public function getCreatedAt(): string
@@ -64,22 +66,22 @@ class Comment
         $this->commentary = $commentary;
     }
 
-    public function getIdPost(): string
+    public function getIdPost(): int
     {
         return $this->id_post;
     }
 
-    public function setIdPost(string $id_post): void
+    public function setIdPost(int $id_post): void
     {
         $this->id_post = $id_post;
     }
 
-    public function getIdUser(): string
+    public function getIdUser(): int
     {
         return $this->id_user;
     }
 
-    public function setIdUser(string $id_user): void
+    public function setIdUser(int $id_user): void
     {
         $this->id_user = $id_user;
     }

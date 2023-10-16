@@ -25,16 +25,19 @@ use App\Core\Router;
 
 
 $router = new Router();
-function isAdmin() {
+
+function isAdmin(): bool
+{
     return isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_ADMIN';
 }
 
 // Fonction pour rediriger en fonction du rôle
-function redirectToAppropriatePage() {
+function redirectToAppropriatePage(): Response
+{
     if (isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_USER') {
-        return new \App\Core\Response("", 302, [ "Location" => "/OpenClassrooms/" ]);
+        return new \App\Core\Response("", 302, [ "Location" => "/" ]);
     }
-    return new \App\Core\Response("", 302, [ "Location" => "/OpenClassrooms/login" ]);
+    return new \App\Core\Response("", 302, [ "Location" => "/login" ]);
 }
 
 $router->addRoute('GET', '~^/$~', function() {
@@ -187,26 +190,26 @@ $router->addRoute('GET', '~^/comment$~', function() {
     $controller = new CommentController();
     return new \App\Core\Response($controller->addcomment());
 });
+
 $router->addRoute('POST', '~^/comment$~', function() {
     $controller = new CommentController();
     return new \App\Core\Response($controller->addcomment());
 });
-//Route::add('/comment', function () {
-//    echo (new CommentController())->addcomment();
-//});
-//Route::add('/comment', function () {
-//    $request = new Request([
-//        'post' => $_POST,
-//    ]);
-//    echo (new CommentController())->addcomment($request);
-//}, ['GET', 'POST']);
-//Route::add('/deletecomment/([0-9]*)', function ($id) {
-//    echo (new CommentController())->deleteComment($id);
-//});
-//
-//Route::add('/updatecomment/([0-9]*)', function ($id) {
-//    echo (new CommentController())->updateComment($id);
-//});
+
+$router->addRoute('GET', '~^/deletecomment/([0-9]+)$~', function($id) {
+    $controller = new CommentController();
+    return new \App\Core\Response($controller->deleteComment($id));
+});
+
+$router->addRoute('GET', '~^/updatecomment/([0-9]+)$~', function($id) {
+    $controller = new CommentController();
+    return new \App\Core\Response($controller->updateComment($id));
+});
+
+$router->addRoute('POST', '~^/updatecomment/([0-9]+)$~', function($id) {
+    $controller = new CommentController();
+    return new \App\Core\Response($controller->updateComment($id));
+});
 //Route::add('/updatecomment/([0-9]*)', function ($id) {
 //    echo (new CommentController())->updateComment($id);
 //}, 'post');
