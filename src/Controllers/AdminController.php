@@ -43,17 +43,21 @@ class AdminController extends AbstractController
     /*
      * Affiche la liste de post valider sur la page d'administration
      */
-    public function list(): string
+    public function listAllData(): string
     {
         $request = new Request([]);
 
         $adminManager = new AdminManager();
-        $posts = $adminManager->fetchvalidate();
+        $data = $adminManager->fetchAllData();
+
         $message = $request->getSessionData('message') ?? null;
-        $output = $this->twig->render('admin/posts.html.twig', [
-            'posts' => $posts,
+
+        $output = $this->twig->render('admin/admin.html.twig', [
+            'posts' => $data['posts'],
+            'comments' => $data['comments'],
             'message' => $message
         ]);
+
         unset($message);
         return $output;
     }
@@ -129,5 +133,19 @@ class AdminController extends AbstractController
             'message' => $message,
             'errors' => $errors,
         ]);
+    }
+
+    public function list(): string
+    {
+        $request = new Request([]);
+        $adminManager = new AdminManager();
+        $posts = $adminManager->fetchvalidate();
+        $message = $request->getSessionData('message') ?? null;
+        $output = $this->twig->render('admin/posts.html.twig', [
+            'posts' => $posts,
+            'message' => $message
+        ]);
+        unset($message);
+        return $output;
     }
 }

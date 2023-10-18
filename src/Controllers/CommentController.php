@@ -97,7 +97,7 @@ class CommentController extends AbstractController
             $this->addError('Vous ne pouvez pas supprimer ce post');
         }
 
-        $postId = $post->getId();
+        $postId = $post->getIdPost();
         $postManager = new PostManager();
         $post = $postManager->fetch($postId);
         $this->redirect('/post/' . $postId);

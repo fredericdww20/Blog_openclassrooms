@@ -185,9 +185,6 @@
                                 Chapo
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Description
-                            </th>
-                            <th scope="col" class="px-6 py-3">
                                 Crée le
                             </th>
                         </tr>
@@ -201,9 +198,6 @@
                                 </th>
                                 <td class="px-6 py-4">
                                     {{ post.chapo }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ post.description }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ post.created_at }}
@@ -222,6 +216,7 @@
             <h3 class="mb-3  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">Les dernier
                 commentaire
                 valider</h3>
+
 
             <div class="border-2 border-dashed rounded-lg border-gray-300 dark:border-gray-600 h-96 mb-4">
 
@@ -252,9 +247,14 @@
                                     {{ comment.title }}
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ comment.chapo }}
+                                    {{ comment.commentary }}
                                 </td>
-
+                                <td class="px-6 py-4">
+                                    {{ comment.author_name}}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ comment.created_at }}
+                                </td>
                             </tr>
                             </tbody>
                         {% endfor %}

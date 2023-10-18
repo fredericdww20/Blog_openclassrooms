@@ -16,7 +16,7 @@ class AdminManager
         $this->pdo = Database::getInstance()->getPdo();
     }
 
-    // Permet la mise à jour d'un post pour le publier.
+
     public function update(int $id, bool $sta): ?Post
     {
         $sql = 'UPDATE post SET sta = :sta WHERE id = :id';
@@ -30,7 +30,6 @@ class AdminManager
         return $this->fetch($id);
     }
 
-    // Permet la mise à jour d'un commentaire pour le publier.
 
     public function fetch(int $id)
     {
@@ -45,7 +44,6 @@ class AdminManager
         return $statement->fetchObject(Post::class);
     }
 
-    // Récupère les commentaires à valider.
 
     public function updatecomment(int $id, bool $sta): ?Comment
     {
@@ -60,7 +58,7 @@ class AdminManager
         return $this->fetchcomments($id);
     }
 
-    // Récupère les posts à valider.
+
 
     public function fetchcomments(int $id)
     {
@@ -75,14 +73,17 @@ class AdminManager
         return $statement->fetchObject(Comment::class);
     }
 
-    // Récupère les 4 dernier posts valider.
 
-    public function fetchcomment()
-    {
-        $sql = 'SELECT * FROM comment WHERE sta = 0';
+
+    public function fetchcomment() {
+        $sql = '
+    SELECT c.*, CONCAT(u.firstname, " ", u.lastname) as author_name
+    FROM comment c
+    JOIN user u ON c.id_user = u.id
+    WHERE c.sta = 0
+';
 
         $statement = $this->pdo->prepare($sql);
-
         $statement->execute();
 
         $comments = [];
@@ -92,12 +93,13 @@ class AdminManager
             $comment->setTitle($row['title']);
             $comment->setCommentary($row['commentary']);
             $comment->setCreatedAt($row['created_at']);
-            $comments[] = $comment;
+            $comment->setSta($row['id_user']);
+            $row['author'] = $row['author_name'];  // Ajouter le nom de l'auteur au tableau $row
+            $comments[] = $row;  // Ajouter le tableau $row au tableau des commentaires
         }
 
         return $comments;
     }
-
     // Récupère les posts via l'id
 
     public function fetchvalidate()
@@ -123,14 +125,21 @@ class AdminManager
         return $posts;
     }
 
-    // Récupére les commentaire via l'id
+    // Récupére les 5 posts les plus récents
 
-    public function fetchAll()
+    public function fetchAllData()
     {
-        $sql = 'SELECT * FROM post WHERE sta = 1 ORDER BY created_at DESC LIMIT 4';
+        return [
+            'posts' => $this->fetchAllPosts(),
+            'comments' => $this->fetchAllComments()
+        ];
+    }
+
+    private function fetchAllPosts()
+    {
+        $sql = 'SELECT * FROM post WHERE sta = 1 ORDER BY created_at DESC LIMIT 5';
 
         $statement = $this->pdo->prepare($sql);
-
         $statement->execute();
 
         $posts = [];
@@ -146,6 +155,36 @@ class AdminManager
         }
 
         return $posts;
+    }
+
+    private function fetchAllComments()
+    {
+        $sql = '
+    SELECT c.*, CONCAT(u.firstname, " ", u.lastname) as author_name
+    FROM comment c
+    JOIN user u ON c.id_user = u.id
+    WHERE c.sta = 1
+    ORDER BY c.created_at DESC
+    LIMIT 5
+';
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute();
+
+        $comments = [];
+        while (($row = $statement->fetch())) {
+            $comment = new Comment();
+            $comment->setId($row['id']);
+            $comment->setTitle($row['title']);
+            $comment->setCommentary($row['commentary']);
+            $comment->setCreatedAt($row['created_at']);
+            $row['author'] = $row['author_name'];
+
+
+            $comments[] = $row;
+        }
+
+        return $comments;
     }
 
 }
