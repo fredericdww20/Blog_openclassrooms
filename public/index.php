@@ -21,7 +21,6 @@ use App\Controllers\UserController;
 use App\Core\Request;
 use App\Core\Response;
 use App\Core\Router;
-//use Steampixel\Route;
 
 
 $router = new Router();
@@ -69,13 +68,7 @@ $router->addRoute('GET', '~^/profil$~', function() {
 $router->addRoute('GET', '~^/admin$~', function () {
     if (!isAdmin()) return redirectToAppropriatePage();
     $controller = new AdminController();
-    return new \App\Core\Response($controller->listvalidate());
-});
-
-$router->addRoute('POST', '~^/admin$~', function() {
-    if (!isAdmin()) return redirectToAppropriatePage();
-    $controller = new AdminController();
-    return new \App\Core\Response($controller->listcomment());
+    return new \App\Core\Response($controller->listAllData());
 });
 
 $router->addRoute('GET', '~^/admin/posts$~', function() {
@@ -210,9 +203,6 @@ $router->addRoute('POST', '~^/updatecomment/([0-9]+)$~', function($id) {
     $controller = new CommentController();
     return new \App\Core\Response($controller->updateComment($id));
 });
-//Route::add('/updatecomment/([0-9]*)', function ($id) {
-//    echo (new CommentController())->updateComment($id);
-//}, 'post');
 
 $router->dispatch();
 

@@ -191,11 +191,14 @@
                                 Description
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Crée le
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Auteur
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Crée le
-                            </th>
+                                Action
+                            </td>
                         </tr>
                         </thead>
 
@@ -211,7 +214,10 @@
                                     {{ comment.commentary }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ comment.created_at }}
+                                    {{ comment.createdAt|date("d/m/Y H:i:s", "Europe/Paris") }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ comment.author_name }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <a href="/admin/com/{{ comment.id }}"
