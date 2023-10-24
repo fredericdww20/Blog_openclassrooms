@@ -2,12 +2,14 @@
 
 namespace App\Core;
 
-class Response {
+class Response
+{
     private mixed $content;
     private mixed $statusCode;
     private mixed $headers;
 
-    public function __construct($content = '', $statusCode = 200, $headers = []) {
+    public function __construct($content = '', $statusCode = 200, $headers = [])
+    {
         $this->content = $content;
         $this->statusCode = $statusCode;
         $this->headers = $headers;

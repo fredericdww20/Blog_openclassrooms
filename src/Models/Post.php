@@ -92,5 +92,4 @@ class Post
     {
         $this->id_user = $id_user;
     }
-
 }

@@ -11,7 +11,8 @@ class PostManager
     private PDO $pdo;
 
     // Connexion à la base de données
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Database::getInstance()->getPdo();
     }
 

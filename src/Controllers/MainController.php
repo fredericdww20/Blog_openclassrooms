@@ -54,5 +54,4 @@ class MainController extends AbstractController
 
         $this->redirect('/');
     }
-
 }

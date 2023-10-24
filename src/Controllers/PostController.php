@@ -91,11 +91,10 @@ class PostController extends AbstractController
 
             $this->addSuccess('Suppression réussie');
         } else {
-           $this->addError('Vous ne pouvez pas supprimer ce post');
+            $this->addError('Vous ne pouvez pas supprimer ce post');
         }
 
         $this->redirect('/posts');
-
     }
 
     /*
