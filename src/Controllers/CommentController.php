@@ -156,5 +156,4 @@ class CommentController extends AbstractController
             'comments' => $comments
         ]);
     }
-
 }

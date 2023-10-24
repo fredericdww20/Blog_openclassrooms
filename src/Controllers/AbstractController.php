@@ -20,7 +20,7 @@ abstract class AbstractController
         $this->twig->addExtension(new DebugExtension());
         $this->twig->addGlobal('session', $_SESSION);
 
-        if(isset($_SESSION['message']) && is_array($_SESSION['message'])) {
+        if (isset($_SESSION['message']) && is_array($_SESSION['message'])) {
             $this->messages = $_SESSION['message'];
             $this->twig->addGlobal('messages', $this->messages);
 
@@ -41,12 +41,11 @@ abstract class AbstractController
 
     public function redirect($url)
     {
-        $request= new Request();
-        if($this->messages) {
+        $request = new Request();
+        if ($this->messages) {
             $request->setSessionData('message', $this->messages);
         }
         header('Location: ' . $url);
         exit;
     }
-
 }
