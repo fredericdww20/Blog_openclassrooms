@@ -12,7 +12,8 @@ class AdminManager
     private PDO $pdo;
 
     // Connexion à la base de données
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Database::getInstance()->getPdo();
     }
 
@@ -75,7 +76,8 @@ class AdminManager
 
 
 
-    public function fetchcomment() {
+    public function fetchcomment()
+    {
         $sql = '
     SELECT c.*, CONCAT(u.firstname, " ", u.lastname) as author_name
     FROM comment c
@@ -186,5 +188,4 @@ class AdminManager
 
         return $comments;
     }
-
 }

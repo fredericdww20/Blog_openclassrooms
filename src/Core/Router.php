@@ -2,7 +2,8 @@
 
 namespace App\Core;
 
-class Router {
+class Router
+{
     private array $routes = [];
 
     public static function redirect($path): void

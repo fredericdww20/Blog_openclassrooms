@@ -7,7 +7,8 @@ class StringHelper
     /*
      * Nettoyage de la chaine
      */
-    public static function cleanString(string $string, bool $deleteHtml = false): string {
+    public static function cleanString(string $string, bool $deleteHtml = false): string
+    {
 
         $string = htmlentities(trim($string));
 

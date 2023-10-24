@@ -19,7 +19,6 @@ class Request
                 $data[$key] = $element; // Ne nettoyez pas les éléments qui ne sont pas des chaînes
             }
         }
-
     }
 
     /*

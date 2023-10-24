@@ -12,7 +12,8 @@ class CommentManager
     private PDO $pdo;
 
     // Connexion à la base de données
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Database::getInstance()->getPdo();
     }
 
@@ -46,7 +47,6 @@ class CommentManager
         ]);
 
         return $statement->fetchAll(PDO::FETCH_CLASS, Comment::class);
-
     }
     public function delete(int $id): bool
     {
@@ -84,7 +84,4 @@ class CommentManager
 
         return $this->fetch($id);
     }
-
-
-
 }
