@@ -1,9 +1,11 @@
 <?php
+
 /**
  *
  */
 
 namespace App\Controllers;
+
 use App\Core\Request;
 use App\Manager\AdminManager;
 
@@ -37,7 +39,8 @@ class AdminController extends AbstractController
         $posts = $adminManager->fetchAll();
 
         return $this->twig->render('admin/admin.html.twig', [
-            'posts' => $posts]);
+            'posts' => $posts
+        ]);
     }
 
     /*

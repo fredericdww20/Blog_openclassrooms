@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -91,4 +92,3 @@ class ConnectController extends AbstractController
         $this->redirect('/');
     }
 }
-
