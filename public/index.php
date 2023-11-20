@@ -33,9 +33,7 @@ function isAdmin(): bool
 // Fonction pour rediriger en fonction du rôle
 function redirectToAppropriatePage(): Response
 {
-    $session = Session::get();
-
-    if ($session->hasRole('ROLE_USER')) {
+    if (isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_USER') {
         return new \App\Core\Response("", 302, [ "Location" => "/" ]);
     }
     return new \App\Core\Response("", 302, [ "Location" => "/login" ]);
