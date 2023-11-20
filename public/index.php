@@ -30,17 +30,14 @@ function isAdmin(): bool
     return isset($_SESSION['roles']) && $_SESSION['roles'] === 'ROLE_ADMIN';
 }
 
-$response = redirectToAppropriatePage($_SESSION);
-
 // Fonction pour rediriger en fonction du rôle
-function redirectToAppropriatePage(array $sessionData): Response
+function redirectToAppropriatePage(): Response
 {
-    // Check if the user role is set and is 'ROLE_USER'
-    if (isset($sessionData['roles']) && $sessionData['roles'] === 'ROLE_USER') {
-        // Redirect 'ROLE_USER' to the homepage
+    $session = Session::get();
+
+    if ($session->hasRole('ROLE_USER')) {
         return new \App\Core\Response("", 302, [ "Location" => "/" ]);
     }
-    // Redirect other users (or if not logged in) to the login page
     return new \App\Core\Response("", 302, [ "Location" => "/login" ]);
 }
 
