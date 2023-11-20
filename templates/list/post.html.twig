@@ -106,6 +106,15 @@
             </form>
 
             {% endif %}
+            {% if comments|length > 0 %}
+                {% for comment in comments %}
+                    <article class=" mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
+                        <!-- Your existing comment display code here -->
+                    </article>
+                {% endfor %}
+            {% else %}
+                <p class="text-center p-6 mb-6 text-base text-gray-900 dark:text-white">Aucun commentaire pour le moment.</p>
+            {% endif %}
 
             {% for comment in comments %}
             <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
