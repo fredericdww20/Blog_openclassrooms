@@ -96,8 +96,8 @@ class AdminManager
             $comment->setCommentary($row['commentary']);
             $comment->setCreatedAt($row['created_at']);
             $comment->setSta($row['id_user']);
-            $row['author'] = $row['author_name'];  // Ajouter le nom de l'auteur au tableau $row
-            $comments[] = $row;  // Ajouter le tableau $row au tableau des commentaires
+            $row['author'] = $row['author_name'];
+            $comments[] = $row;
         }
 
         return $comments;
