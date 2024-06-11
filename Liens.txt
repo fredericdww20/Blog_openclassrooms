@@ -1,0 +1,2 @@
+CODACY: https://app.codacy.com/gh/fredericdww20/blog_openclassrooms/dashboard
+GITHUB: https://github.com/fredericdww20/blog_openclassrooms
