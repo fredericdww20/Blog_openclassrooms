@@ -1,8 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <body class="leading-normal tracking-normal text-white gradient"
-          style="font-family: 'Source Sans Pro', sans-serif;">
+<body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
 <div class="pt-24">
     <div class="container px-3 mx-auto flex flex-wrap flex-col md:flex-row items-center">
         <!--Left Col-->
@@ -39,32 +38,32 @@
 <section class="bg-white border-b py-8">
     <div class="container max-w-5xl mx-auto m-8">
         <div class="flex min-h-full items-center justify-center px-4 sm:px-6 lg:px-8">
-            <div class="w-full max-w-md space-y-8">
-                <div class="rounded-lg sm:rounded-none sm:rounded-l-lg bg-white text-center">{% include '_message.html.twig' %}</div>
+            <div class="w-full max-w-2xl space-y-8">
+                <div class="bg-white text-center p-4 rounded-lg dark:bg-gray-800">{% include '_message.html.twig' %}</div>
                 <section class="z-50 pb-5 bg-white dark:bg-gray-900">
-                    <div class="items-center bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700">
-                        <a href="#">
-                            <img class="p-3 w80 rounded-lg sm:rounded-none sm:rounded-l-lg"
+                    <div class="bg-gray-50 rounded-lg shadow sm:flex dark:bg-gray-800 dark:border-gray-700 p-4">
+                        <a class="block sm:flex-shrink-0">
+                            <img class="p-3 w-80 h-80 object-cover rounded-lg sm:rounded-none sm:rounded-l-lg"
                                  src="../../assets/img/news-report.png"
                                  alt="Bonnie Avatar">
                         </a>
-                        <div class="p-2">
-                            <h2 class="mb-2 text-lg text-slate-900 dark:text-gray-400">Publié par {{ post.lastname }} {{ post.firstname }}</h2>
-                            <h1 class=" underline decoration-pink-500 mb-2 text-lg text-slate-900 dark:text-gray-400 ">{{ post.title }}</h1>
-                            <p class="italic mb-2 text-slate-900 dark:text-gray-400 ">{{ post.chapo }}</p>
-                            <p class=" mb-2 text-slate-900 dark:text-gray-400">{{ post.description }}</p>
-                            <p class=" font-semibold normal-case text-slate-900 dark:text-gray-400">Dernière mise à jour le : {{ post.CreatedAt() | date("d/m/Y") }}</p>
+                        <div class="p-4">
+                            <h2 class="mb-2 text-lg font-semibold text-slate-900 dark:text-gray-400">Publié par {{ post.lastname }} {{ post.firstname }}</h2>
+                            <h1 class="underline decoration-pink-500 mb-2 text-2xl font-bold text-slate-900 dark:text-gray-400">{{ post.title }}</h1>
+                            <p class="italic mb-2 text-slate-900 dark:text-gray-400">{{ post.chapo }}</p>
+                            <p class="mb-2 text-slate-900 dark:text-gray-400">{{ post.description }}</p>
+                            <p class="font-semibold text-slate-900 dark:text-gray-400">Dernière mise à jour le : {{ post.CreatedAt() | date("d/m/Y") }}</p>
                         </div>
                     </div>
                     {% if session['user_id'] == post.getIdUser() %}
-                    <div class="text-center">
+                    <div class="text-center mt-4 space-y-3 sm:space-y-0 sm:space-x-3">
                         <a href="/delete/{{ post.id }}"
-                           class="m-2 text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
+                           class="block sm:inline-block w-full sm:w-auto text-slate-900 shadow dark:bg-gray-800 p-2 border border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Supprimer le post
                         </a>
                         <a href="/update/{{ post.id }}"
-                           class="text-slate-900 text-s mt-3 shadow dark:bg-gray-800 p-1 border border-1 border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
+                           class="block sm:inline-block w-full sm:w-auto text-slate-900 shadow dark:bg-gray-800 p-2 border border-[#0F172A] hover:border-[#C19A4C] rounded-lg"
                            type="button">
                             Modifier le post
                         </a></div>
@@ -83,82 +82,73 @@
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Commentaire</h2>
             </div>
-            {% if session ['LOGGED_USER'] == true %}
-            <form  action="/comment" method="POST"  class="mb-6">
+            {% if session['LOGGED_USER'] == true %}
+            <form action="/comment" method="POST" class="mb-6">
                 <input type="hidden" name="id_post" value="{{ post.id }}">
                 <div class="mb-5">
-                    <label for="title"
-                           class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800">Titre</label>
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Titre</label>
                     <input type="text" name="title" id="title" value="{{ title|default('') }}"
-                           class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 "
+                           class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
                            placeholder="Super !!!" required>
                 </div>
-                <div class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                    <label for="comment" class="sr-only">Commentaire</label>
+                <div class="py-2 px-4 mb-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                    <label for="commentary" class="sr-only">Commentaire</label>
                     <textarea id="commentary" name="commentary" rows="6"
-                              class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                              placeholder="Ecrivez votre commentaire" name="chapo" id="chapo" required>{{ chapo|default('') }}</textarea>
+                              class="block w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                              placeholder="Écrivez votre commentaire" required>{{ chapo|default('') }}</textarea>
                 </div>
                 <button type="submit"
-                        class="group relative  rounded-md py-2 px-3 text-sm font-semibold text-black hover:text-grey border-solid border-2 border-black-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-50">
+                        class="group relative rounded-md py-2 px-3 text-sm font-semibold text-black hover:text-grey border-solid border-2 border-black-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-50">
                     Soumettre
                 </button>
             </form>
-
             {% endif %}
             {% if comments|length > 0 %}
                 {% for comment in comments %}
-                    <article class=" mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
-                        <!-- Your existing comment display code here -->
+                    <article class="mb-6 text-base bg-white rounded-lg dark:bg-gray-900 p-6">
+                        <footer class="flex justify-between items-center mb-2">
+                            <div class="flex items-center">
+                                <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
+                                            class="mr-2 w-6 h-6 rounded-full"
+                                            src="https://cdn-icons-png.flaticon.com/512/1531/1531344.png"
+                                            alt="image">{{ comment.lastname }} {{ comment.firstname }}</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400"><time>Publié le : {{ comment.createdAt|date("d/m/Y H:i:s", "Europe/Paris") }}</time></p>
+                            </div>
+                            {% if session['user_id'] == comment.getIdUser() %}
+                            <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                                    class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                    type="button">
+                                <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                            d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
+                                    </path>
+                                </svg>
+                                <span class="sr-only">Option</span>
+                            </button>
+                            <div id="dropdownComment1"
+                                 class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownMenuIconHorizontalButton">
+                                    <li>
+                                        <a href="/updatecomment/{{ comment.getId() }}"
+                                           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Modifier</a>
+                                    </li>
+                                    <li>
+                                        <a href="/deletecomment/{{ comment.getId() }}"
+                                           class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Supprimer</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </footer>
+                        <p class="mb-2 text-sm text-gray-900 dark:text-white">{{ comment.title }}</p>
+                        <p class="text-gray-500 dark:text-gray-400">{{ comment.commentary }}</p>
                     </article>
                 {% endfor %}
             {% else %}
                 <p class="text-center p-6 mb-6 text-base text-gray-900 dark:text-white">Aucun commentaire pour le moment.</p>
             {% endif %}
-
-            {% for comment in comments %}
-            <article class="p-6 mb-6 text-base bg-white rounded-lg dark:bg-gray-900">
-                <footer class="flex justify-between items-center mb-2">
-                    <div class="flex items-center">
-                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white"><img
-                                    class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://cdn-icons-png.flaticon.com/512/1531/1531344.png"
-                                    alt="image">{{ comment.lastname }} {{ comment.firstname }}</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-400"><time>Publier le : {{ comment.createdAt|date("d/m/Y H:i:s", "Europe/Paris") }}</time></p>
-                    </div>
-                    {% if session['user_id'] == comment.getIdUser() %}
-                    <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
-                            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            type="button">
-                        <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z">
-                            </path>
-                        </svg>
-                        <span class="sr-only">Option</span>
-                    </button>
-                    <div id="dropdownComment1"
-                         class="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-200"
-                            aria-labelledby="dropdownMenuIconHorizontalButton">
-                            <li>
-                                <a href="/updatecomment/{{ comment.getId() }}"
-                                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Modifier</a>
-                            </li>
-                            <li>
-                                <a href="/deletecomment/{{ comment.getId() }}"
-                                   class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Supprimer</a>
-                            </li>
-                        </ul>
-                    </div>
-                    {% endif %}
-                </footer>
-                <p class="mb-2 mr-3 text-sm text-gray-900 dark:text-white">{{ comment.title }}</p>
-                <p class="text-gray-500 dark:text-gray-400">{{ comment.commentary }}</p>
-            </article>
-
-            {% endfor %}
         </div>
     </section>
 </section>
