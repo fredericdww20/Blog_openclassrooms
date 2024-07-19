@@ -1,7 +1,5 @@
 # Blog Openclassrooms
 
-[![SymfonyInsight](https://insight.symfony.com/projects/84cd1851-bfb2-4c4c-8646-5b3b85b956b6/mini.svg)](https://insight.symfony.com/projects/84cd1851-bfb2-4c4c-8646-5b3b85b956b6)
-
 ## Description
 
 Ce projet est un blog réalisé dans le cadre de la formation de développeur d'application Php/Symfony dispensée par Openclassrooms. Il s'agit d'une application web permettant de créer, afficher, éditer et supprimer des articles de blog, ainsi que de laisser des commentaires sur les articles.
