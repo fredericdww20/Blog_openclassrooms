@@ -61,11 +61,11 @@ http://localhost:8000
 
 Les contributions à ce projet sont les bienvenues. Voici comment vous pouvez contribuer :
 
-1. Fork the repository.
-2. Create a new branch.
-3. Make your changes and commit them.
-4. Push your branch to your forked repository.
-5. Submit a pull request.
+1. Forkez le dépôt.
+2. Créez une nouvelle branche.
+3. Apportez vos modifications et validez-les.
+4. Envoyez votre branche vers votre dépôt forké.
+5. Soumettez une demande d'extraction
 
 Veuillez-vous assurer de suivre les bonnes pratiques de développement et de respecter les normes de codage en vigueur.
 
